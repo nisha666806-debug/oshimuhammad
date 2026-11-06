@@ -4,86 +4,77 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Оши Муҳаммад</title>
-<link rel="icon" type="image/png" href="favicon.png">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0B0C10">
+<meta name="theme-color" content="#0A0806">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Оши Муҳаммад">
+<link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
   :root{
-    --ink: #0F172A;
-    --paper: #FBFBFA;
-    --paper-dim: #F4F3F0;
-    --card: #FFFFFF;
-    --brick: #E11D48;
-    --brick-dim: #BE123C;
-    --olive: #10B981;
-    --gold: #D97706;
-    --line: #E7E5E0;
-    --green: #10B981;
-    --amber: #F59E0B;
-    --white: #FFFFFF;
-    --blue: #D97706;
-    --blue-dim: #B45309;
-    --blue-tint: #FEF3C7;
-    --text-dim: #64748B;
-    --shadow-sm: 0 1px 3px rgba(15,23,42,.05), 0 1px 2px rgba(15,23,42,.06);
-    --shadow-md: 0 8px 24px -4px rgba(15,23,42,.08), 0 4px 6px -2px rgba(15,23,42,.04);
-    --shadow-lg: 0 16px 32px -8px rgba(217,119,6,.15), 0 8px 16px -4px rgba(15,23,42,.06);
+    --ink:#1E293B;
+    --paper:#F8FAFC;
+    --paper-dim:#EEF2F7;
+    --card:#FFFFFF;
+    --brick:#DC2626;
+    --brick-dim:#B91C1C;
+    --olive:#16A34A;
+    --gold:#C9A227;
+    --line:#E3E8EF;
+    --green:#16A34A;
+    --amber:#D97706;
+    --white:#FFFFFF;
+    --blue:#2563EB;
+    --blue-dim:#1D4ED8;
+    --blue-tint:#EFF4FF;
+    --text-dim:#64748B;
+    --shadow-sm:0 1px 2px rgba(15,23,42,.06);
+    --shadow-md:0 4px 16px rgba(15,23,42,.08);
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;overscroll-behavior-y:contain;touch-action:pan-x pan-y;}
   input, select, textarea, button{touch-action:manipulation;}
   body{
-    background: linear-gradient(180deg, #FBFBFA 0%, #F5F3EF 100%);
-    color: var(--ink);
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-    min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', system-ui, sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:clip;
   }
-  .mono{font-family:'Plus Jakarta Sans',sans-serif;font-variant-numeric:tabular-nums;}
-  .display{font-family:'Outfit','Plus Jakarta Sans',sans-serif;}
+  .mono{font-family:'Inter',sans-serif;font-variant-numeric:tabular-nums;}
+  .display{font-family:'Inter',sans-serif;}
 
-  #app{max-width:1120px;margin:0 auto;padding:0 0 60px;}
+  #app{width:100%;max-width:1100px;margin:0 auto;padding:0 0 60px;overflow-x:clip;}
 
   input:focus, select:focus, textarea:focus, button:focus-visible{
     outline:2px solid var(--blue);outline-offset:1px;
   }
+  /* iOS Safari auto-zooms the whole page when a focused field's text is under 16px —
+     force 16px on every field (overriding any other size, inline included) so focusing
+     anything never triggers that zoom. */
   input, select, textarea{ font-size:16px !important; }
 
-  /* ---------- Header / Topbar ---------- */
+  /* ---------- Header ---------- */
   .topbar{
-    display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
-    padding:12px 18px;border-bottom:1px solid rgba(231, 229, 224, 0.9);
-    background:rgba(255, 255, 255, 0.94);
-    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-    position:sticky;top:0;z-index:20;
-    box-shadow:0 2px 14px rgba(15,23,42,0.03);
+    display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+    padding:14px 16px;border-bottom:1px solid var(--line);
+    background:var(--white);position:sticky;top:0;z-index:20;
   }
-  .brand{display:flex;align-items:center;gap:12px;min-width:0;flex-shrink:1;}
+  .brand{display:flex;align-items:center;gap:9px;min-width:0;flex-shrink:1;}
   .brand-logo-img{
-    width:40px;height:40px;border-radius:50%;object-fit:cover;flex:none;
-    box-shadow:0 2px 10px rgba(217,119,6,.28);background:#000;
-    border:2px solid #E5A93C;
+    width:34px;height:34px;border-radius:50%;object-fit:cover;flex:none;
+    box-shadow:0 1px 4px rgba(0,0,0,.25);background:#000;border:1.5px solid #D97706;
   }
-  .brand .name{
-    font-family:'Outfit',sans-serif;font-weight:800;font-size:18px;
-    letter-spacing:-.3px;color:var(--ink);white-space:nowrap;overflow:visible;
-    text-overflow:clip;max-width:180px;
-  }
-  .brand .tag{
-    font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:#92400E;
-    font-weight:800;display:none;background:var(--blue-tint);padding:2px 7px;border-radius:6px;
-    margin-top:1px;border:1px solid #FDE68A;
-  }
-  @media(min-width:480px){.brand .name{max-width:none;} .brand .tag{display:inline-block;}}
+  .brand .name{font-family:'Inter',sans-serif;font-weight:800;font-size:16px;letter-spacing:-.2px;color:var(--ink);white-space:nowrap;overflow:visible;text-overflow:clip;max-width:150px;}
+  .brand .tag{font-size:10px;letter-spacing:1.3px;text-transform:uppercase;color:var(--text-dim);font-weight:700;display:none;}
+  @media(min-width:480px){.brand .name{max-width:none;} .brand .tag{display:inline;}}
   .top-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end;}
   @media(max-width:479px){
     .user-name-label:not(.preview-label){display:none;}
@@ -92,287 +83,251 @@
     .role-pill{padding:5px 9px;font-size:11px;}
     #logoutBtn, #backToAdminBtn{padding:6px 10px;font-size:12px;}
   }
-  .clock{font-family:'Plus Jakarta Sans',sans-serif;font-variant-numeric:tabular-nums;font-size:13px;color:var(--text-dim);font-weight:600;display:none;}
+  .clock{font-family:'Inter',sans-serif;font-variant-numeric:tabular-nums;font-size:13px;color:var(--text-dim);display:none;}
   @media(min-width:560px){.clock{display:block;}}
   .role-pill{
-    font-size:12px;font-weight:700;padding:6px 14px;border-radius:999px;
-    background:linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
-    color:#92400E;border:1px solid #FCD34D;letter-spacing:.2px;
-    box-shadow:0 1px 3px rgba(217,119,6,0.1);
+    font-size:12px;font-weight:600;padding:6px 12px;border-radius:20px;
+    background:var(--blue-tint);color:var(--blue-dim);letter-spacing:.2px;
   }
   .btn-ghost{
     background:var(--white);border:1px solid var(--line);color:var(--ink);
-    padding:8px 14px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;
-    font-family:inherit;transition:all .18s ease;box-shadow:var(--shadow-sm);
+    padding:7px 14px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;
+    font-family:inherit;transition:background .15s ease,border-color .15s ease;
   }
-  .btn-ghost:hover{background:#F8FAFC;border-color:#CBD5E1;transform:translateY(-1px);}
+  .btn-ghost:hover{background:var(--paper-dim);border-color:#CBD5E1;}
 
   /* ---------- Generic ---------- */
   .container{padding:24px 20px;}
   .section-title{
-    font-family:'Outfit','Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;margin:0 0 18px;letter-spacing:-.3px;
-    display:flex;align-items:center;gap:10px;color:var(--ink);
+    font-family:'Inter',sans-serif;font-size:19px;font-weight:700;margin:0 0 16px;letter-spacing:-.2px;
+    display:flex;align-items:center;gap:10px;
   }
-  .section-title .num{font-family:'Plus Jakarta Sans',sans-serif;font-variant-numeric:tabular-nums;color:var(--blue);font-size:15px;font-weight:800;}
+  .section-title .num{font-family:'Inter',sans-serif;font-variant-numeric:tabular-nums;color:var(--blue);font-size:14px;font-weight:700;}
 
   button{cursor:pointer;}
 
-  /* ---------- Role Select & Login ---------- */
+  /* ---------- Role select ---------- */
   .role-select{
-    min-height:calc(100vh - 40px);display:flex;flex-direction:column;align-items:center;justify-content:center;
-    padding:40px 20px;text-align:center;gap:20px;
-    background:radial-gradient(circle at 50% 25%, rgba(217, 119, 6, 0.08) 0%, transparent 65%);
+    min-height:calc(100vh - 0px);display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:40px 20px;text-align:center;gap:26px;
   }
-  .brand-avatar-box{
-    display:flex;align-items:center;justify-content:center;width:104px;height:104px;
-    border-radius:50%;padding:3px;
-    background:linear-gradient(135deg, #F5C542 0%, #B37D1A 100%);
-    box-shadow:0 12px 32px rgba(217, 119, 6, 0.28);
-  }
-  .brand-avatar-box img{width:100%;height:100%;border-radius:50%;object-fit:cover;background:#000;}
-  .brand-title{font-family:'Outfit',sans-serif;font-size:32px;margin:8px 0 0;font-weight:800;letter-spacing:-.5px;color:var(--ink);}
-  .brand-subtitle{color:var(--text-dim);margin:4px 0 0;font-size:15px;font-weight:500;}
+  .role-select h1{font-family:'Inter',sans-serif;font-size:30px;margin:0;font-weight:800;letter-spacing:-.5px;}
+  .role-select p{color:var(--text-dim);margin:0;font-size:15px;}
   .role-cards{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:10px;}
-  .login-box{
-    display:flex;flex-direction:column;gap:16px;width:100%;max-width:320px;margin-top:8px;text-align:left;
-    background:var(--card);padding:26px 22px;border-radius:22px;border:1px solid var(--line);
-    box-shadow:var(--shadow-md);
-  }
-  .login-box .field label{font-size:12px;color:var(--text-dim);font-weight:700;margin-bottom:6px;display:block;letter-spacing:.3px;text-transform:uppercase;}
-  .login-box .field input{
-    width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;
-    font-family:inherit;font-size:14px;background:var(--white);transition:border-color .15s ease, box-shadow .15s ease;
-  }
-  .login-box .field input:focus{
-    border-color:var(--blue);box-shadow:0 0 0 3px rgba(217, 119, 6, 0.15);
-  }
+  .login-box{display:flex;flex-direction:column;gap:14px;width:280px;margin-top:10px;text-align:left;}
+  .login-box .field label{font-size:12px;color:var(--text-dim);font-weight:600;margin-bottom:4px;display:block;}
+  .login-box .field input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-family:inherit;font-size:14px;background:var(--white);}
   .login-error{color:var(--brick);font-size:13px;font-weight:600;}
   .role-card{
-    width:190px;padding:26px 18px;border:1.5px solid var(--line);border-radius:20px;
+    width:190px;padding:26px 18px;border:1px solid var(--line);border-radius:16px;
     background:var(--card);display:flex;flex-direction:column;align-items:center;gap:10px;
-    box-shadow:var(--shadow-sm);transition:all .2s ease;
+    box-shadow:var(--shadow-sm);
+    transition:transform .15s ease, box-shadow .15s ease;
   }
-  .role-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:#CBD5E1;}
-  .role-card .icon{font-size:32px;}
-  .role-card .label{font-weight:700;font-size:16px;font-family:'Outfit',sans-serif;}
+  .role-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);}
+  .role-card .icon{font-size:30px;}
+  .role-card .label{font-weight:700;font-size:16px;font-family:'Inter',sans-serif;}
   .role-card .desc{font-size:12px;color:var(--text-dim);}
 
-  /* ---------- Table Grid (Waiter) ---------- */
+  /* ---------- Table grid (waiter) ---------- */
   .table-grid{
-    display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:14px;
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;
   }
   .table-card{
-    border:1.5px solid var(--line);border-radius:18px;padding:16px 14px;background:var(--card);
+    border:1px solid var(--line);border-radius:14px;padding:16px 14px;background:var(--card);
     display:flex;flex-direction:column;gap:8px;text-align:left;font-family:inherit;
-    box-shadow:var(--shadow-sm);transition:all .2s cubic-bezier(.4,0,.2,1);
-    position:relative;overflow:hidden;
+    box-shadow:var(--shadow-sm);transition:box-shadow .15s ease,transform .15s ease;
   }
-  .table-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px);border-color:#CBD5E1;}
+  .table-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);}
   .table-card .row1{display:flex;justify-content:space-between;align-items:center;}
-  .table-card .tnum{
-    font-family:'Outfit',sans-serif;font-size:17px;font-weight:800;overflow:hidden;
-    text-overflow:ellipsis;white-space:nowrap;max-width:105px;letter-spacing:-.3px;color:var(--ink);
-  }
-  .dot{width:10px;height:10px;border-radius:50%;flex:none;transition:box-shadow .2s ease;}
-  .dot.free{background:var(--green);box-shadow:0 0 0 3px rgba(16, 185, 129, 0.22);}
-  .dot.occupied{background:var(--amber);box-shadow:0 0 0 3px rgba(245, 158, 11, 0.25);}
-  .dot.reserved{background:var(--gold);box-shadow:0 0 0 3px rgba(217, 119, 6, 0.25);}
+  .table-card .tnum{font-family:'Inter',sans-serif;font-size:16px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100px;letter-spacing:-.2px;}
+  .dot{width:9px;height:9px;border-radius:50%;flex:none;}
+  .dot.free{background:var(--green);}
+  .dot.occupied{background:var(--amber);}
+  .dot.reserved{background:var(--gold);}
   .table-card.reserved-table{border-style:dashed;border-color:var(--gold);}
   .table-card.locked-table{opacity:.55;}
-  .reserve-note{font-size:10px;color:#9C7A12;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%;}
+  .table-card.waiter-own{border:2px solid var(--brick);background:#FEF2F2;box-shadow:0 0 0 1px rgba(220,38,38,.18),var(--shadow-sm);}
+  .table-card.from-scheduled{border:2px solid var(--olive);background:#F0FDF4;}
+  .order-src-badge{display:block;width:max-content;max-width:100%;margin:0 0 4px;padding:3px 8px;border-radius:999px;font-size:10px;font-weight:800;letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .order-src-badge.own{background:var(--brick);color:#fff;}
+  .order-src-badge.sched{background:var(--olive);color:#fff;}
+  .add-btn.ta-btn{background:var(--brick);width:auto;min-width:32px;padding:0 10px;border-radius:16px;font-size:12px;white-space:nowrap;}
+  .reserve-note{font-size:10px;color:#9C7A12;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%;}
   .reserve-detail{font-size:10px;color:var(--text-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%;font-variant-numeric:tabular-nums;}
-  .table-card .status{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-dim);font-weight:700;}
-  .table-card .total{font-family:'Plus Jakarta Sans',sans-serif;font-variant-numeric:tabular-nums;font-size:15px;font-weight:800;color:var(--ink);}
+  .table-card .status{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--text-dim);font-weight:600;}
+  .table-card .total{font-family:'Inter',sans-serif;font-variant-numeric:tabular-nums;font-size:15px;font-weight:700;color:var(--ink);}
 
-  /* ---------- Ticket / Order Builder ---------- */
+  /* ---------- Ticket / order builder ---------- */
   .overlay{
-    position:fixed;inset:0;background:rgba(15,23,42,.55);backdrop-filter:blur(4px);z-index:30;
+    position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:30;
     display:flex;align-items:flex-end;justify-content:center;
   }
   @media(min-width:760px){.overlay{align-items:center;}}
   .ticket-wrap{
     background:var(--paper);width:100%;max-width:720px;max-height:92vh;overflow-y:auto;
-    border-radius:24px 24px 0 0;border:1px solid var(--line);box-shadow:0 -8px 35px rgba(15,23,42,.18);
+    border-radius:20px 20px 0 0;border:1px solid var(--line);box-shadow:0 -8px 30px rgba(15,23,42,.15);
   }
-  @media(min-width:760px){.ticket-wrap{border-radius:22px;max-height:88vh;box-shadow:0 24px 60px rgba(15,23,42,.25);}}
+  @media(min-width:760px){.ticket-wrap{border-radius:18px;max-height:88vh;box-shadow:0 20px 60px rgba(15,23,42,.2);}}
   .ticket-head{
-    display:flex;justify-content:space-between;align-items:center;padding:18px 22px;
-    border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(251, 251, 250, 0.95);
-    backdrop-filter:blur(10px);z-index:2;
+    display:flex;justify-content:space-between;align-items:center;padding:16px 20px;
+    border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--paper);z-index:2;
   }
-  .ticket-head h2{font-family:'Outfit',sans-serif;margin:0;font-size:20px;font-weight:800;letter-spacing:-.3px;color:var(--ink);}
-  .close-x{background:none;border:none;font-size:22px;color:var(--text-dim);line-height:1;transition:color .15s;}
-  .close-x:hover{color:var(--ink);}
+  .ticket-head h2{font-family:'Inter',sans-serif;margin:0;font-size:18px;font-weight:700;letter-spacing:-.2px;}
+  .close-x{background:none;border:none;font-size:20px;color:var(--text-dim);line-height:1;}
 
-  .cat-tabs{display:flex;gap:8px;overflow-x:auto;padding:14px 20px 6px;}
+  .cat-tabs{display:flex;gap:8px;overflow-x:auto;padding:14px 20px 4px;}
   .cat-tab{
-    flex:none;padding:8px 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--white);
-    font-size:12px;font-weight:700;font-family:inherit;white-space:nowrap;color:var(--ink);
-    transition:all .18s ease;box-shadow:var(--shadow-sm);
+    flex:none;padding:7px 14px;border-radius:20px;border:1px solid var(--line);background:var(--white);
+    font-size:12px;font-weight:600;font-family:inherit;white-space:nowrap;color:var(--ink);
+    transition:background .15s ease,color .15s ease,border-color .15s ease;
   }
-  .cat-tab.active{
-    background:linear-gradient(135deg, #D97706 0%, #B45309 100%);color:var(--white);
-    border-color:#D97706;box-shadow:0 4px 12px rgba(217,119,6,0.3);
-  }
+  .cat-tab.active{background:var(--blue);color:var(--white);border-color:var(--blue);}
 
   .menu-list{padding:8px 20px 4px;display:flex;flex-direction:column;gap:8px;}
   .menu-row{
-    display:flex;justify-content:space-between;align-items:center;padding:12px 14px;
-    background:var(--card);border:1.5px solid var(--line);border-radius:14px;
-    box-shadow:var(--shadow-sm);transition:border-color .15s ease;
+    display:flex;justify-content:space-between;align-items:center;padding:10px 12px;
+    background:var(--card);border:1px solid var(--line);border-radius:12px;
   }
-  .menu-row:hover{border-color:#CBD5E1;}
-  .menu-row .mname{font-weight:700;font-size:14px;color:var(--ink);}
-  .menu-row .mprice{font-family:'Plus Jakarta Sans',sans-serif;font-variant-numeric:tabular-nums;font-size:13px;color:var(--blue);font-weight:700;margin-top:2px;}
+  .menu-row .mname{font-weight:600;font-size:14px;}
+  .menu-row .mprice{font-family:'Inter',sans-serif;font-variant-numeric:tabular-nums;font-size:13px;color:var(--text-dim);margin-top:2px;}
   .add-btn{
-    background:linear-gradient(135deg, #D97706 0%, #B45309 100%);color:var(--white);border:none;
-    width:34px;height:34px;border-radius:50%;font-size:18px;font-weight:700;
-    display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 2px 8px rgba(217,119,6,0.32);
-    transition:all .15s ease;
+    background:var(--blue);color:var(--white);border:none;width:32px;height:32px;border-radius:50%;
+    font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none;
   }
-  .add-btn:hover{transform:scale(1.08);}
 
   .receipt{
-    margin:18px 20px 20px;background:var(--white);border:1.5px solid var(--line);border-radius:18px;
-    padding:18px 20px 20px;box-shadow:var(--shadow-sm);
+    margin:18px 20px 20px;background:var(--white);border:1px solid var(--line);border-radius:14px;
+    padding:18px 18px 20px;
+    box-shadow:var(--shadow-sm);
   }
-  .receipt-title{
-    font-family:'Outfit',sans-serif;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;
-    color:var(--text-dim);text-align:center;margin-bottom:12px;border-bottom:1px solid var(--line);
-    padding-bottom:10px;font-weight:800;
-  }
-  .receipt-line{display:flex;justify-content:space-between;align-items:center;font-variant-numeric:tabular-nums;font-size:13px;padding:6px 0;}
+  .receipt-title{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);text-align:center;margin-bottom:10px;border-bottom:1px solid var(--line);padding-bottom:10px;font-weight:700;}
+  .receipt-line{display:flex;justify-content:space-between;align-items:center;font-variant-numeric:tabular-nums;font-size:13px;padding:5px 0;}
   .receipt-line .qty-ctrl{display:flex;align-items:center;gap:6px;}
-  .qty-btn{
-    width:24px;height:24px;border:1px solid var(--line);background:var(--paper-dim);border-radius:8px;
-    font-size:12px;line-height:1;font-family:inherit;font-weight:700;transition:all .15s;
-  }
-  .qty-btn:hover{background:#E2E8F0;}
-  .receipt-empty{text-align:center;color:#94A3B8;font-size:13px;padding:16px 0;font-weight:500;}
-  .receipt-total{
-    display:flex;justify-content:space-between;border-top:2px solid var(--line);margin-top:10px;
-    padding-top:12px;font-variant-numeric:tabular-nums;font-weight:800;font-size:17px;color:var(--ink);
-  }
+  .qty-btn{width:22px;height:22px;border:1px solid var(--line);background:var(--white);border-radius:6px;font-size:12px;line-height:1;font-family:inherit;}
+  .receipt-empty{text-align:center;color:#94A3B8;font-size:13px;padding:14px 0;}
+  .receipt-total{display:flex;justify-content:space-between;border-top:1px solid var(--line);margin-top:8px;padding-top:10px;font-variant-numeric:tabular-nums;font-weight:700;font-size:16px;}
 
-  .ticket-actions{display:flex;gap:12px;padding:0 20px 24px;}
+  .ticket-actions{display:flex;gap:10px;padding:0 20px 24px;}
   .btn-primary{
-    flex:1;background:linear-gradient(135deg, #D97706 0%, #B45309 100%);color:var(--white);
-    border:none;border-radius:12px;padding:14px;font-weight:700;font-size:14px;font-family:inherit;
-    box-shadow:0 4px 14px rgba(217,119,6,0.3);transition:all .18s ease;
+    flex:1;background:var(--blue);color:var(--white);border:none;border-radius:10px;padding:13px;
+    font-weight:700;font-size:14px;font-family:inherit;transition:background .15s ease;
   }
-  .btn-primary:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 18px rgba(217,119,6,0.38);}
-  .btn-primary:disabled{opacity:.4;box-shadow:none;}
+  .btn-primary:hover:not(:disabled){background:var(--blue-dim);}
+  .btn-primary:disabled{opacity:.4;}
   .btn-pay{
-    flex:1;background:linear-gradient(135deg, #0F172A 0%, #1E293B 100%);color:var(--white);
-    border:none;border-radius:12px;padding:14px;font-weight:700;font-size:14px;font-family:inherit;
-    box-shadow:0 4px 14px rgba(15,23,42,0.25);transition:all .18s ease;
+    flex:1;background:var(--ink);color:var(--white);border:none;border-radius:10px;padding:13px;
+    font-weight:700;font-size:14px;font-family:inherit;transition:background .15s ease;
   }
-  .btn-pay:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 18px rgba(15,23,42,0.35);}
-  .btn-pay:disabled{opacity:.4;box-shadow:none;}
+  .btn-pay:hover:not(:disabled){background:#0B1220;}
+  .btn-pay:disabled{opacity:.4;}
 
-  /* ---------- Admin & Management ---------- */
-  .admin-tabs{
-    display:flex;gap:6px;padding:0 20px;border-bottom:1px solid var(--line);
-    overflow-x:auto;background:var(--white);
-  }
+  /* ---------- Admin ---------- */
+  .admin-tabs{display:flex;gap:4px;padding:0 20px;border-bottom:1px solid var(--line);overflow-x:auto;background:var(--white);}
   .admin-tab{
-    padding:14px 12px;background:none;border:none;font-family:'Outfit','Plus Jakarta Sans',sans-serif;
-    font-size:14px;font-weight:700;color:var(--text-dim);position:relative;top:1px;white-space:nowrap;
-    border-bottom:3px solid transparent;transition:all .18s;
+    padding:14px 10px;background:none;border:none;font-family:'Inter',sans-serif;font-size:14px;
+    font-weight:600;color:var(--text-dim);position:relative;top:1px;white-space:nowrap;
+    border-bottom:2px solid transparent;
   }
-  .admin-tab.active{color:var(--blue);border-bottom:3px solid var(--blue);}
+  .admin-tab.active{color:var(--blue);border-bottom:2px solid var(--blue);}
 
   .stat-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:22px;}
   .stat-card{
-    flex:1;min-width:150px;background:var(--card);border:1.5px solid var(--line);border-radius:18px;
-    padding:18px 20px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden;
-  }
-  .stat-card::before{
-    content:'';position:absolute;top:0;left:0;right:0;height:3px;
-    background:linear-gradient(90deg, #D97706, #F59E0B);
-  }
-  .stat-card .label{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--text-dim);font-weight:800;}
-  .stat-card .value{
-    font-family:'Outfit',sans-serif;font-variant-numeric:tabular-nums;font-size:26px;
-    font-weight:800;color:var(--ink);margin-top:6px;letter-spacing:-.5px;
-  }
-
-  .item-row{
-    display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px;
-    background:var(--card);border:1.5px solid var(--line);border-radius:14px;margin-bottom:8px;
+    flex:1;min-width:150px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;
     box-shadow:var(--shadow-sm);
   }
-  .item-row .info .nm{font-weight:700;font-size:14px;}
-  .item-row .info .cat{font-size:11px;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;font-weight:800;margin-top:2px;}
-  .item-row .price{font-variant-numeric:tabular-nums;font-weight:800;color:var(--ink);}
-  .icon-btn{background:var(--white);border:1px solid var(--line);border-radius:10px;width:32px;height:32px;font-size:13px;transition:all .15s;}
-  .icon-btn:hover{background:var(--paper-dim);}
+  .stat-card .label{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-dim);font-weight:700;}
+  .stat-card .value{font-family:'Inter',sans-serif;font-variant-numeric:tabular-nums;font-size:25px;font-weight:800;color:var(--ink);margin-top:4px;letter-spacing:-.5px;}
+
+  .item-row{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;
+    background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:8px;
+  }
+  .item-row .info .nm{font-weight:600;font-size:14px;}
+  .item-row .info .cat{font-size:11px;color:var(--blue);text-transform:uppercase;letter-spacing:.4px;font-weight:700;margin-top:2px;}
+  .item-row .price{font-variant-numeric:tabular-nums;font-weight:700;}
+  .icon-btn{background:var(--white);border:1px solid var(--line);border-radius:8px;width:30px;height:30px;font-size:13px;}
   .icon-btn.danger{border-color:#FECACA;color:var(--brick);background:#FEF2F2;}
 
-  .cat-group{margin-bottom:22px;}
-  .cat-group h3{font-family:'Outfit',sans-serif;font-size:15px;margin:0 0 10px;color:var(--blue);font-weight:800;}
+  .cat-group{margin-bottom:20px;}
+  .cat-group h3{font-family:'Inter',sans-serif;font-size:14px;margin:0 0 10px;color:var(--blue);font-weight:700;}
 
   .form-box{
-    background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:18px;margin-bottom:20px;
-    display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;box-shadow:var(--shadow-sm);
+    background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:20px;
+    display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;box-shadow:var(--shadow-sm);
   }
-  .field{display:flex;flex-direction:column;gap:5px;}
-  .field label{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-dim);font-weight:800;}
+  .field{display:flex;flex-direction:column;gap:4px;}
+  .field label{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--text-dim);font-weight:700;}
   .field input, .field select{
-    font-family:inherit;font-size:14px;padding:10px 12px;border:1.5px solid var(--line);border-radius:11px;background:var(--white);
-    transition:border-color .15s ease;
+    font-family:inherit;font-size:14px;padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:var(--white);
   }
-  .field input:focus, .field select:focus{border-color:var(--blue);}
   .field input{width:150px;}
   .field.small input{width:90px;}
 
   .receipt-item-row{
-    display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--card);
-    border:1.5px solid var(--line);border-radius:14px;margin-bottom:8px;font-size:13px;box-shadow:var(--shadow-sm);
+    display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:var(--card);
+    border:1px solid var(--line);border-radius:12px;margin-bottom:8px;font-size:13px;
   }
-  .receipt-item-row .l1{font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;}
+  .receipt-item-row .l1{font-weight:600;font-family:'Inter',sans-serif;}
   .receipt-item-row .l2{color:var(--text-dim);font-size:12px;margin-top:3px;}
 
   .empty-state{
     text-align:center;padding:50px 20px;color:#94A3B8;
   }
-  .empty-state .big{font-size:38px;margin-bottom:8px;}
+  .empty-state .big{font-size:34px;margin-bottom:8px;}
 
   .toast{
     position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--white);
-    padding:12px 22px;border-radius:14px;font-size:13px;font-weight:700;z-index:50;
+    padding:11px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:50;
     opacity:0;transition:opacity .25s ease;pointer-events:none;box-shadow:var(--shadow-md);
   }
   .toast.show{opacity:1;}
 
-  .chef-osh-line{font-weight:800;font-variant-numeric:tabular-nums;font-size:14px;padding:3px 0;color:var(--ink);}
+  .chef-osh-line{font-weight:700;font-variant-numeric:tabular-nums;font-size:14px;padding:3px 0;color:var(--ink);}
   .chef-other-line{font-size:12px;color:var(--text-dim);padding:3px 0;}
   .osh-banner{
-    display:flex;flex-wrap:wrap;gap:14px;align-items:center;padding:12px 20px;
-    background:var(--blue-tint);border-bottom:1px solid #FCD34D;font-size:12px;color:#92400E;font-weight:700;
+    display:flex;flex-wrap:wrap;gap:14px;align-items:center;padding:10px 20px;
+    background:var(--paper-dim);border-bottom:1px solid var(--line);font-size:12px;color:var(--text-dim);
   }
   .settings-form{display:flex;flex-direction:column;gap:16px;max-width:340px;}
   .salary-row{
     display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:12px 14px;
-    background:var(--card);border:1.5px solid var(--line);border-radius:14px;margin-bottom:8px;
+    background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:8px;
   }
   .salary-row .salary-name{min-width:110px;}
-  .salary-row .salary-name .nm{font-weight:700;font-size:14px;}
-  .salary-row .salary-name .cat{font-size:11px;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;font-weight:800;}
-  .salary-select{padding:8px 10px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:12px;background:var(--white);}
-  .salary-input{width:100px;padding:8px 10px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:13px;}
+  .salary-row .salary-name .nm{font-weight:600;font-size:14px;}
+  .salary-row .salary-name .cat{font-size:11px;color:var(--blue);text-transform:uppercase;letter-spacing:.4px;font-weight:700;}
+  .salary-select{padding:8px 9px;border:1px solid var(--line);border-radius:9px;font-family:inherit;font-size:12px;background:var(--white);}
+  .salary-input{width:100px;padding:8px 9px;border:1px solid var(--line);border-radius:9px;font-family:inherit;font-size:13px;}
   .salary-computed{display:flex;flex-direction:column;gap:2px;font-size:12px;color:var(--text-dim);margin-left:auto;}
-  .xls-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:10px;font-variant-numeric:tabular-nums;}
-  .xls-table th, .xls-table td{border:1px solid var(--line);padding:9px 10px;text-align:right;}
-  .xls-table th{background:var(--paper-dim);font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--text-dim);font-weight:800;}
-  .xls-table td:first-child, .xls-table th:first-child{text-align:left;font-weight:700;}
+  .xls-table{width:100%;max-width:100%;border-collapse:collapse;font-size:12px;margin-top:10px;font-variant-numeric:tabular-nums;}
+  .xls-table th, .xls-table td{border:1px solid var(--line);padding:9px 10px;text-align:right;word-break:break-word;}
+  @media(max-width:640px){
+    .container{padding:14px 12px;}
+    .topbar{padding:10px 12px;}
+    .admin-tabs{padding:0 10px;}
+    .stat-row{gap:10px;}
+    .stat-card{min-width:calc(50% - 6px);padding:12px 14px;}
+    .stat-card .value{font-size:20px;}
+    .receipt{margin:12px 12px 16px;padding:14px;}
+    .ticket-head{padding:14px 16px;}
+    .ticket-actions{padding:0 12px 18px;}
+    .menu-list{padding:8px 12px 4px;}
+    .cat-tabs{padding:10px 12px 4px;}
+    .receipt-item-row, .item-row{flex-wrap:wrap;gap:8px;}
+    .xls-table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+    .xls-table th, .xls-table td{padding:7px 8px;font-size:11px;white-space:nowrap;}
+    .field{max-width:100%;}
+    .field input, .field select{max-width:100%;}
+  }
+  .xls-table th{background:var(--paper-dim);font-size:11px;text-transform:uppercase;letter-spacing:.3px;color:var(--text-dim);font-weight:700;}
+  .xls-table td:first-child, .xls-table th:first-child{text-align:left;font-weight:600;}
   .xls-table tr:nth-child(even) td{background:var(--paper-dim);}
-  .xls-table td.total-cell{font-weight:800;color:var(--blue);}
+  .xls-table td.total-cell{font-weight:700;color:var(--blue);}
 
   .arrival-badge{display:block;width:max-content;max-width:100%;margin:0 0 7px;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:800;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .arrival-badge.with-order{background:#fef3c7;color:#92400e;border:1px solid #fde68a;}
+  .arrival-badge.with-order{background:#eef5ff;color:#1f5fbf;border:1px solid #cfe0ff;}
   .arrival-badge.without-order{background:#f4f1eb;color:#6b5f4d;border:1px solid #ded7ca;}
-
 </style>
 </head>
 <body>
@@ -400,9 +355,8 @@ try{
    already-running café is never touched by this change. */
 function getCafeId(){
   try{
-    const p = (new URLSearchParams(window.location.search).get('cafe') || '').trim().toLowerCase().replace(/[^a-z0-9-]/g,'');
-    return p || 'muhammad';
-  }catch(e){ return 'muhammad'; }
+    return (new URLSearchParams(window.location.search).get('cafe') || '').trim().toLowerCase().replace(/[^a-z0-9-]/g,'');
+  }catch(e){ return ''; }
 }
 const CAFE_ID = getCafeId();
 // Bumped on every deploy — used to detect when a device is running stale JS (e.g. the PWA
@@ -482,31 +436,35 @@ function mergeActiveOrdersIntoState(activeOrders){
   state.orders=Array.from(byId.values()).sort((a,b)=>(Number(a.createdAt)||0)-(Number(b.createdAt)||0));
   state.__lastKnownOrderIds=new Set(state.orders.map(o=>o.id));
 }
-function mergePaidOrdersIntoState(paidOrders){
-  const active=(state.orders||[]).filter(o=>o.status==='active');
-  const byId=new Map(active.map(o=>[String(o.id),o]));
+function mergePaidOrdersIntoState(paidOrders, sinceTs){
+  const cutoff = Math.max(0, Number(sinceTs)||0);
+  const keep=(state.orders||[]).filter(o=>o.status==='active' || (o.status==='paid' && cutoff>0 && Number(o.paidAt||o.createdAt||0)<cutoff));
+  const byId=new Map(keep.map(o=>[String(o.id),o]));
   (paidOrders||[]).forEach(o=>byId.set(String(o.id),o));
   state.orders=Array.from(byId.values()).sort((a,b)=>(Number(a.createdAt)||0)-(Number(b.createdAt)||0));
   state.__lastKnownOrderIds=new Set(state.orders.map(o=>o.id));
 }
 async function ensurePaidOrdersLoaded(scope){
-  const start = scope==='month' ? new Date(new Date().getFullYear(),new Date().getMonth(),1).getTime() : reportPeriodStart();
-  const key=String(Math.max(0,Number(start)||0));
-  if(state.__paidOrdersLoadedSince===key) return true;
+  const todayStart = new Date(); todayStart.setHours(0,0,0,0);
+  const repStart = reportPeriodStart();
+  const reportOrTodayStart = repStart > 0 ? Math.min(repStart, todayStart.getTime()) : 0;
+  const start = scope==='month'
+    ? new Date(new Date().getFullYear(),new Date().getMonth(),1).getTime()
+    : reportOrTodayStart;
+  const startNum = Math.max(0, Number(start)||0);
+  const key=String(startNum);
+  if(state.__paidOrdersLoadedSince!==null && state.__paidOrdersLoadedSince!==undefined && Number(state.__paidOrdersLoadedSince)<=startNum) return true;
   if(state.__dataLoadPromises.paid) return await state.__dataLoadPromises.paid;
   state.__dataLoadPromises.paid=(async()=>{
-    const result=await loadPaidOrdersSinceV2(start);
+    const result=await loadPaidOrdersSinceV2(startNum);
     if(!result.ok) return false;
-    mergePaidOrdersIntoState(result.value);
+    mergePaidOrdersIntoState(result.value, startNum);
     if(state.__paidOrdersUnsub){try{state.__paidOrdersUnsub();}catch(e){}}
     try{
-      state.__paidOrdersUnsub=ordersCollectionRef().where('paidAt','>=',Math.max(0,Number(start)||0)).onSnapshot(snap=>{
+      state.__paidOrdersUnsub=ordersCollectionRef().where('paidAt','>=',startNum).onSnapshot(snap=>{
         const paid=[];
         snap.forEach(d=>{const x=d.data()||{};delete x._migratedAt;if(x.status==='paid')paid.push({...x,id:x.id||d.id});});
-        const active=(state.orders||[]).filter(o=>o.status==='active');
-        const byId=new Map(active.map(o=>[String(o.id),o]));
-        paid.forEach(o=>byId.set(String(o.id),o));
-        state.orders=Array.from(byId.values()).sort((a,b)=>(Number(a.createdAt)||0)-(Number(b.createdAt)||0));
+        mergePaidOrdersIntoState(paid, startNum);
         if(state.role && state.activeTable===null && !isActivelyEditingFormField()) render();
       },err=>console.error('Paid orders realtime error',err));
     }catch(e){console.error('Paid orders listener attach failed',e);}
@@ -551,10 +509,19 @@ async function loadOrdersV2(){
     return {ok:true,value:orders};
   }catch(e){console.error('loadOrdersV2 failed',e);return {ok:false,value:null};}
 }
+function stripUndefinedDeep(v){
+  if(Array.isArray(v)) return v.map(stripUndefinedDeep);
+  if(v && typeof v==='object' && Object.getPrototypeOf(v)===Object.prototype){
+    const out={};
+    Object.keys(v).forEach(k=>{ if(v[k]!==undefined) out[k]=stripUndefinedDeep(v[k]); });
+    return out;
+  }
+  return v;
+}
 async function saveOrderV2(order){
   if(!db || !order || !order.id) return false;
   const ref=orderDocRef(order.id);
-  const clean={...order};
+  const clean=stripUndefinedDeep({...order});
   delete clean._migratedAt;
   clean.updatedAt=Date.now();
 
@@ -924,7 +891,7 @@ async function downloadBackup(){
     backupOrders=result.value||[];
   }
   // Паролҳо (ҳатто хаш) ба файли backup дохил намешаванд
-  const safeAccounts = (state.accounts||[]).map(a=>({id:a.id, username:a.username, role:a.role, wageType:a.wageType, wageAmount:a.wageAmount}));
+  const safeAccounts = (state.accounts||[]).map(a=>({id:a.id, username:a.username, role:a.role, wageType:a.wageType, wageAmount:a.wageAmount, commissionPct:a.commissionPct}));
   const data = {
     exportedAt: new Date().toISOString(),
     cafeName: state.settings.cafeName,
@@ -1031,6 +998,7 @@ let state = {
   scheduledPhone:'',
   scheduledTime:'',
   scheduledDeliveryType:'dinein',
+  scheduledOshShift:2,
   viewingOrderId:null,
   viewingMode:null,
   previewUsername:null,     // when admin is previewing AS a specific staff account
@@ -1089,10 +1057,10 @@ function todayKey(){
 function oshOrderedKgToday(){
   let kgTotal = 0;
   const porsiyaKg = (Number(state.settings.porsiyaGrams) || 120) / 1000;
-  const clearedAt = Number(state.settings.chefQueueClearedAt) || 0;
-  state.orders.filter(o=>isToday(o.createdAt) && (o.updatedAt||o.createdAt) > clearedAt).forEach(o=>{
+  const clearedAt = Math.max(Number(state.settings.chefQueueClearedAt)||0, reportPeriodStart());
+  state.orders.filter(o=>isToday(o.createdAt) && o.status!=='cancelled' && !o.archived && (o.updatedAt||o.createdAt) > clearedAt).forEach(o=>{
     o.items.forEach(it=>{
-      if(getItemCategory(it)==='Ош'){
+      if(isOshDiscountItem(it)){
         if(it.unit==='kg') kgTotal += it.qty/1000;
         else kgTotal += it.qty * porsiyaKg;
       }
@@ -1124,28 +1092,90 @@ function shiftForTimestamp(ts){
     if(a===b) continue;
     if((a<b && mins>=a && mins<b) || (a>b && (mins>=a || mins<b))) return i;
   }
-  return 0;
+  const s1End = shiftTimeMinutes(shiftConfig(1).end) || (17*60+30);
+  return mins < s1End ? 1 : 2;
 }
 function currentShift(){return shiftForTimestamp(Date.now());}
 function isShift1(ts){return shiftForTimestamp(ts)===1;}
 function isShift2(ts){return shiftForTimestamp(ts)===2;}
-function oshKgFromOrders(filterFn){
+function itemOshKg(it){
+  if(!it || !isOshDiscountItem(it)) return 0;
   const porsiyaKg=(Number(state.settings.porsiyaGrams)||120)/1000;
+  const q=Math.max(0, Number(it.qty)||0);
+  return it.unit==='kg' ? (q/1000) : (q*porsiyaKg);
+}
+function isTakeawayOrderItem(order, it){
+  if(!order || !it) return false;
+  if(order.type==='takeaway') return true;
+  if(order.type==='scheduled' && order.deliveryType==='takeaway') return true;
+  if(isTaKey(it.menuId) || it.isExtra || it.takeawayOsh) return true;
+  return false;
+}
+function oshKgFromOrders(filterFn){
   let kg=0;
   state.orders.filter(o=>isToday(o.createdAt)&&o.status!=='cancelled'&&filterFn(o)).forEach(o=>{
-    (o.items||[]).forEach(it=>{ if(getItemCategory(it)==='Ош'){ if(it.unit==='kg') kg+=it.qty/1000; else kg+=it.qty*porsiyaKg; } });
+    (o.items||[]).forEach(it=>{ kg += itemOshKg(it); });
   });
   return kg;
 }
+function shiftForTimeStr(timeStr){
+  const m = /^(\d{1,2}):(\d{2})$/.exec(String(timeStr||'').trim());
+  if(!m) return null;
+  const mins = Number(m[1])*60 + Number(m[2]);
+  for(let i=1;i<=2;i++){
+    const c=shiftConfig(i),a=shiftTimeMinutes(c.start),b=shiftTimeMinutes(c.end);
+    if(a===b) continue;
+    if((a<b && mins>=a && mins<b) || (a>b && (mins>=a || mins<b))) return i;
+  }
+  const s1End = shiftTimeMinutes(shiftConfig(1).end) || (17*60+30);
+  return mins < s1End ? 1 : 2;
+}
+function activeOshShift(){
+  if(state.oshStock && state.oshStock.date===todayKey()){
+    const sh = Number(state.oshStock.activeShift);
+    if(sh===1 || sh===2) return sh;
+  }
+  return currentShift();
+}
+function orderOshShift(o){
+  if(!o) return 1;
+  if(o.type==='scheduled' || o.fromScheduled){
+    return Number(o.oshShiftManual)===1 ? 1 : 2;
+  }
+  const explicit = Number(o.oshShift);
+  if(explicit===1 || explicit===2) return explicit;
+  return shiftForTimestamp(o.createdAt || Date.now());
+}
+function isOrderInTodayOshScope(o){
+  if(!o || o.status==='cancelled' || o.archived) return false;
+  const repStart = Math.max(reportPeriodStart(), Number(state.settings && state.settings.oshTotalResetAt)||0);
+  if(repStart && Number(o.createdAt)<=repStart && o.status!=='active') return false;
+  if(o.status==='active') return true;
+  return isToday(o.createdAt) || (o.paidAt && isToday(o.paidAt));
+}
 function oshShiftStats(shift){
-  const shiftFn=shift===1?isShift1:isShift2;
-  const scheduled=oshKgFromOrders(o=>shiftFn(o.createdAt)&&(o.type==='scheduled'||o.type==='takeaway'));
-  const waiters=oshKgFromOrders(o=>shiftFn(o.createdAt)&&o.type==='dine-in');
-  const total=scheduled+waiters;
-  const osh=state.oshStock&&state.oshStock.date===todayKey()?state.oshStock:{lunch:0,evening:0};
-  const cooked=shift===1?(Number(osh.lunch)||0):(Number(osh.evening)||0);
-  const remaining=Math.max(0,cooked-total);
-  return {cooked,scheduled,waiters,total,remaining};
+  let takeaway=0, scheduledOnly=0, waiters=0;
+  let takeawayCount=0, scheduledCount=0, waiterCount=0;
+  (state.orders||[]).filter(o=>isOrderInTodayOshScope(o) && orderOshShift(o)===shift).forEach(o=>{
+    let hasTa=false, hasSched=false, hasWaiter=false;
+    (o.items||[]).forEach(it=>{
+      const kg = itemOshKg(it);
+      if(kg<=0) return;
+      if(isTakeawayOrderItem(o, it)){ takeaway += kg; hasTa=true; }
+      else if(o.type==='scheduled' || o.fromScheduled){ scheduledOnly += kg; hasSched=true; }
+      else { waiters += kg; hasWaiter=true; }
+    });
+    if(hasTa) takeawayCount++;
+    if(hasSched) scheduledCount++;
+    if(hasWaiter) waiterCount++;
+  });
+  const scheduled = takeaway + scheduledOnly;
+  const total = takeaway + scheduledOnly + waiters;
+  const hasStock = state.oshStock && state.oshStock.date===todayKey();
+  const stock = hasStock ? normalizeOshStock(state.oshStock) : {lunchKg:0, eveningKg:0};
+  const cooked = shift===1 ? (Number(stock.lunchKg)||0) : (Number(stock.eveningKg)||0);
+  const remaining = cooked - total;
+  return {cooked, takeaway, scheduledOnly, scheduled, waiters, total, remaining, takeawayCount, scheduledCount, waiterCount};
 }
 function renderOshShiftTable(){
   const s1=oshShiftStats(1),s2=oshShiftStats(2);
@@ -1162,8 +1192,10 @@ function renderOshShiftTable(){
         </tr></thead>
         <tbody>
           <tr><td style="padding:8px 10px;color:#6b5f4d;">🍳 Пухта</td><td style="padding:8px 10px;text-align:center;font-weight:700;">${fmtKg(s1.cooked)}</td><td style="padding:8px 10px;text-align:center;font-weight:700;">${fmtKg(s2.cooked)}</td></tr>
-          <tr style="background:var(--card);"><td style="padding:8px 10px;color:#6b5f4d;">📋 Вақтдор+takeaway</td><td style="padding:8px 10px;text-align:center;">${fmtKg(s1.scheduled)}</td><td style="padding:8px 10px;text-align:center;">${fmtKg(s2.scheduled)}</td></tr>
-          <tr><td style="padding:8px 10px;color:#6b5f4d;">🧑‍🍳 Офитсиантон</td><td style="padding:8px 10px;text-align:center;">${fmtKg(s1.waiters)}</td><td style="padding:8px 10px;text-align:center;">${fmtKg(s2.waiters)}</td></tr>
+          <tr style="background:var(--card);"><td style="padding:8px 10px;color:var(--brick);font-weight:700;">🥡 Оши собой (мустақим + дар миз)</td><td style="padding:8px 10px;text-align:center;font-weight:700;color:var(--brick);">${fmtKg(s1.takeaway)}</td><td style="padding:8px 10px;text-align:center;font-weight:700;color:var(--brick);">${fmtKg(s2.takeaway)}</td></tr>
+          <tr><td style="padding:8px 10px;color:#6b5f4d;">🕐 Фармоиши вақтдор (интизор)</td><td style="padding:8px 10px;text-align:center;">${fmtKg(s1.scheduledOnly)}</td><td style="padding:8px 10px;text-align:center;">${fmtKg(s2.scheduledOnly)}</td></tr>
+          <tr style="background:var(--card);"><td style="padding:8px 10px;color:#6b5f4d;">🧑‍🍳 Дар мизҳо (офитсиантон)</td><td style="padding:8px 10px;text-align:center;">${fmtKg(s1.waiters)}</td><td style="padding:8px 10px;text-align:center;">${fmtKg(s2.waiters)}</td></tr>
+          <tr><td style="padding:8px 10px;font-weight:700;">📊 Ҳамагӣ ош рафта</td><td style="padding:8px 10px;text-align:center;font-weight:700;">${fmtKg(s1.total)}</td><td style="padding:8px 10px;text-align:center;font-weight:700;">${fmtKg(s2.total)}</td></tr>
           <tr style="border-top:2px solid var(--ink);"><td style="padding:8px 10px;font-weight:700;">✅ Боқӣ</td><td style="padding:8px 10px;text-align:center;font-weight:700;color:${rc(s1.remaining)};">${fmtKg(s1.remaining)}</td><td style="padding:8px 10px;text-align:center;font-weight:700;color:${rc(s2.remaining)};">${fmtKg(s2.remaining)}</td></tr>
         </tbody>
       </table>
@@ -1195,20 +1227,87 @@ function normalizeOshStock(stock){
   const lunchKg = Number(x.lunchKg);
   const eveningKg = Number(x.eveningKg);
   const hasShiftFields = Object.prototype.hasOwnProperty.call(x,'lunchKg') || Object.prototype.hasOwnProperty.call(x,'eveningKg');
+  const actShift = Number(x.activeShift);
   return {
     date: x.date || '',
     kg: hasShiftFields ? Math.max(0, (Number.isFinite(lunchKg)?lunchKg:0) + (Number.isFinite(eveningKg)?eveningKg:0)) : legacyKg,
     lunchKg: hasShiftFields ? Math.max(0, Number.isFinite(lunchKg)?lunchKg:0) : legacyKg,
-    eveningKg: hasShiftFields ? Math.max(0, Number.isFinite(eveningKg)?eveningKg:0) : 0
+    eveningKg: hasShiftFields ? Math.max(0, Number.isFinite(eveningKg)?eveningKg:0) : 0,
+    activeShift: (actShift===1 || actShift===2) ? actShift : currentShift()
   };
 }
 function oshShiftForTimestamp(ts){return shiftForTimestamp(ts)===1?'lunch':'evening';}
 function oshWeightFromItems(items){
-  const porsiyaKg = (Number(state.settings.porsiyaGrams)||120)/1000;
-  return (items||[]).reduce((sum,it)=>{
-    if(getItemCategory(it)!=='Ош') return sum;
-    return sum + (it.unit==='kg' ? Number(it.qty||0)/1000 : Number(it.qty||0)*porsiyaKg);
-  },0);
+  return (items||[]).reduce((sum,it)=>sum + itemOshKg(it), 0);
+}
+function takeawayOshStatsForOrders(orders){
+  let directKg = 0, tableExtraKg = 0, directCount = 0, tableExtraCount = 0, directRev = 0, tableExtraRev = 0, discTotal = 0;
+  const taPct = takeawayOshDiscountPct();
+  const prodMap = {};
+  const recordProduct = (it, itemRev, sourceTag)=>{
+    const cleanName = String(it && it.name || 'Маҳсулот').replace(/\s*\(иловагӣ\)\s*$/i, '').trim();
+    const key = cleanName + '|' + String(it.unit||'dona');
+    if(!prodMap[key]){
+      prodMap[key] = {name: cleanName, unit: it.unit||'dona', qty: 0, revenue: 0, isOsh: isOshDiscountItem(it), directQty: 0, extraQty: 0};
+    }
+    const q = Math.max(0, Number(it.qty)||0);
+    prodMap[key].qty += q;
+    prodMap[key].revenue += itemRev;
+    if(sourceTag==='direct') prodMap[key].directQty += q;
+    else prodMap[key].extraQty += q;
+  };
+  (orders||[]).filter(o=>o && o.status!=='cancelled' && !o.archived).forEach(o=>{
+    const pctUsed = Number(o.discountPct)!==undefined && Number(o.discountPct)>0 ? Number(o.discountPct) : (Number(o.discount)>0 ? taPct : 0);
+    if(o.type==='takeaway'){
+      directCount++;
+      (o.items||[]).forEach(it=>{
+        directKg += itemOshKg(it);
+        const sub = lineTotal({unit:it.unit, price:it.price}, it.qty);
+        const disc = isOshDiscountItem(it) && pctUsed>0 ? roundMoney(sub * (pctUsed/100)) : 0;
+        const rev = Math.max(0, sub - disc);
+        recordProduct(it, rev, 'direct');
+      });
+      if(o.status==='paid'){
+        directRev += Number(o.total)||0;
+        discTotal += Number(o.discount)||0;
+      }
+    } else if(o.type==='scheduled' && o.deliveryType==='takeaway'){
+      (o.items||[]).forEach(it=>{
+        directKg += itemOshKg(it);
+        const sub = lineTotal({unit:it.unit, price:it.price}, it.qty);
+        recordProduct(it, sub, 'direct');
+      });
+    } else {
+      const extraItems = (o.items||[]).filter(it=>isTaKey(it.menuId) || it.isExtra || it.takeawayOsh);
+      if(extraItems.length){
+        tableExtraCount++;
+        extraItems.forEach(it=>{
+          tableExtraKg += itemOshKg(it);
+          const sub = lineTotal({unit:it.unit, price:it.price}, it.qty);
+          const disc = isOshDiscountItem(it) && pctUsed>0 ? roundMoney(sub * (pctUsed/100)) : 0;
+          const rev = Math.max(0, sub - disc);
+          recordProduct(it, rev, 'extra');
+          if(o.status==='paid'){
+            tableExtraRev += rev;
+          }
+        });
+        if(o.status==='paid') discTotal += Number(o.discount)||0;
+      }
+    }
+  });
+  const soldProducts = Object.values(prodMap).sort((a,b)=>b.revenue - a.revenue);
+  return {
+    directKg,
+    tableExtraKg,
+    totalKg: directKg + tableExtraKg,
+    directCount,
+    tableExtraCount,
+    totalRevenue: directRev + tableExtraRev,
+    directRevenue: directRev,
+    tableExtraRevenue: tableExtraRev,
+    totalDiscount: discTotal,
+    soldProducts
+  };
 }
 function oshWeightForShift(orders, shift){
   return (orders||[]).filter(o=>isToday(o.createdAt) && o.status!=='cancelled' && oshShiftForTimestamp(o.createdAt)===shift)
@@ -1273,14 +1372,28 @@ function renderOshShiftReport(orders){
 }
 function oshRemainingBadge(){
   const hasStock = state.oshStock && state.oshStock.date === todayKey();
-  if(!hasStock) return '';
+  const s1 = oshShiftStats(1), s2 = oshShiftStats(2);
+  const totalTakeawayKg = s1.takeaway + s2.takeaway;
+  const totalWaitersKg = s1.waiters + s2.waiters;
+  const totalSchedKg = s1.scheduledOnly + s2.scheduledOnly;
+  const totalAllKg = s1.total + s2.total;
+  const actSh = activeOshShift();
+  if(!hasStock){
+    return `<div style="display:flex;flex-wrap:wrap;gap:12px;padding:10px 14px;background:var(--card);border:1.5px solid var(--line);border-radius:10px;margin:0 0 12px;font-size:12px;align-items:center;">
+      <span>🍚 <b>Оши рафта (имрӯз):</b> ${totalAllKg.toFixed(2)} кг</span>
+      <span>🕐 <b>Брон:</b> ${totalSchedKg.toFixed(2)} кг</span>
+      <span>🍽 <b>Мизҳо:</b> ${totalWaitersKg.toFixed(2)} кг</span>
+      <span style="color:var(--brick);">🥡 <b>Собой:</b> ${totalTakeawayKg.toFixed(2)} кг</span>
+      <span style="color:#9c8f78;">(Миқдори оши пухташуда дар бахши «🍚 Ош / Бастҳо» ворид нашудааст)</span>
+    </div>`;
+  }
   const stock = normalizeOshStock(state.oshStock);
-  const lunch = oshWeightForShift(state.orders,'lunch');
-  const evening = oshWeightForShift(state.orders,'evening');
-  const lr = stock.lunchKg-lunch, er = stock.eveningKg-evening;
-  return `<div style="display:flex;flex-wrap:wrap;gap:8px;padding:8px 14px;background:var(--card);border:1.5px solid var(--line);border-radius:10px;margin:0 0 10px;font-size:12px;">
-    <span>🍚 <b>Нисфирӯзӣ:</b> ${lr.toFixed(2)} кг боқӣ</span>
-    <span>🌙 <b>Шом:</b> ${er.toFixed(2)} кг боқӣ</span>
+  const lr = stock.lunchKg - s1.total, er = stock.eveningKg - s2.total;
+  const totRem = (stock.lunchKg + stock.eveningKg) - totalAllKg;
+  return `<div style="display:flex;flex-wrap:wrap;gap:12px;padding:10px 14px;background:var(--card);border:1.5px solid var(--line);border-radius:10px;margin:0 0 12px;font-size:12px;align-items:center;">
+    <span style="padding:3px 8px;border-radius:6px;background:${actSh===1?'var(--blue-tint)':'transparent'};">☀️ <b>Басти 1:</b> <b style="color:${lr<=0?'var(--brick)':'var(--olive)'};">${lr.toFixed(2)} кг боқӣ</b> <span style="color:#64748B;">(аз ${stock.lunchKg.toFixed(1)} кг · рафт ${s1.total.toFixed(2)} кг)</span></span>
+    <span style="padding:3px 8px;border-radius:6px;background:${actSh===2?'var(--blue-tint)':'transparent'};">🌙 <b>Басти 2:</b> <b style="color:${er<=0?'var(--brick)':'var(--olive)'};">${er.toFixed(2)} кг боқӣ</b> <span style="color:#64748B;">(аз ${stock.eveningKg.toFixed(1)} кг · рафт ${s2.total.toFixed(2)} кг)</span></span>
+    <span>🍚 <b>Умумӣ боқӣ:</b> <b style="color:${totRem<=0?'var(--brick)':'var(--ink)'};">${totRem.toFixed(2)} кг</b></span>
   </div>`;
 }
 function oshWeightForOrdersTab(){
@@ -1324,10 +1437,22 @@ async function init(){
   }catch(e){
     console.error('Initial orders migration failed',e);
   }
-  // Only active orders are needed for the live operational screens at startup.
-  // Historical paid orders are loaded lazily by report/salary/client-history screens.
-  const ordersResult = await loadActiveOrdersV2();
-  const orders = ordersResult.ok ? ordersResult.value : [];
+  // Load active orders AND today's paid orders (including takeaway orders which are paid immediately) at startup.
+  const todayStartInit = new Date(); todayStartInit.setHours(0,0,0,0);
+  const repStartInit = Number(settings && settings.reportClearedAt) || 0;
+  const paidSinceInit = repStartInit > 0 ? Math.min(repStartInit, todayStartInit.getTime()) : todayStartInit.getTime();
+  const [ordersResult, paidInitResult] = await Promise.all([
+    loadActiveOrdersV2(),
+    loadPaidOrdersSinceV2(paidSinceInit)
+  ]);
+  const ordersById = new Map();
+  if(ordersResult.ok && Array.isArray(ordersResult.value)){
+    ordersResult.value.forEach(o=>{ if(o&&o.id) ordersById.set(String(o.id), o); });
+  }
+  if(paidInitResult && paidInitResult.ok && Array.isArray(paidInitResult.value)){
+    paidInitResult.value.forEach(o=>{ if(o&&o.id) ordersById.set(String(o.id), o); });
+  }
+  const orders = Array.from(ordersById.values()).sort((a,b)=>(Number(a.createdAt)||0)-(Number(b.createdAt)||0));
 
   // EVERY field must load successfully before we touch anything. A failed read must NEVER be
   // treated as "this data doesn't exist yet" — that is exactly what caused real staff/order/
@@ -1341,12 +1466,22 @@ async function init(){
     return;
   }
 
-  if(CAFE_ID && (!accounts || !accounts.length)){
-    // confirmed genuinely empty (not a failed read) — brand-new café on this link
-    state.needsSetup = true;
-    state.loaded = true;
-    render();
-    return;
+  if(!accounts || !accounts.length){
+    const defaultPassword = 'admin';
+    state.accounts = [{id:'acc_admin', username:'admin', password:defaultPassword, role:'admin'}];
+    try{ await saveAccounts(state.accounts); }catch(e){}
+  }
+  if(!menu || !menu.length){
+    state.menu = DEFAULT_MENU;
+    try{ await saveMenu(state.menu); }catch(e){}
+  }
+  if(!tables || !tables.length){
+    state.tables = Array.from({length:8}, (_,i)=>({id:i+1, name:'Мизи '+(i+1), seats:4, x:((i%5)*19)+2, y:(Math.floor(i/5)*25)+3}));
+    try{ await saveTables(state.tables); }catch(e){}
+  }
+  if(!settings){
+    state.settings = {...DEFAULT_SETTINGS, cafeName:'Оши Муҳаммад'};
+    try{ await saveSettings(state.settings); }catch(e){}
   }
 
   state.menu = (menu && menu.length) ? menu : DEFAULT_MENU;
@@ -1468,6 +1603,8 @@ function setupRealtimeSync(){
     });
     __realtimeUnsubs.push(unsub);
   }catch(e){console.error('orders listener attach failed',e);}
+  ensurePaidOrdersLoaded('report').catch(console.error);
+  ensureScheduledOrdersLoaded().catch(console.error);
   const fields=[['menu','menu'],['settings','settings'],['reservations','reservations'],['tables','tables'],['oshStock','oshStock'],['accounts','accounts'],['inventory','inventory'],['activityLog','activityLog'],['bonuses','bonuses'],['dailyClosures','dailyClosures'],['technicalStaff','technicalStaff'],['dailySalaryLedger','dailySalaryLedger']];
   fields.forEach(([key,stateKey])=>{
     try{
@@ -1556,7 +1693,15 @@ function openTable(t){
   }
   if(state.role==='cashier' && !existing){ showToast('Ин миз озод аст — фармоише нест'); return; }
   if(state.role==='admin' && !existing){ showToast('Ин миз озод аст'); return; }
-  state.ticketMode = state.role==='waiter' ? 'edit' : (state.role==='cashier' ? 'pay' : 'view');
+  if(state.role==='waiter'){
+    state.ticketMode = 'edit';
+  } else if(state.role==='cashier'){
+    state.ticketMode = 'pay';
+  } else if(state.role==='admin'){
+    state.ticketMode = 'edit';
+  } else {
+    state.ticketMode = 'view';
+  }
   state.activeTable = t;
   state.draftItems = {};
   if(!existing && state.role==='waiter'){
@@ -1566,22 +1711,180 @@ function openTable(t){
     existing.items.forEach(it=>{ state.draftItems[it.menuId] = it.qty; });
   }
   state.activeCat = (state.menu[0] && state.menu[0].category) || null;
+  state.ticketSection = 'main';
   render();
 }
 function closeTicket(){
   state.activeTable = null;
   state.draftItems = {};
+  state.ticketSection = 'main';
   state.customerPhone = '';
   state.confirmCancelOrderId = null;
   render();
 }
-function draftTotal(){
+/* ---------- Оши собой (дар дохили чеки миз), лаълӣ, манбаи фармоиш ---------- */
+// Калиди махсус барои оши собой дар чеки миз: menuId + '__ta' (масалан 'm2__ta').
+const TA_SUFFIX = '__ta';
+function isTaKey(k){ return typeof k==='string' && k.endsWith(TA_SUFFIX); }
+function baseMenuId(k){ return isTaKey(k) ? k.slice(0, -TA_SUFFIX.length) : k; }
+function menuForKey(k){
+  const m = state.menu.find(x=>x.id===baseMenuId(k));
+  if(!m) return null;
+  if(!isTaKey(k)) return m;
+  return {...m, id:k, name:m.name+' (иловагӣ)', noService:true, isExtra:true, takeawayOsh:isOshDiscountItem(m)};
+}
+function roundMoney(n){ return Math.round((Number(n)||0)*100)/100; }
+// Табақ / Лаълӣ (зарф) — аз он ҳаққи хизматрасонӣ гирифта намешавад ва ба он тахфиф дода намешавад.
+function isLaaliName(name){ return /ла[ъьеиӣйі'’`]л|ляган|лаган|таба[қкq]/i.test(String(name||'')); }
+function draftMainSubtotal(){
   let total = 0;
   Object.keys(state.draftItems).forEach(mid=>{
-    const item = state.menu.find(m=>m.id===mid);
+    if(isTaKey(mid)) return;
+    const item = menuForKey(mid);
     if(item) total += lineTotal(item, state.draftItems[mid]);
   });
   return total;
+}
+function draftExtraSubtotal(){
+  let total = 0;
+  Object.keys(state.draftItems).forEach(mid=>{
+    if(!isTaKey(mid)) return;
+    const item = menuForKey(mid);
+    if(item) total += lineTotal(item, state.draftItems[mid]);
+  });
+  return total;
+}
+function moveDraftItemSection(fromKey, toExtra){
+  const cur = Number(state.draftItems[fromKey])||0;
+  if(cur<=0) return;
+  const baseId = baseMenuId(fromKey);
+  const targetKey = toExtra ? (baseId + TA_SUFFIX) : baseId;
+  if(targetKey === fromKey) return;
+  const m = state.menu.find(x=>x.id===baseId);
+  const moveAmt = (m && m.unit!=='kg' && cur>1) ? 1 : cur;
+  const rem = cur - moveAmt;
+  if(rem<=0) delete state.draftItems[fromKey];
+  else state.draftItems[fromKey] = rem;
+  state.draftItems[targetKey] = (Number(state.draftItems[targetKey])||0) + moveAmt;
+  render();
+}
+function takeawayOshDiscountPct(){ return Math.max(0, Math.min(100, Number(state.settings.takeawayDiscountPct)||0)); }
+// Тахфифи собой танҳо ба ош (категорияи «Ош»), на ба нӯшокӣ, нон, лаълӣ ва ғайра.
+function isOshDiscountItem(item){ return !!item && getItemCategory(item)==='Ош' && !isLaaliName(item.name); }
+// 'own'   = фармоише, ки офитсиант худаш дар сари миз гирифтааст (ранги сурх)
+// 'sched' = фармоиши вақтдор, ки ба миз гузошта шудааст (ранги сабз)
+function orderSourceKind(o){
+  if(!o) return '';
+  if(o.type==='takeaway') return '';
+  if(o.fromScheduled || o.type==='dine-in' || o.type==='scheduled') return 'sched';
+  if(o.table===null || o.table===undefined) return '';
+  return 'own';
+}
+function orderSourceBadge(o){
+  const k = orderSourceKind(o);
+  if(k==='own') return `<span class="order-src-badge own">🔴 Фармоиши офитсиант</span>`;
+  if(k==='sched') return `<span class="order-src-badge sched">🕐 Фармоиши вақтдор</span>`;
+  return '';
+}
+function fmtOshQtyUnit(unit, qty){
+  const q = Math.max(0, Number(qty)||0);
+  if(unit==='kg') return q>=1000 ? (Math.round((q/1000)*100)/100)+' кг' : Math.round(q)+' г';
+  return Math.round(q)+'×';
+}
+// Муқоисаи оши фармоиши вақтдор бо миқдори ҳозира дар миз (барои муайян кардани «Оши доп» ё кам кардани ош)
+function scheduledOshDiffs(order, currentItemsOverride){
+  if(!order || orderSourceKind(order)!=='sched') return [];
+  const initList = Array.isArray(order.initialItems) && order.initialItems.length ? order.initialItems : null;
+  if(!initList) return [];
+  const curList = Array.isArray(currentItemsOverride) ? currentItemsOverride : (order.items||[]);
+  const initMap = {}, curMap = {};
+  initList.forEach(it=>{
+    const bId = baseMenuId(it.menuId);
+    const m = state.menu.find(x=>x.id===bId) || it;
+    if(!isOshDiscountItem({...m, ...it})) return;
+    if(!initMap[bId]) initMap[bId] = {menuId:bId, name:m.name||it.name||'Ош', unit:it.unit||m.unit||'dona', qty:0};
+    initMap[bId].qty += Math.max(0, Number(it.qty)||0);
+  });
+  curList.forEach(it=>{
+    const bId = baseMenuId(it.menuId);
+    const m = state.menu.find(x=>x.id===bId) || it;
+    if(!isOshDiscountItem({...m, ...it})) return;
+    if(!curMap[bId]) curMap[bId] = {menuId:bId, name:m.name||it.name||'Ош', unit:it.unit||m.unit||'dona', qty:0};
+    curMap[bId].qty += Math.max(0, Number(it.qty)||0);
+  });
+  const allIds = [...new Set([...Object.keys(initMap), ...Object.keys(curMap)])];
+  const diffs = [];
+  allIds.forEach(bId=>{
+    const inf = initMap[bId] || curMap[bId];
+    const initQty = initMap[bId] ? initMap[bId].qty : 0;
+    const curQty = curMap[bId] ? curMap[bId].qty : 0;
+    const delta = curQty - initQty;
+    if(Math.abs(delta) < 0.001) return;
+    diffs.push({
+      menuId: bId,
+      name: inf.name,
+      unit: inf.unit,
+      initQty,
+      curQty,
+      delta,
+      kind: delta > 0 ? 'dop' : 'less',
+      initLabel: fmtOshQtyUnit(inf.unit, initQty),
+      curLabel: fmtOshQtyUnit(inf.unit, curQty),
+      deltaLabel: (delta>0?'+':'−') + fmtOshQtyUnit(inf.unit, Math.abs(delta))
+    });
+  });
+  return diffs;
+}
+function renderScheduledOshDiffBanner(order, currentItemsOverride){
+  const diffs = scheduledOshDiffs(order, currentItemsOverride);
+  if(!diffs.length) return '';
+  return `<div style="margin:6px 0 10px;display:flex;flex-direction:column;gap:6px;">` + diffs.map(d=>{
+    if(d.kind==='dop'){
+      return `<div style="background:#ECFDF5;border:1.5px solid #6EE7B7;border-radius:8px;padding:7px 10px;font-size:12px;color:#065F46;font-weight:700;">
+        🍚 Оши доп: <span style="font-size:13px;color:#047857;">${escapeHtml(d.deltaLabel)}</span> ${escapeHtml(d.name)} илова шуд
+        <div style="font-size:11px;font-weight:600;color:#047857;margin-top:2px;">Вақтдор (пешакӣ): ${escapeHtml(d.initLabel)} → Ҳоло дар чек: ${escapeHtml(d.curLabel)}</div>
+      </div>`;
+    }
+    return `<div style="background:#FFFBEB;border:1.5px solid #FCD34D;border-radius:8px;padding:7px 10px;font-size:12px;color:#92400E;font-weight:700;">
+      ⚠️ Ош кам карда шуд: <span style="font-size:13px;color:var(--brick);">${escapeHtml(d.deltaLabel)}</span> ${escapeHtml(d.name)}
+      <div style="font-size:11px;font-weight:600;color:#B45309;margin-top:2px;">Вақтдор (пешакӣ): ${escapeHtml(d.initLabel)} → Ҳоло дар чек: ${escapeHtml(d.curLabel)}</div>
+    </div>`;
+  }).join('') + `</div>`;
+}
+function renderScheduledOshCardBadge(order){
+  const diffs = scheduledOshDiffs(order);
+  if(!diffs.length) return '';
+  return diffs.map(d=>{
+    if(d.kind==='dop') return `<span class="reserve-detail" style="color:var(--olive);font-weight:700;">🍚 Оши доп: ${escapeHtml(d.deltaLabel)}</span>`;
+    return `<span class="reserve-detail" style="color:var(--brick);font-weight:700;">⚠️ Ош кам: ${escapeHtml(d.deltaLabel)}</span>`;
+  }).join('');
+}
+function draftTotal(){
+  let total = 0;
+  Object.keys(state.draftItems).forEach(mid=>{
+    const item = menuForKey(mid);
+    if(item) total += lineTotal(item, state.draftItems[mid]);
+  });
+  return total;
+}
+// Тахфифи оши собойи иловагӣ дар чеки миз
+function draftDiscount(){
+  const pct = takeawayOshDiscountPct();
+  if(pct<=0) return 0;
+  let base = 0;
+  Object.keys(state.draftItems).forEach(k=>{
+    if(!isTaKey(k)) return;
+    const m = menuForKey(k);
+    if(m && isOshDiscountItem(m)) base += lineTotal(m, state.draftItems[k]);
+  });
+  return roundMoney(base * pct / 100);
+}
+function ticketDraftDirty(order){
+  if(!order) return false;
+  const items = order.items || [];
+  const keys = Object.keys(state.draftItems);
+  if(keys.length !== items.length) return true;
+  return items.some(it=> Number(state.draftItems[it.menuId]) !== Number(it.qty));
 }
 // Service charge — only for dine-in (eat-in) checks, never takeaway.
 function serviceChargeAmount(subtotal){
@@ -1590,21 +1893,22 @@ function serviceChargeAmount(subtotal){
 }
 function serviceBaseFromItems(items){
   return (items||[]).reduce((s,it)=>{
-    const m = state.menu.find(x=>x.id===it.menuId);
-    if((m && m.noService) || it.noService) return s;
+    const m = state.menu.find(x=>x.id===baseMenuId(it.menuId));
+    if((m && m.noService) || it.noService || it.isExtra || it.takeawayOsh || isTaKey(it.menuId) || isLaaliName(it.name)) return s;
     return s + lineTotal({unit:it.unit, price:it.price}, it.qty);
   },0);
 }
 function draftServiceBase(){
   let t = 0;
   Object.keys(state.draftItems).forEach(mid=>{
-    const m = state.menu.find(x=>x.id===mid);
-    if(m && !m.noService) t += lineTotal(m, state.draftItems[mid]);
+    if(isTaKey(mid)) return;
+    const m = menuForKey(mid);
+    if(m && !m.noService && !m.isExtra && !m.takeawayOsh && !isLaaliName(m.name)) t += lineTotal(m, state.draftItems[mid]);
   });
   return t;
 }
 function draftTotalWithService(){
-  return draftTotal() + serviceChargeAmount(draftServiceBase());
+  return roundMoney(Math.max(0, draftTotal() - draftDiscount()) + serviceChargeAmount(draftServiceBase()));
 }
 function draftTotalWithService_old(){
   const subtotal = draftTotal();
@@ -1613,9 +1917,32 @@ function draftTotalWithService_old(){
 function lineTotal(menuItem, amount){
   return menuItem.unit==='kg' ? menuItem.price * (amount/1000) : menuItem.price * amount;
 }
+function isHeadWaiterAccount(accOrUsername){
+  const acc = (typeof accOrUsername === 'string')
+    ? (state.accounts||[]).find(a=>a.username===accOrUsername)
+    : accOrUsername;
+  return !!(acc && acc.role==='waiter' && acc.isHeadWaiter);
+}
+function isCurrentHeadWaiter(){
+  return state.role==='waiter' && isHeadWaiterAccount(actingUsername());
+}
+function waiterLockedFromReducing(){
+  return state.role==='waiter' && !isCurrentHeadWaiter();
+}
+function committedTicketItemQty(mid){
+  const ord = activeOrderForTable(state.activeTable);
+  if(!ord || !Array.isArray(ord.items)) return 0;
+  const found = ord.items.find(it=>it.menuId===mid);
+  return found ? Math.max(0, Number(found.qty)||0) : 0;
+}
 function changeQty(mid, delta){
   const cur = state.draftItems[mid] || 0;
-  const next = Math.max(0, cur + delta);
+  const minQty = waiterLockedFromReducing() ? committedTicketItemQty(mid) : 0;
+  if(delta < 0 && waiterLockedFromReducing() && cur + delta < minQty){
+    showToast('Танҳо Сарофитсиант, Кассир ё Админ маҳсулоти қабулшударо кам карда метавонад');
+    return;
+  }
+  const next = Math.max(minQty, cur + delta);
   if(next === 0) delete state.draftItems[mid];
   else state.draftItems[mid] = next;
   render();
@@ -1629,34 +1956,75 @@ function addGrams(mid, grams){
 }
 function setGrams(mid, grams){
   const g = Math.max(0, Number(grams)||0);
+  const minQty = waiterLockedFromReducing() ? committedTicketItemQty(mid) : 0;
+  if(waiterLockedFromReducing() && g < minQty){
+    showToast('Танҳо Сарофитсиант, Кассир ё Админ миқдори қабулшударо кам карда метавонад');
+    state.draftItems[mid] = Math.max(curQtyOrMin(mid, minQty), minQty);
+    render();
+    return;
+  }
   if(g<=0) delete state.draftItems[mid];
   else state.draftItems[mid] = g;
   render();
 }
+function curQtyOrMin(mid, minQty){
+  return Math.max(Number(state.draftItems[mid])||0, minQty);
+}
 function removeDraftItem(mid){
+  const minQty = waiterLockedFromReducing() ? committedTicketItemQty(mid) : 0;
+  if(waiterLockedFromReducing() && minQty > 0){
+    showToast('Танҳо Сарофитсиант, Кассир ё Админ маҳсулоти қабулшударо нест карда метавонад');
+    return;
+  }
   delete state.draftItems[mid];
   render();
 }
-async function saveTicket(sendFlag){
+async function saveTicket(sendFlag, opts){
+  opts = opts || {};
   try{
-    if(!validateCustomerArrival()) return;
+    if(!validateCustomerArrival()) return false;
   let order = activeOrderForTable(state.activeTable);
-  const prevItems = order ? order.items : [];
+  const prevItems = order ? (order.items || []) : [];
+  if(order && waiterLockedFromReducing()){
+    for(const p of prevItems){
+      const curQ = Number(state.draftItems[p.menuId]) || 0;
+      const prevQ = Number(p.qty) || 0;
+      if(curQ < prevQ){
+        showToast('Танҳо Сарофитсиант, Кассир ё Админ маҳсулоти қабулшударо кам карда метавонад');
+        state.draftItems[p.menuId] = prevQ;
+        render();
+        return false;
+      }
+    }
+  }
+  if(!Object.keys(state.draftItems).length && order && isCurrentHeadWaiter()){
+    showToast('Чек холӣ шуда наметавонад — «Бекор кардани фармоиш»-ро истифода баред');
+    return false;
+  }
   let droppedAny = false;
   const items = Object.keys(state.draftItems).map(mid=>{
-    const m = state.menu.find(x=>x.id===mid);
+    const m = menuForKey(mid);
     if(!m){ droppedAny = true; return null; }
     const prev = prevItems.find(p=>p.menuId===mid);
-    return {menuId:mid, name:m.name, price:m.price, unit:m.unit||'dona', category:m.category, noService:!!m.noService, qty:state.draftItems[mid], servedQty: prev?(prev.servedQty||0):0};
+    return {menuId:mid, name:m.name, price:m.price, unit:m.unit||'dona', category:m.category,
+      noService:!!m.noService || !!m.isExtra || isLaaliName(m.name), isExtra:!!m.isExtra, takeawayOsh:!!m.takeawayOsh,
+      qty:state.draftItems[mid], servedQty: prev?(prev.servedQty||0):0};
   }).filter(Boolean);
   if(droppedAny) showToast('Баъзе маҳсулот дигар дар меню нест — аз чек хориҷ шуд');
+  if(!items.length && order && state.role==='cashier'){
+    showToast('Чек холӣ шуда наметавонад — «Бекор кардани фармоиш»-ро истифода баред');
+    return false;
+  }
   const subtotal = draftTotal();
-  const total = subtotal + serviceChargeAmount(draftServiceBase());
+  const discount = draftDiscount();
+  const serviceCharge = serviceChargeAmount(draftServiceBase());
+  const total = roundMoney(Math.max(0, subtotal - discount) + serviceCharge);
   let isNew = false;
   if(!order){
     isNew = true;
     order = {id:uid('ord'), table:state.activeTable, status:'active', items:[], total:0, createdAt:Date.now(),
-      createdBy: actingUsername(), sentToKitchen:false,
+      createdBy: actingUsername(), sentToKitchen:false, source:'waiter',
+      oshShift: activeOshShift(),
       customerType: state.customerPhone ? 'with_order' : 'without_order',
       customerPhone: state.customerPhone || null};
     state.orders.push(order);
@@ -1665,17 +2033,29 @@ async function saveTicket(sendFlag){
     order.customerType = state.customerPhone ? 'with_order' : 'without_order';
     order.customerPhone = state.customerPhone || null;
   }
+  if(!isNew && order && orderSourceKind(order)==='sched' && (!Array.isArray(order.initialItems) || !order.initialItems.length)){
+    order.initialItems = (prevItems||[]).map(it=>({menuId:baseMenuId(it.menuId), name:it.name, unit:it.unit||'dona', category:it.category, qty:Number(it.qty)||0}));
+  }
+  const editedByCashier = !isNew && !!opts.cashierEdit;
   order.items = items;
   order.total = total;
   order.subtotal = subtotal;
-  order.serviceCharge = total - subtotal;
+  order.discount = discount;
+  order.discountPct = discount>0 ? takeawayOshDiscountPct() : 0;
+  order.serviceCharge = serviceCharge;
   order.updatedAt = Date.now();
+  if(editedByCashier){ order.editedByCashier = actingUsername(); order.editedByCashierAt = Date.now(); }
   if(sendFlag){
     order.sentToKitchen = true;
+    const prevOshKg = oshWeightFromItems(prevItems);
+    const nextOshKg = oshWeightFromItems(items);
+    if(nextOshKg > prevOshKg + 0.001){
+      order.prepared = false;
+    }
     const inventoryOk = await deductForOrderDelta(order, items);
     if(inventoryOk===false){
       showToast('Анбор нав нашуд — фармоиш фиристода нашуд');
-      return;
+      return false;
     }
   }
   // Save ONLY the order being created/edited. Saving the entire orders array here
@@ -1685,14 +2065,41 @@ async function saveTicket(sendFlag){
   const saved = await saveOrderV2(order);
   if(!saved){
     showToast('Хатогӣ ҳангоми нигоҳдории фармоиш');
-    return;
+    return false;
   }
-  showToast(sendFlag ? '🍚 Ба ошпаз фиристода шуд' : 'Фармоиш захира шуд');
-  closeTicket();
+  if(editedByCashier){
+    try{ await logActivity('Кассир чекро тағйир дод: '+orderLabel(order)+' → '+fmtMoney(total)); }catch(e){}
+  }
+  if(!opts.silent) showToast(editedByCashier ? '✏️ Тағйироти чек сабт шуд' : 'Фармоиш захира шуд');
+  if(!opts.keepOpen) closeTicket();
+  return true;
   }catch(e){
     console.error('saveTicket failed', e);
     showToast('Хатогӣ ҳангоми захира кардани фармоиш');
+    return false;
   }
+}
+
+
+async function moveOrderToTable(orderId, targetTableId){
+  const order = state.orders.find(o=>o.id===orderId && o.status==='active');
+  if(!order){ showToast('Фармоиши фаъол ёфт нашуд'); return false; }
+  const targetId = Number(targetTableId);
+  if(!targetId || targetId === Number(order.table)){ showToast('Мизи навро интихоб кунед'); return false; }
+  if(activeOrderForTable(targetId)){ showToast('Ин миз аллакай банд аст'); return false; }
+  const oldTbl = state.tables.find(t=>t.id===order.table);
+  const newTbl = state.tables.find(t=>t.id===targetId);
+  const oldName = oldTbl ? oldTbl.name : ('Мизи №'+order.table);
+  const newName = newTbl ? newTbl.name : ('Мизи №'+targetId);
+  order.table = targetId;
+  order.updatedAt = Date.now();
+  const ok = await saveOrderV2(order);
+  if(!ok){ showToast('Хатогӣ ҳангоми кӯчонидани миз'); return false; }
+  if(state.activeTable !== null) state.activeTable = targetId;
+  try{ await logActivity('Фармоишро аз '+oldName+' ба '+newName+' кӯчонид'); }catch(e){}
+  showToast('🔄 Фармоиш ба '+newName+' кӯчонида шуд');
+  render();
+  return true;
 }
 
 /* ---------- PAYMENT SAFETY v11 ----------
@@ -1721,20 +2128,24 @@ async function commitPaidOrderAtomic(orderId, cashAmount, noncashAmount){
       }
 
       const now=Date.now();
+      const isSchedTakeaway = remote.type==='scheduled' && remote.deliveryType==='takeaway';
       const paid={
         ...remote,
+        type: isSchedTakeaway ? 'takeaway' : remote.type,
+        prepared: (remote.type==='takeaway' || isSchedTakeaway) ? true : !!remote.prepared,
         status:'paid',
         paidAt:now,
         paidBy:actingUsername(),
-        receivedAt: remote.type==='scheduled' ? now : (remote.receivedAt || null),
+        receivedAt: (remote.type==='scheduled' || remote.type==='takeaway') ? now : (remote.receivedAt || null),
         cashAmount:cash,
         noncashAmount:noncash,
         paymentMethod:cash>0&&noncash>0?'mixed':(noncash>0?'noncash':'cash'),
         lockedAt:now,
         updatedAt:now
       };
-      tx.set(ref,paid,{merge:true});
-      return {ok:true,order:paid};
+      const paidClean=stripUndefinedDeep(paid);
+      tx.set(ref,paidClean,{merge:true});
+      return {ok:true,order:paidClean};
     });
   }catch(e){
     console.error('commitPaidOrderAtomic failed:',e);
@@ -1745,6 +2156,11 @@ async function commitPaidOrderAtomic(orderId, cashAmount, noncashAmount){
 async function payTicket(cashAmount, noncashAmount){
   const order=activeOrderForTable(state.activeTable);
   if(!order) return;
+  // Агар кассир чекро тағйир дода бошад — аввал тағйирот сабт мешавад, баъд пардохт.
+  if(state.role==='cashier' && ticketDraftDirty(order)){
+    const okSave = await saveTicket(!!order.sentToKitchen, {keepOpen:true, silent:true, cashierEdit:true});
+    if(!okSave) return;
+  }
   const cash=Math.max(0,Number(cashAmount)||0);
   const noncash=Math.max(0,Number(noncashAmount)||0);
   const expected=Number(order.total||0);
@@ -1899,6 +2315,7 @@ function playChefAlertSound(){
 // Note: a Tajik voice is rarely available on phones, so this uses the closest available voice
 // (usually Russian, since it shares the Cyrillic alphabet) — pronunciation may sound accented.
 function speakOrderAlert(order, baseText){
+  return; // Матни огоҳии овозии ошпаз аз барнома хориҷ карда шуд
   try{
     if(!('speechSynthesis' in window)) return;
     const lead = (baseText || 'Фармоиши нав').trim();
@@ -1919,7 +2336,7 @@ function speakOrderAlert(order, baseText){
   }catch(e){}
 }
 function speakCashierAlert(order){
-  speakOrderAlert(order, state.settings.cashierAlertText);
+  // Огоҳии овозии кассир аз барнома хориҷ карда шуд
 }
 function orderLabel(o){
   if(o.type==='takeaway'){
@@ -2050,7 +2467,7 @@ async function adjustInventoryQty(id, delta){
 function computeInventoryDeduction(orderItems){
   const deduction = {};
   orderItems.forEach(it=>{
-    const menuItem = state.menu.find(m=>m.id===it.menuId);
+    const menuItem = state.menu.find(m=>m.id===baseMenuId(it.menuId));
     if(!menuItem || !menuItem.recipe || !menuItem.recipe.length) return;
     const soldAmount = menuItem.unit==='kg' ? (it.qty/1000) : it.qty; // recipe is "per 1kg" or "per 1 dona"
     menuItem.recipe.forEach(r=>{
@@ -2102,20 +2519,41 @@ async function deductForOrderDelta(order, currentItems){
   order.inventoryDeductedFor = currentMap;
   return true;
 }
-async function addAccount(username, password, role){
+function accountCommissionPct(accOrUsername){
+  const acc = (typeof accOrUsername === 'string')
+    ? (state.accounts||[]).find(a=>a.username===accOrUsername)
+    : accOrUsername;
+  if(acc && acc.commissionPct !== undefined && acc.commissionPct !== null && acc.commissionPct !== ''){
+    const n = Number(acc.commissionPct);
+    if(Number.isFinite(n)) return Math.max(0, Math.min(100, n));
+  }
+  return 5;
+}
+function isCommissionAccount(acc){
+  if(!acc) return false;
+  if(acc.wageType === 'commission') return true;
+  if(acc.commissionPct !== undefined && acc.commissionPct !== null && acc.commissionPct !== '') return true;
+  if(acc.role === 'waiter' && !(Number(acc.wageAmount) > 0)) return true;
+  return false;
+}
+async function addAccount(username, password, role, commissionPct){
   if(!username || !password){ showToast('Логин ва паролро пур кунед'); return false; }
   if(password.length < 4){ showToast('Парол бояд камаш 4 аломат бошад'); return false; }
   if(state.accounts.some(a=>a.username.toLowerCase()===username.toLowerCase())){
     showToast('Ин логин аллакай истифода шудааст'); return false;
   }
   const id = uid('acc');
-  state.accounts.push({id, username, password, role, wageType:'daily', wageAmount:0});
+  const pct = (commissionPct !== undefined && commissionPct !== null && commissionPct !== '')
+    ? Math.max(0, Math.min(100, Number(commissionPct)||0))
+    : 5;
+  const wageType = (role==='waiter' || role==='cashier') ? 'commission' : 'daily';
+  state.accounts.push({id, username, password, role, wageType, wageAmount:0, commissionPct: pct});
   await saveAccounts(state.accounts);
-  await logActivity('Корманди нав илова кард: '+username+' ('+role+')');
-  showToast('Корманд илова шуд');
+  await logActivity('Корманди нав илова кард: '+username+' ('+role+', '+pct+'%)');
+  showToast('Корманд илова шуд ('+pct+'%)');
   return true;
 }
-async function updateAccountFn(id, username, password, role){
+async function updateAccountFn(id, username, password, role, commissionPct){
   const acc = state.accounts.find(a=>a.id===id);
   if(!acc) return false;
   if(!username){ showToast('Логинро пур кунед'); return false; }
@@ -2127,9 +2565,34 @@ async function updateAccountFn(id, username, password, role){
     showToast('Ин ягона ҳисоби админ аст — нақшашро иваз карда намешавад'); return false;
   }
   acc.username=username; if(password) acc.password=password; acc.role=role;
+  if(commissionPct !== undefined && commissionPct !== null && commissionPct !== ''){
+    acc.commissionPct = Math.max(0, Math.min(100, Number(commissionPct)||0));
+    if(role==='waiter' || role==='cashier') acc.wageType = 'commission';
+  }
   await saveAccounts(state.accounts);
-  await logActivity('Кормандро тағйир дод: '+username);
+  await logActivity('Кормандро тағйир дод: '+username+' ('+accountCommissionPct(acc)+'%)');
   showToast('Тағйирот сабт шуд');
+  return true;
+}
+async function saveAccountCommissionPct(id, pctValue){
+  const acc = (state.accounts||[]).find(a=>a.id===id);
+  if(!acc) return false;
+  const pct = Math.max(0, Math.min(100, Number(pctValue)||0));
+  acc.commissionPct = pct;
+  if(acc.role==='waiter' || acc.role==='cashier') acc.wageType = 'commission';
+  await saveAccounts(state.accounts);
+  await ensureDailySalarySnapshot();
+  await logActivity('Фоизи маоши кормандро иваз кард: '+acc.username+' -> '+pct+'%');
+  showToast('Фоизи '+acc.username+': '+pct+'% сабт шуд');
+  return true;
+}
+async function toggleHeadWaiter(id){
+  const acc = (state.accounts||[]).find(a=>a.id===id);
+  if(!acc || acc.role!=='waiter') return false;
+  acc.isHeadWaiter = !acc.isHeadWaiter;
+  await saveAccounts(state.accounts);
+  await logActivity((acc.isHeadWaiter ? 'Сарофитсиант таъин кард: ' : 'Аз сарофитсиантӣ гирифт: ') + acc.username);
+  showToast(acc.isHeadWaiter ? ('⭐ '+acc.username+' Сарофитсиант таъин шуд') : (acc.username+' официанти оддӣ шуд'));
   return true;
 }
 async function deleteAccount(id){
@@ -2157,15 +2620,25 @@ function isThisMonth(ts){
 function salaryShiftResetAt(shift){
   return Number(state.settings && state.settings['salaryResetAtShift'+shift]) || 0;
 }
-function orderCommission(order){
-  // 5% аз маблағи воқеии чек — баъд аз тахфиф/хизматрасонӣ, агар чунин бошад.
-  return Math.max(0, Number(order && order.total)||0) * 0.05;
+function salaryMonthResetAt(){
+  return Math.max(
+    Number(state.settings && state.settings.salaryMonthResetAt) || 0,
+    Number(state.settings && state.settings.salaryResetAt) || 0
+  );
+}
+function orderCommission(order, ratePct){
+  // Фоизи инфиродии корманд (пешфарз 5%) аз маблағи воқеии чек
+  const pct = (ratePct !== undefined && ratePct !== null) ? Math.max(0, Number(ratePct)||0) : 5;
+  return Math.max(0, Number(order && order.total)||0) * (pct / 100);
 }
 function staffCommissionBreakdown(username, role, scope, shift){
   const reset1=salaryShiftResetAt(1), reset2=salaryShiftResetAt(2);
+  const monthReset=salaryMonthResetAt();
+  const rate = accountCommissionPct(username);
   const orders = state.orders.filter(o=>{
     if(o.status!=='paid' || o.archived===true) return false;
     const ts = o.paidAt || o.updatedAt || o.createdAt;
+    if(monthReset && Number(ts)<=monthReset) return false;
     if(scope==='today' && !isToday(ts)) return false;
     if(scope==='month' && !isThisMonth(ts)) return false;
     if(shift){
@@ -2180,15 +2653,19 @@ function staffCommissionBreakdown(username, role, scope, shift){
     return (role==='waiter' && o.createdBy===username) || (role==='cashier' && o.paidBy===username);
   });
   let total=0;
-  orders.forEach(o=>{ total+=orderCommission(o); });
-  return {orderCount:orders.length, salesTotal:orders.reduce((n,o)=>n+(Number(o.total)||0),0), commissionRate:5, countHigh:0, countLow:0, countNoOsh:0, oshSum:0, otherSum:total, total};
+  orders.forEach(o=>{ total+=orderCommission(o, rate); });
+  return {orderCount:orders.length, salesTotal:orders.reduce((n,o)=>n+(Number(o.total)||0),0), commissionRate:rate, countHigh:0, countLow:0, countNoOsh:0, oshSum:0, otherSum:total, total};
 }
 function staffCommission(username, role, scope){
   return staffCommissionBreakdown(username, role, scope).total;
 }
 function manualBonusSum(username, scope){
-  return (state.bonuses||[]).filter(b=>b.username===username && (scope==='today' ? isToday(b.ts) : isThisMonth(b.ts)))
-    .reduce((s,b)=>s+(Number(b.amount)||0), 0);
+  const monthReset = salaryMonthResetAt();
+  return (state.bonuses||[]).filter(b=>{
+    if(b.username!==username) return false;
+    if(monthReset && Number(b.ts)<=monthReset) return false;
+    return scope==='today' ? isToday(b.ts) : isThisMonth(b.ts);
+  }).reduce((s,b)=>s+(Number(b.amount)||0), 0);
 }
 // Automatic bonuses are evaluated live against TODAY's performance only (we don't retroactively
 // re-earn past days), for waiters and cashiers.
@@ -2209,16 +2686,16 @@ function computeWages(acc){
   // reportClearedToday is ONLY true when admin manually pressed "Пок кардани ҳисобот"
   // (which sets salaryResetAt). Daily closure (closeDailyReport) sets reportClosedAt
   // but must NOT zero out wages — staff earned their commission on those closed orders.
-  const salaryResetAt = Number(state.settings && state.settings.salaryResetAt) || 0;
+  const salaryResetAt = salaryMonthResetAt();
   const salaryResetThisMonth = salaryResetAt && isThisMonth(salaryResetAt);
   const salaryResetForToday = salaryResetAt && isToday(salaryResetAt);
 
-  if(acc.wageType==='commission'){
-    const auto = salaryResetForToday ? {total:0} : autoBonusToday(acc.username, acc.role);
-    const manualToday = salaryResetForToday ? 0 : manualBonusSum(acc.username, 'today');
-    const manualMonth = salaryResetThisMonth ? 0 : manualBonusSum(acc.username, 'month');
-    const dailyCommission = salaryResetForToday ? 0 : staffCommission(acc.username, acc.role, 'today');
-    const monthlyCommission = salaryResetThisMonth ? 0 : staffCommission(acc.username, acc.role, 'month');
+  if(isCommissionAccount(acc)){
+    const auto = autoBonusToday(acc.username, acc.role);
+    const manualToday = manualBonusSum(acc.username, 'today');
+    const manualMonth = manualBonusSum(acc.username, 'month');
+    const dailyCommission = staffCommission(acc.username, acc.role, 'today');
+    const monthlyCommission = staffCommission(acc.username, acc.role, 'month');
     return {
       daily: dailyCommission + auto.total + manualToday,
       monthly: monthlyCommission + manualMonth,
@@ -2256,7 +2733,7 @@ function formatQtyLabel(it){
 }
 function getItemCategory(it){
   if(it.category) return it.category;
-  const m = state.menu.find(x=>x.id===it.menuId);
+  const m = state.menu.find(x=>x.id===baseMenuId(it.menuId));
   return m ? m.category : '';
 }
 
@@ -2333,10 +2810,23 @@ function render(){
         // Load data in background — onSnapshot triggers render() automatically
         if(tab==='orders') ensureScheduledOrdersLoaded().catch(console.error);
         if(tab==='salary') ensurePaidOrdersLoaded('month').catch(console.error);
+        if(tab==='report'){
+          ensurePaidOrdersLoaded('report').then(()=>ensureDailySalarySnapshot()).catch(console.error);
+          ensureReportArchiveLoaded().catch(console.error);
+        }
       });
     });
+    if((state.cashierTab||'main')==='osh'){
+      attachOshShiftsEvents();
+    }
     if((state.cashierTab||'main')==='orders'){
       attachAdminOrdersEvents();
+    }
+    if((state.cashierTab||'main')==='report'){
+      attachReportEvents();
+    }
+    if((state.cashierTab||'main')==='salary'){
+      attachMonthlySalaryClearEvents();
     }
     attachTableGridEvents();
     const openBtn = document.getElementById('openTakeawayBtn');
@@ -2397,20 +2887,18 @@ function renderTopbar(){
   const previewing = isAdmin && state.role!=='admin';
   const nameLabel = previewing && state.previewUsername
     ? `<span class="user-name-label preview-label" style="font-size:12px;color:var(--brick);font-weight:700;">👁 ${escapeHtml(state.previewUsername)} <span class="preview-word">(пешнамоиш)</span></span>`
-    : (state.currentUser ? `<span class="user-name-label" style="font-size:12px;color:#6b5f4d;font-weight:600;">${escapeHtml(state.currentUser.username)}</span>` : '');
+    : (state.currentUser ? `<span class="user-name-label" style="font-size:12px;color:#6b5f4d;">${escapeHtml(state.currentUser.username)}</span>` : '');
   return `
   <div class="topbar">
     <div class="brand">
-      <img src="logo.png" class="brand-logo-img" alt="Logo" onerror="this.outerHTML='<span style=\'font-size:26px;display:inline-block;padding:2px;\'>🍲</span>'">
-      <div style="display:flex;flex-direction:column;min-width:0;">
-        <span class="name">${escapeHtml(state.settings.cafeName||'Оши Муҳаммад')}</span>
-        <span class="tag">${state.role==='waiter'?'Официант':state.role==='cashier'?'Кассир':state.role==='chef'?'Ошпаз':'Идора'}</span>
-      </div>
+      <img src="logo.png" class="brand-logo-img" alt="Logo" onerror="this.style.display='none'">
+      <span class="name">${escapeHtml(state.settings.cafeName||'Оши Муҳаммад')}</span>
+      <span class="tag">${state.role==='waiter'?'Официант':state.role==='cashier'?'Кассир':state.role==='chef'?'Ошпаз':'Идора'}</span>
     </div>
     <div class="top-right">
       <span class="clock">${dateStr} · ${timeStr}</span>
       ${nameLabel}
-      <span class="role-pill">${state.role==='waiter'?'👤 Официант':state.role==='cashier'?'💰 Кассир':state.role==='chef'?'👨‍🍳 Ошпаз':'🛠 Админ'}</span>
+      <span class="role-pill">${state.role==='waiter'?(isCurrentHeadWaiter()?'⭐ Сарофитсиант':'👤 Официант'):state.role==='cashier'?'💰 Кассир':state.role==='chef'?'👨‍🍳 Ошпаз':'🛠 Админ'}</span>
       ${previewing ? `<button class="btn-ghost" id="backToAdminBtn">🛠 Бозгашт ба Админ</button>` : ''}
       <button class="btn-ghost" id="hardRefreshBtn" title="Тоза кардани кэш ва навсозӣ">🔄</button>
       <button class="btn-ghost" id="logoutBtn">Баромадан</button>
@@ -2421,18 +2909,12 @@ function renderTopbar(){
 function renderCafeSetup(){
   return `
   <div class="role-select">
-    <div class="brand-avatar-box">
-      <img src="logo.png" alt="Оши Муҳаммад" onerror="this.outerHTML='<span style=\\'font-size:38px;line-height:1;\\'>🍲</span>'">
-    </div>
-    <div style="text-align:center;">
-      <h1 class="brand-title">Оши Муҳаммад</h1>
-      <p class="brand-subtitle">Базаи нави Firebase пайваст шуд. Маълумотро таъин кунед:</p>
-    </div>
-
+    <h1>☕ Кафеи нав</h1>
+    <p>Ин линк холист — маълумоти кафеи худро таъин кунед</p>
     <div class="login-box">
-      <div class="field"><label>Номи кафе</label><input type="text" id="setupCafeName" value="Оши Муҳаммад" placeholder="Оши Муҳаммад"></div>
-      <div class="field"><label>Логини Админ</label><input type="text" id="setupAdminUser" value="admin" placeholder="admin" autocomplete="username"></div>
-      <div class="field"><label>Пароли Админ</label><input type="password" id="setupAdminPass" placeholder="Паролро ворид кунед" autocomplete="new-password"></div>
+      <div class="field"><label>Номи кафе</label><input type="text" id="setupCafeName" placeholder="масалан: Оши Форам"></div>
+      <div class="field"><label>Логини Админ</label><input type="text" id="setupAdminUser" placeholder="масалан: admin" autocomplete="username"></div>
+      <div class="field"><label>Пароли Админ</label><input type="password" id="setupAdminPass" autocomplete="new-password"></div>
       ${state.setupError ? `<div class="login-error">${escapeHtml(state.setupError)}</div>` : ''}
       <button class="btn-primary" style="padding:12px;" id="setupSubmitBtn">Сохтани кафе</button>
     </div>
@@ -2455,22 +2937,19 @@ function attachCafeSetupEvents(){
 function renderLogin(){
   return `
   <div class="role-select">
-    <div class="brand-avatar-box">
-      <img src="logo.png" alt="Оши Муҳаммад" onerror="this.outerHTML='<span style=\'font-size:38px;line-height:1;\'>🍲</span>'">
+    <div style="width:96px;height:96px;border-radius:50%;padding:2px;background:linear-gradient(135deg,#F5C542,#B37D1A);box-shadow:0 8px 24px rgba(0,0,0,0.25);margin-bottom:-12px;">
+      <img src="logo.png" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" onerror="this.outerHTML='<span style=\'font-size:42px;line-height:96px;\'>🍲</span>'">
     </div>
-    <div style="text-align:center;">
-      <h1 class="brand-title">Оши Муҳаммад</h1>
-      <p class="brand-subtitle">Системаи муосири идоракунии тарабхона</p>
-    </div>
+    <h1 style="margin-top:14px;">Оши Муҳаммад</h1>
+    <p>Логин ва пароли худро ворид кунед</p>
     <div class="login-box">
-      <div class="field"><label>Логин</label><input type="text" id="loginUsername" placeholder="Логин" autocomplete="username"></div>
-      <div class="field"><label>Парол</label><input type="password" id="loginPassword" placeholder="Парол" autocomplete="current-password"></div>
+      <div class="field"><label>Логин</label><input type="text" id="loginUsername" autocomplete="username"></div>
+      <div class="field"><label>Парол</label><input type="password" id="loginPassword" autocomplete="current-password"></div>
       ${state.loginError ? `<div class="login-error">${escapeHtml(state.loginError)}</div>` : ''}
-      <button class="btn-primary" style="padding:13px;width:100%;margin-top:6px;" id="loginSubmitBtn">Ворид шудан</button>
+      <button class="btn-primary" style="padding:12px;" id="loginSubmitBtn">Ворид шудан</button>
     </div>
   </div>`;
 }
-
 function attachLoginEvents(){
   const submit = async ()=>{
     const u = (document.getElementById('loginUsername').value||'').trim();
@@ -2541,11 +3020,14 @@ function buildTableCards(){
       const mins = Math.floor((Date.now()-order.createdAt)/60000);
       extra += `<span class="reserve-detail" style="color:${mins>=60?'var(--brick)':'#8a7c64'};">⏱ ${mins < 60 ? mins+' дақ' : Math.floor(mins/60)+' соат '+(mins%60)+' дақ'}</span>`;
       if(order.createdBy) extra += `<span class="reserve-detail">👤 ${escapeHtml(order.createdBy)}</span>`;
-      if(order.type!=='takeaway' && order.type!=='scheduled' && !order.sentToKitchen) extra += `<span class="reserve-detail" style="color:var(--brick);">⏳ ба ошпаз нафиристода шуд</span>`;
+      extra += renderScheduledOshCardBadge(order);
     }
+    const srcKind = occ ? orderSourceKind(order) : '';
+    const srcClass = srcKind==='own' ? 'waiter-own' : (srcKind==='sched' ? 'from-scheduled' : '');
+    const srcBadge = occ ? orderSourceBadge(order) : '';
     const assignBadge = tbl.assignedTo ? `<span class="reserve-detail">👤 ${escapeHtml(tbl.assignedTo)}</span>` : '';
-    cards += `<button class="table-card ${lockedForMe?'locked-table':''}" data-table="${t}">
-      ${arrivalBadge}<div class="row1"><span class="tnum">${escapeHtml(tbl.name)}</span><span class="dot ${dotClass}"></span></div>
+    cards += `<button class="table-card ${lockedForMe?'locked-table':''} ${srcClass}" data-table="${t}">
+      ${arrivalBadge}${srcBadge}<div class="row1"><span class="tnum">${escapeHtml(tbl.name)}</span><span class="dot ${dotClass}"></span></div>
       <span class="status">${statusText} · ${tbl.seats} ҷой</span>${extra}${assignBadge}
       ${lockedForMe ? `<span class="reserve-detail" style="color:var(--brick);">🔒 танҳо ${escapeHtml(tbl.assignedTo)}</span>` : ''}
     </button>`;
@@ -2632,32 +3114,23 @@ function attachWaiterEvents(){
 /* ---------- Cashier view ---------- */
 function renderCashier(){
   const occCount = occupiedTableCount();
-
-  // Speak an alert when a genuinely new order becomes active — not on first render (that would
-  // announce every order already on the books when the cashier simply opens the screen).
-  const activeForCashier = state.orders.filter(o=>o.status==='active');
-  const currentCashierIds = activeForCashier.map(o=>o.id);
-  if(state.seenCashierOrderIds === null){
-    state.seenCashierOrderIds = new Set(currentCashierIds);
-  } else {
-    const newOnes = activeForCashier.filter(o=>!state.seenCashierOrderIds.has(o.id));
-    newOnes.forEach(o=> speakCashierAlert(o));
-    state.seenCashierOrderIds = new Set(currentCashierIds);
-  }
-  const myTakeaway = state.orders.filter(o=>o.type==='takeaway' && isToday(o.createdAt) &&
-    (o.status==='active' || !state.currentUser || o.paidBy===state.currentUser.username))
+  const repStart = reportPeriodStart();
+  const myTakeaway = state.orders.filter(o=>o.type==='takeaway' && isToday(o.createdAt) && o.status!=='cancelled' && !o.archived && (!repStart || Number(o.createdAt)>repStart))
     .sort((a,b)=>b.createdAt-a.createdAt);
-  const takeawayHtml = myTakeaway.length ? myTakeaway.map(o=>`
+  const takeawayHtml = myTakeaway.length ? myTakeaway.map(o=>{
+    const oshKg = oshWeightFromItems(o.items);
+    return `
     <div class="receipt-item-row" ${o.status==='active' ? `data-vieworder="${o.id}" data-viewmode="pay" style="cursor:pointer;"` : ''}>
       <div>
-        <div class="l1">${orderLabel(o)}</div>
+        <div class="l1">${orderLabel(o)}${oshKg>0 ? ` · <span style="color:var(--brick);font-weight:700;">🍚 ${oshKg.toFixed(2)} кг ош</span>` : ''}</div>
         <div class="l2">${o.items.map(i=>formatQtyLabel(i)).join(', ')}</div>
       </div>
       <div style="text-align:right;">
         <div>${fmtMoney(o.total)}</div>
-        <div class="l2">${o.status==='active' ? '⏳ интизори пардохт' : (o.prepared?'тайёр':'дар навбат')}</div>
+        <div class="l2">${o.status==='active' ? '⏳ интизори пардохт' : '✅ пардохт ва қабул шуд'}</div>
       </div>
-    </div>`).join('') : '';
+    </div>`;
+  }).join('') : '';
 
   const pendingScheduledDinein = state.orders.filter(o=>o.type==='scheduled' && o.status==='active' && o.deliveryType!=='takeaway')
     .sort((a,b)=>(a.readyTime||'').localeCompare(b.readyTime||''));
@@ -2669,36 +3142,111 @@ function renderCashier(){
       </div>
       <div style="text-align:right;">
         <div>${fmtMoney(o.total)}</div>
-        <div class="l2">${o.prepared?'тайёр':'дар навбат'}</div>
+        <div class="l2">⏳ интизори пардохт</div>
       </div>
     </div>`).join('') : '';
 
   const pendingScheduledTakeaway = state.orders.filter(o=>o.type==='scheduled' && o.status==='active' && o.deliveryType==='takeaway')
     .sort((a,b)=>(a.readyTime||'').localeCompare(b.readyTime||''));
   const scheduledTakeawayHtml = pendingScheduledTakeaway.length ? pendingScheduledTakeaway.map(o=>`
-    <div class="receipt-item-row">
+    <div class="receipt-item-row" data-vieworder="${o.id}" data-viewmode="pay" style="cursor:pointer;">
       <div>
         <div class="l1">🥡 ${orderLabel(o)}</div>
         <div class="l2">${o.items.map(i=>formatQtyLabel(i)).join(', ')}</div>
       </div>
       <div style="text-align:right;display:flex;align-items:center;gap:10px;">
         <div>${fmtMoney(o.total)}</div>
-        <button class="btn-ghost" style="padding:6px 12px;font-size:12px;" data-sendschedtakeaway="${o.id}">🍚 Ба ошпаз фиристодан</button>
+        <button class="btn-primary" style="padding:6px 12px;font-size:12px;flex:none;" data-vieworder="${o.id}" data-viewmode="pay">💵 Пардохт ва қабул</button>
       </div>
     </div>`).join('') : '';
 
   const cashierTab = state.cashierTab || 'main';
   const tabBar = `<div style="display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;">
     <button class="cat-tab ${cashierTab==='main'?'active':''}" data-cashiertab="main">🏠 Асосӣ</button>
+    <button class="cat-tab ${cashierTab==='osh'?'active':''}" data-cashiertab="osh">🍚 Ош / Бастҳо</button>
+    <button class="cat-tab ${cashierTab==='takeaway'?'active':''}" data-cashiertab="takeaway">🥡 Собой</button>
     <button class="cat-tab ${cashierTab==='orders'?'active':''}" data-cashiertab="orders">📋 Фармоишҳо</button>
+    <button class="cat-tab ${cashierTab==='report'?'active':''}" data-cashiertab="report">📊 Ҳисобот</button>
     <button class="cat-tab ${cashierTab==='salary'?'active':''}" data-cashiertab="salary">💰 Маош</button>
   </div>`;
 
+  if(cashierTab==='osh'){
+    return `<div class="container">${tabBar}${renderOshShiftsSection()}</div>`;
+  }
   if(cashierTab==='orders'){
     return `<div class="container">${tabBar}${renderAdminOrders()}</div>`;
   }
+  if(cashierTab==='report'){
+    return `<div class="container">${tabBar}${renderAdminReport()}</div>`;
+  }
   if(cashierTab==='salary'){
     return `<div class="container">${tabBar}${renderCashierSalary()}</div>`;
+  }
+  if(cashierTab==='takeaway'){
+    const taPct = takeawayOshDiscountPct();
+    const todayOrders = (state.orders||[]).filter(o=>isToday(o.createdAt) && o.status!=='cancelled' && !o.archived && (!repStart || Number(o.createdAt)>repStart));
+    const taStats = takeawayOshStatsForOrders(todayOrders);
+    const taPaid = myTakeaway.filter(o=>o.status==='paid');
+    const tableWithExtraOrders = todayOrders.filter(o=>o.type!=='takeaway' && o.type!=='scheduled' && (o.items||[]).some(it=>isTaKey(it.menuId)||it.isExtra||it.takeawayOsh))
+      .sort((a,b)=>(b.updatedAt||b.createdAt)-(a.updatedAt||a.createdAt));
+    const tableExtraHtml = tableWithExtraOrders.map(o=>{
+      const exItems = (o.items||[]).filter(it=>isTaKey(it.menuId)||it.isExtra||it.takeawayOsh);
+      const exOshKg = oshWeightFromItems(exItems);
+      const pctUsed = Number(o.discountPct)!==undefined && Number(o.discountPct)>0 ? Number(o.discountPct) : (Number(o.discount)>0 ? taPct : 0);
+      const exSum = exItems.reduce((s,it)=>{
+        const sub = lineTotal({unit:it.unit, price:it.price}, it.qty);
+        const disc = isOshDiscountItem(it) && pctUsed>0 ? roundMoney(sub*(pctUsed/100)) : 0;
+        return s + Math.max(0, sub - disc);
+      }, 0);
+      return `<div class="receipt-item-row" ${o.status==='active' ? `data-vieworder="${o.id}" data-viewmode="pay" style="cursor:pointer;"` : ''}>
+        <div>
+          <div class="l1">${orderLabel(o)} · <span style="color:var(--brick);font-weight:700;">🥡 Фурӯши иловагӣ (собой)${exOshKg>0 ? ` · 🍚 ${exOshKg.toFixed(2)} кг ош` : ''}</span></div>
+          <div class="l2">${exItems.map(i=>formatQtyLabel(i)).join(', ')}</div>
+        </div>
+        <div style="text-align:right;">
+          <div>${fmtMoney(exSum)}</div>
+          <div class="l2">${o.status==='paid' ? '✅ пардохт шуд' : '⏳ дар миз фаъол'}</div>
+        </div>
+      </div>`;
+    }).join('');
+    const soldProductsRows = (taStats.soldProducts||[]).map(p=>{
+      const qtyLbl = p.unit==='kg' ? (p.qty>=1000 ? (Math.round((p.qty/1000)*100)/100)+' кг' : Math.round(p.qty)+' г') : (p.qty+' дона');
+      return `<tr>
+        <td>${escapeHtml(p.name)}${p.isOsh ? ' <span style="color:var(--brick);font-weight:700;">(ош)</span>' : ''}</td>
+        <td><b>${qtyLbl}</b></td>
+        <td class="total-cell">${fmtMoney(p.revenue)}</td>
+      </tr>`;
+    }).join('');
+    const soldProductsTableHtml = `
+      <div class="section-title" style="margin-top:20px;">📦 Рӯйхати маҳсулоти фурӯхташуда (собой ва иловагӣ)</div>
+      ${soldProductsRows ? `
+        <table class="xls-table">
+          <thead><tr><th>Маҳсулот</th><th>Миқдор</th><th>Маблағ</th></tr></thead>
+          <tbody>
+            ${soldProductsRows}
+            <tr><td><b>Ҳамагӣ</b></td><td><b>${taStats.soldProducts.length} намуд</b></td><td class="total-cell"><b>${fmtMoney(taStats.totalRevenue)}</b></td></tr>
+          </tbody>
+        </table>
+      ` : `<div class="empty-state" style="padding:20px;">Ҳоло дар бахши собой ва иловагӣ чизе фурӯхта нашудааст</div>`}`;
+    return `
+    <div class="container">
+      ${tabBar}
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;align-items:center;">
+        <button class="btn-primary" id="openTakeawayBtn" style="padding:12px 20px;background:var(--brick);flex:none;">🥡 + Фармоиши собой</button>
+        ${taPct>0 ? `<span style="font-size:13px;color:#6b5f4d;">Тахфифи оши собой: <b style="color:var(--olive);">${taPct}%</b></span>` : ''}
+      </div>
+      ${oshRemainingBadge()}
+      <div class="stat-row">
+        <div class="stat-card"><div class="label">🍚 Оши собой (имрӯз)</div><div class="value" style="color:var(--brick);">${taStats.totalKg.toFixed(2)} кг</div><div style="font-size:11px;color:#64748B;margin-top:4px;">Мустақим: ${taStats.directKg.toFixed(2)} кг · Дар миз: ${taStats.tableExtraKg.toFixed(2)} кг</div></div>
+        <div class="stat-card"><div class="label">🥡 Чекҳои собой ва иловагӣ</div><div class="value">${taPaid.length}${taStats.tableExtraCount ? ` <span style="font-size:13px;color:#64748B;">(+${taStats.tableExtraCount} миз)</span>` : ''}</div></div>
+        <div class="stat-card"><div class="label">💵 Маблағи фурӯш (собой + иловагӣ)</div><div class="value">${fmtMoney(taStats.totalRevenue)}</div></div>
+      </div>
+      ${soldProductsTableHtml}
+      ${pendingScheduledTakeaway.length ? `<div class="section-title" style="margin-top:24px;">🕐 Фармоишҳои вақтдор — собой (интизори пардохт)</div>${scheduledTakeawayHtml}` : ''}
+      <div class="section-title" style="margin-top:24px;">🥡 Чекҳои собойи мустақим</div>
+      ${myTakeaway.length ? takeawayHtml : `<div class="empty-state" style="padding:24px;">Ҳоло чеки собойи мустақим нест</div>`}
+      ${tableWithExtraOrders.length ? `<div class="section-title" style="margin-top:24px;">🍽 Фурӯшҳои иловагӣ дар дохили чеки мизҳо</div>${tableExtraHtml}` : ''}
+    </div>`;
   }
 
   return `
@@ -2711,9 +3259,7 @@ function renderCashier(){
     <div class="section-title">Чекҳои фаъол <span class="num">${occCount} банд / ${state.tables.length} ҷами</span></div>
     <p style="color:#6b5f4d;font-size:13px;margin-top:-8px;margin-bottom:18px;">Мизи бандро зада, чекро бинед ва пардохт кунед</p>
     <div class="table-grid" id="tableLayoutGrid">${buildTableCards()}</div>
-    ${pendingScheduledTakeaway.length ? `<div class="section-title" style="margin-top:24px;">🥡 Фармоишҳои вақтдор — бо худ бурдан (ҳанӯз ба ошпаз нафиристода)</div>${scheduledTakeawayHtml}` : ''}
     ${pendingScheduledDinein.length ? `<div class="section-title" style="margin-top:24px;">Фармоишҳои вақтдор — интизори пардохт</div>${scheduledDineinHtml}` : ''}
-    ${myTakeaway.length ? `<div class="section-title" style="margin-top:24px;">Фармоишҳои бо худ бурдани имрӯза</div>${takeawayHtml}` : ''}
   </div>`;
 }
 
@@ -2727,20 +3273,20 @@ function takeawaySubtotal(){
   return total;
 }
 function takeawayDiscountAmount(){
-  // Тахфиф танҳо барои ош (категория "Ош", unit===kg), на барои нӯшокиҳо ва дигар чизҳо
-  const pct = Math.max(0, Math.min(100, Number(state.settings.takeawayDiscountPct)||0));
+  // Тахфиф танҳо барои ош (категорияи "Ош" — кило ё порсия), на барои нӯшокиҳо, нон, лаълӣ ва дигар чизҳо
+  const pct = takeawayOshDiscountPct();
   if(pct<=0) return 0;
   let oshTotal = 0;
   Object.keys(state.takeawayItems).forEach(mid=>{
     const item = state.menu.find(m=>m.id===mid);
-    if(item && getItemCategory(item)==='Ош' && item.unit==='kg'){
+    if(item && isOshDiscountItem(item)){
       oshTotal += lineTotal(item, state.takeawayItems[mid]);
     }
   });
-  return oshTotal * (pct/100);
+  return roundMoney(oshTotal * (pct/100));
 }
 function takeawayTotal(){
-  return Math.max(0, takeawaySubtotal() - takeawayDiscountAmount());
+  return roundMoney(Math.max(0, takeawaySubtotal() - takeawayDiscountAmount()));
 }
 function openTakeaway(){
   state.takeawayOpen = true;
@@ -2792,19 +3338,23 @@ async function submitTakeaway(cashAmount, noncashAmount){
   const noncash = Math.max(0, Number(noncashAmount)||0);
   const order = {
     id: uid('ord'), table: null, type: 'takeaway', status: 'paid', takeawayNumber: todayCount+1,
-    items, total, createdAt: Date.now(), updatedAt: Date.now(),
+    items, total, subtotal: takeawaySubtotal(), discount: takeawayDiscountAmount(),
+    discountPct: takeawayDiscountAmount()>0 ? takeawayOshDiscountPct() : 0,
+    createdAt: Date.now(), updatedAt: Date.now(),
     createdBy: null, paidAt: Date.now(), paidBy: actingUsername(),
     cashAmount: cash, noncashAmount: noncash,
     paymentMethod: cash>0 && noncash>0 ? 'mixed' : (noncash>0 ? 'noncash' : 'cash'),
     receivedAt: Date.now(),
-    prepared: false
+    oshShift: activeOshShift(),
+    prepared: true,
+    sentToKitchen: false
   };
   state.orders.push(order);
   state.__lastKnownOrderIds = state.__lastKnownOrderIds || new Set();
   state.__lastKnownOrderIds.add(order.id);
   await deductForOrderDelta(order, items);
   await saveOrderV2(order); // save only this one order, not the whole array
-  showToast('Фармоиш пардохт шуд ва ба ошпаз фиристода шуд');
+  showToast('Фармоиши собой пардохт ва қабул шуд');
   closeTakeaway();
 }
 
@@ -2822,6 +3372,7 @@ function openScheduled(){
   state.scheduledItems = {};
   state.scheduledCat = (state.menu[0] && state.menu[0].category) || null;
   state.scheduledDeliveryType = 'dinein';
+  state.scheduledOshShift = 2;
   state.formOpen = true; state.formOpenAt = Date.now();
   render();
 }
@@ -2857,7 +3408,7 @@ function removeScheduledItem(mid){
   delete state.scheduledItems[mid];
   render();
 }
-async function submitScheduled(name, phone, time, deliveryType){
+async function submitScheduled(name, phone, time, deliveryType, oshShift){
   let droppedAny = false;
   const items = Object.keys(state.scheduledItems).map(mid=>{
     const m = state.menu.find(x=>x.id===mid);
@@ -2868,11 +3419,14 @@ async function submitScheduled(name, phone, time, deliveryType){
   if(!items.length){ showToast('Аввал маҳсулот илова кунед'); return; }
   // Вақт ва ном ихтиёрианд — агар нависта нашавад, холӣ мемонад
   const total = scheduledTotal();
+  const chosenShift = 2;
+  const initialItems = items.map(it=>({menuId:baseMenuId(it.menuId), name:it.name, unit:it.unit||'dona', category:it.category, qty:Number(it.qty)||0}));
   const order = {
     id: uid('ord'), table: null, type: 'scheduled', status: 'active',
-    items, total, createdAt: Date.now(), updatedAt: Date.now(),
+    items, initialItems, total, createdAt: Date.now(), updatedAt: Date.now(),
     createdBy: null, readyTime: time, customerName: name||'', customerPhone: phone||'',
-    deliveryType: deliveryType==='takeaway' ? 'takeaway' : 'dinein',
+    deliveryType: 'dinein',
+    oshShift: chosenShift,
     prepared: false
   };
   state.orders.push(order);
@@ -2938,8 +3492,12 @@ async function assignScheduledToTable(orderId, tableId){
   const order = state.orders.find(o=>o.id===orderId);
   if(!order) return;
   if(activeOrderForTable(tableId)){ showToast('Ин миз аллакай банд аст'); return; }
+  if(!Array.isArray(order.initialItems) || !order.initialItems.length){
+    order.initialItems = (order.items||[]).map(it=>({menuId:baseMenuId(it.menuId), name:it.name, unit:it.unit||'dona', category:it.category, qty:Number(it.qty)||0}));
+  }
   order.table = tableId;
   order.type = 'dine-in';
+  order.fromScheduled = true;
   order.createdBy = actingUsername();
   order.sentToKitchen = true;
   order.updatedAt = Date.now();
@@ -3026,7 +3584,7 @@ function renderTakeawayOverlay(){
   <div class="overlay" id="takeawayOverlay">
     <div class="ticket-wrap">
       <div class="ticket-head">
-        <h2>🥡 Бо худ бурдан</h2>
+        <h2>🥡 Собой (бо худ бурдан)</h2>
         <button class="close-x" id="closeTakeaway">✕</button>
       </div>
       <div style="padding:10px 20px 0;">${oshRemainingBadge()}</div>
@@ -3035,7 +3593,7 @@ function renderTakeawayOverlay(){
       <div class="receipt">
         <div class="receipt-title">Чек — Бо худ бурдан</div>
         ${receiptLines}
-        ${discountAmt>0 ? `<div class="receipt-line"><span>Тарҳи мобайнӣ</span><span>${fmtMoney(subtotal)}</span></div><div class="receipt-line" style="color:var(--olive);"><span>Тахфиф (${state.settings.takeawayDiscountPct}%)</span><span>−${fmtMoney(discountAmt)}</span></div>` : ''}
+        ${discountAmt>0 ? `<div class="receipt-line"><span>Тарҳи мобайнӣ</span><span>${fmtMoney(subtotal)}</span></div><div class="receipt-line" style="color:var(--olive);"><span>Тахфифи ош (${state.settings.takeawayDiscountPct}%)</span><span>−${fmtMoney(discountAmt)}</span></div>` : ''}
         <div class="receipt-total"><span>Ҳамагӣ</span><span>${fmtMoney(total)}</span></div>
       </div>
       <div class="ticket-actions" style="flex-direction:column;align-items:stretch;">
@@ -3154,11 +3712,9 @@ function renderScheduledOverlay(){
         <div class="field"><label>Рақами телефон <span style="font-size:10px;color:#9c8f78;">(ихтиёрӣ)</span></label><input type="tel" id="schedPhoneInput" value="${escapeHtml(state.scheduledPhone)}" placeholder="масалан: 900123456"></div>
         <div class="field"><label>Вақти омадан <span style="font-size:10px;color:#9c8f78;">(ихтиёрӣ)</span></label><input type="time" id="schedTimeInput" value="${escapeHtml(state.scheduledTime||'')}"></div>
       </div>
-      <div style="padding:12px 20px 0;">
-        <label style="font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#6b5f4d;font-weight:600;display:block;margin-bottom:6px;">Навъи фармоиш</label>
-        <div style="display:flex;gap:8px;">
-          <button type="button" class="cat-tab ${state.scheduledDeliveryType!=='takeaway'?'active':''}" data-schedtype="dinein">🍽 Дар кафе (миз)</button>
-          <button type="button" class="cat-tab ${state.scheduledDeliveryType==='takeaway'?'active':''}" data-schedtype="takeaway">🥡 Бо худ бурдан</button>
+      <div style="padding:10px 20px 0;">
+        <div style="padding:8px 12px;background:#EFF6FF;border:1.5px solid #BFDBFE;border-radius:10px;font-size:12px;color:var(--blue-dim);font-weight:700;">
+          🌙 Оши фармоиши вақтдор ба таври автоматӣ аз <b>Басти 2</b> кам карда мешавад (боқимондаи Басти 2: <b>${oshShiftStats(2).remaining.toFixed(2)} кг</b>)
         </div>
       </div>
       <div class="cat-tabs">${tabs}</div>
@@ -3208,8 +3764,12 @@ function attachScheduledEvents(){
   document.querySelectorAll('[data-sremoveitem]').forEach(el=>{
     el.addEventListener('click', ()=>{ captureScheduledFields(); removeScheduledItem(el.dataset.sremoveitem); });
   });
-  document.querySelectorAll('[data-schedtype]').forEach(el=>{
-    el.addEventListener('click', ()=>{ captureScheduledFields(); state.scheduledDeliveryType = el.dataset.schedtype; render(); });
+  document.querySelectorAll('[data-schedshift]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      captureScheduledFields();
+      state.scheduledOshShift = Number(el.dataset.schedshift)||1;
+      render();
+    });
   });
   const submitBtn = document.getElementById('submitScheduledBtn');
   if(submitBtn) submitBtn.addEventListener('click', ()=>{
@@ -3217,18 +3777,28 @@ function attachScheduledEvents(){
     const phone = document.getElementById('schedPhoneInput').value.trim();
     const timeEl = document.getElementById('schedTimeInput');
     const time = timeEl ? timeEl.value : '';
-    submitScheduled(name, phone, time, state.scheduledDeliveryType);
+    submitScheduled(name, phone, time, state.scheduledDeliveryType, state.scheduledOshShift);
   });
 }
 
 function renderOrderViewOverlay(){
   const order = state.orders.find(o=>o.id===state.viewingOrderId);
   if(!order) return '';
-  const itemsHtml = order.items.length ? order.items.map(it=>`
+  const mainViewItems = (order.items||[]).filter(it=>!isTaKey(it.menuId) && !it.isExtra && !it.takeawayOsh);
+  const extraViewItems = (order.items||[]).filter(it=>isTaKey(it.menuId) || it.isExtra || it.takeawayOsh);
+  const renderViewLine = it=>`
     <div class="receipt-line">
       <span>${formatQtyLabel(it)}</span>
       <span>${fmtMoney(lineTotal({unit:it.unit, price:it.price}, it.qty))}</span>
-    </div>`).join('') : `<div class="receipt-empty">холӣ</div>`;
+    </div>`;
+  const itemsHtml = !order.items.length ? `<div class="receipt-empty">холӣ</div>` : (
+    extraViewItems.length ? `
+      <div style="font-size:11px;font-weight:800;color:var(--ink);padding:4px 0 2px;text-transform:uppercase;">🍽 Қисми асосӣ (бо хизматрасонӣ)</div>
+      ${mainViewItems.length ? mainViewItems.map(renderViewLine).join('') : `<div class="receipt-empty">— нест —</div>`}
+      <div style="font-size:11px;font-weight:800;color:var(--brick);padding:8px 0 2px;margin-top:6px;border-top:1px dashed var(--line);text-transform:uppercase;">🥡 Қисми иловагӣ (бе хизматрасонӣ)</div>
+      ${extraViewItems.map(renderViewLine).join('')}
+    ` : order.items.map(renderViewLine).join('')
+  );
   const contactLine = (order.customerName || order.customerPhone)
     ? `<p style="padding:0 20px;font-size:13px;color:#6b5f4d;margin:0 0 4px;">${escapeHtml(order.customerName||'')} ${order.customerPhone?('· '+escapeHtml(order.customerPhone)):''}</p>` : '';
   const waiterLine = order.createdBy
@@ -3257,7 +3827,10 @@ function renderOrderViewOverlay(){
       ${waiterLine}
       <div class="receipt">
         <div class="receipt-title">Чек</div>
+        ${renderScheduledOshDiffBanner(order)}
         ${itemsHtml}
+        ${Number(order.discount)>0 ? `<div class="receipt-line" style="color:var(--olive);"><span>Тахфифи ош${order.discountPct?(' ('+order.discountPct+'%)'):''}</span><span>−${fmtMoney(order.discount)}</span></div>` : ''}
+        ${Number(order.serviceCharge)>0 ? `<div class="receipt-line"><span>Ҳаққи хизматрасонӣ</span><span>+${fmtMoney(order.serviceCharge)}</span></div>` : ''}
         <div class="receipt-total"><span>Ҳамагӣ</span><span>${fmtMoney(order.total)}</span></div>
       </div>
       ${actionBtn}
@@ -3325,27 +3898,27 @@ function renderChef(){
   let porsiyaTotal = 0;
   todays.forEach(o=>{
     o.items.forEach(it=>{
-      if(getItemCategory(it)==='Ош' && it.unit!=='kg') porsiyaTotal += it.qty;
+      if(isOshDiscountItem(it) && it.unit!=='kg') porsiyaTotal += it.qty;
     });
   });
   const kgTotal = oshOrderedKgToday();
-  const hasOsh = (o)=> o.items.some(it=>getItemCategory(it)==='Ош');
+  const hasOsh = (o)=> o.items.some(it=>isOshDiscountItem(it));
   const chefClearedAt = Number(state.settings.chefQueueClearedAt) || 0;
   const pending = state.orders.filter(o=>{
     if((o.updatedAt||o.createdAt) <= chefClearedAt) return false;
     if(o.prepared) return false;
     if(!hasOsh(o)) return false;
-    if(o.type==='takeaway') return o.status==='paid' || o.sentToKitchen===true;
-    if(o.type==='scheduled') return false; // hidden until sent to kitchen (assigned to a table, or sent as takeaway)
-    return o.status==='active' && o.sentToKitchen===true;
+    if(o.type==='takeaway') return false; // Закази собой ба навбати ошпаз партофта намешавад
+    if(o.type==='scheduled') return false;
+    return o.status==='active';
   }).sort((a,b)=>a.createdAt-b.createdAt);
   const done = state.orders.filter(o=>{
     if((o.updatedAt||o.createdAt) <= chefClearedAt) return false;
     if(!o.prepared) return false;
     if(!hasOsh(o)) return false;
-    if(o.type==='takeaway') return isToday(o.createdAt);
+    if(o.type==='takeaway') return false;
     if(o.type==='scheduled') return false;
-    return o.status==='active' && o.sentToKitchen===true;
+    return o.status==='active';
   }).sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));
 
   const hasStock = state.oshStock && state.oshStock.date === todayKey();
@@ -3361,7 +3934,7 @@ function renderChef(){
     const title = orderLabel(o);
     const ageMin = Math.floor((Date.now()-o.createdAt)/60000);
     const isDelayed = !isDone && ageMin >= (state.settings.delayWarnMinutes||15);
-    const oshItems = o.items.filter(it=>getItemCategory(it)==='Ош');
+    const oshItems = o.items.filter(it=>isOshDiscountItem(it));
     const itemsHtml = oshItems.length ? oshItems.map(it=>{
       const cat = 'Ош';
       const lineClass = 'chef-osh-line';
@@ -3390,6 +3963,7 @@ function renderChef(){
     <div class="receipt" style="margin:0 0 14px;${isDone?'opacity:.55;':''}${isDelayed?'border-color:var(--brick);box-shadow:0 0 0 2px var(--brick);':''}">
       <div class="receipt-title" style="${isDelayed?'color:var(--brick);':''}">${escapeHtml(title)}${isDelayed?` · ⏰ ${ageMin} дақ дер`:''}</div>
       ${o.createdBy ? `<div style="text-align:center;font-size:11px;color:#9c8f78;margin:-6px 0 8px;">👤 ${escapeHtml(o.createdBy)}</div>` : ''}
+      ${renderScheduledOshDiffBanner(o)}
       ${itemsHtml}
       <div style="margin-top:10px;">
         <button class="${isDone?'btn-ghost':'btn-primary'}" style="padding:8px 16px;font-size:12px;" data-toggleprep="${o.id}">${isDone?'Бозгашт ба навбат':'Тайёр шуд'}</button>
@@ -3406,7 +3980,6 @@ function renderChef(){
     const newArrivals = pending.filter(o=>!state.seenPendingIds.has(o.id));
     if(newArrivals.length){
       playChefAlertSound();
-      newArrivals.forEach(o=> speakOrderAlert(o, state.settings.chefAlertText));
     }
     state.seenPendingIds = new Set(currentIds);
   }
@@ -3475,36 +4048,49 @@ function attachChefEvents(){
 /* ---------- Ticket overlay ---------- */
 function renderTicketOverlay(){
   const mode = state.ticketMode || 'edit';
-  const editable = mode === 'edit';
+  // Кассир низ метавонад чекро тағйир диҳад (зиёд/кам кардани маҳсулот)
+  const cashierEditing = mode==='pay' && state.role==='cashier';
+  const editable = mode === 'edit' || cashierEditing;
   const currentOrder = activeOrderForTable(state.activeTable);
   const servedInfo = (mid, qty)=>{
     const prevItem = currentOrder ? currentOrder.items.find(p=>p.menuId===mid) : null;
     const served = prevItem ? (prevItem.servedQty||0) : 0;
     if(served<=0) return '';
-    const m = state.menu.find(x=>x.id===mid) || {unit:'dona'};
+    const m = menuForKey(mid) || {unit:'dona'};
     const remaining = Math.max(0, qty - served);
     const servedLabel = m.unit==='kg' ? formatQtyLabel({name:'',unit:'kg',qty:served}).trim() : served+'×';
     const remLabel = m.unit==='kg' ? formatQtyLabel({name:'',unit:'kg',qty:remaining}).trim() : remaining+'×';
     return `<div style="font-size:10px;color:${remaining<=0?'var(--olive)':'#9c8f78'};margin-top:-2px;">${remaining<=0?'✅ пурра кашида шуд':`${servedLabel} кашида шуд · ${remLabel} боқӣ`}</div>`;
   };
 
+  const activeSec = state.ticketSection === 'extra' ? 'extra' : 'main';
   let menuSection = '';
   if(editable){
     const cats = [...new Set(state.menu.map(m=>m.category))];
     if(!state.activeCat) state.activeCat = cats[0];
+    const secSwitch = `
+      <div style="padding:10px 20px 0;">
+        <div style="font-size:11px;font-weight:700;color:#6b5f4d;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px;">Ба кадом қисми чек илова шавад:</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button type="button" class="cat-tab ${activeSec==='main'?'active':''}" data-ticketsec="main" style="flex:1;min-width:140px;text-align:center;">🍽 Қисми асосӣ (бо хизматрасонӣ)</button>
+          <button type="button" class="cat-tab ${activeSec==='extra'?'active':''}" data-ticketsec="extra" style="flex:1;min-width:140px;text-align:center;${activeSec==='extra'?'background:var(--brick);border-color:var(--brick);color:#fff;':''}">🥡 Қисми иловагӣ (бе хизматрасонӣ)</button>
+        </div>
+      </div>`;
     const tabs = cats.map(c=>`<button class="cat-tab ${c===state.activeCat?'active':''}" data-cat="${escapeHtml(c)}">${escapeHtml(c)}</button>`).join('');
     const items = state.menu.filter(m=>m.category===state.activeCat).map(m=>{
+      const noSrv = m.noService || isLaaliName(m.name);
+      const subBadge = noSrv ? ` <span style="font-size:10px;color:var(--olive);font-weight:700;">· бе хизматрасонӣ</span>` : '';
       if(m.unit==='kg'){
         return `
         <div class="menu-row">
           <div>
             <div class="mname">${escapeHtml(m.name)}</div>
-            <div class="mprice">${fmtMoney(m.price)}/кг</div>
+            <div class="mprice">${fmtMoney(m.price)}/кг${subBadge}</div>
           </div>
           <div style="display:flex;align-items:center;gap:6px;">
             <input type="number" class="kg-qty-input" id="kgin-${m.id}" value="500" min="10" step="50" style="width:64px;padding:6px;border:1.5px solid var(--ink);border-radius:8px;font-family:inherit;font-size:13px;">
             <span style="font-size:11px;color:#6b5f4d;">г</span>
-            <button class="add-btn" data-addgrams="${m.id}">+</button>
+            <button class="add-btn" style="${activeSec==='extra'?'background:var(--brick);':''}" data-${activeSec==='extra'?'addgramsta':'addgrams'}="${m.id}">+</button>
           </div>
         </div>`;
       }
@@ -3512,71 +4098,145 @@ function renderTicketOverlay(){
       <div class="menu-row">
         <div>
           <div class="mname">${escapeHtml(m.name)}</div>
-          <div class="mprice">${fmtMoney(m.price)}</div>
+          <div class="mprice">${fmtMoney(m.price)}${subBadge}</div>
         </div>
-        <button class="add-btn" data-add="${m.id}">+</button>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <button class="add-btn" style="${activeSec==='extra'?'background:var(--brick);':''}" data-${activeSec==='extra'?'addta':'add'}="${m.id}">+</button>
+        </div>
       </div>`;
     }).join('');
-    menuSection = `<div class="cat-tabs">${tabs}</div><div class="menu-list">${items}</div>`;
+    menuSection = `${secSwitch}<div class="cat-tabs">${tabs}</div><div class="menu-list">${items}</div>`;
   }
 
   const draftKeys = Object.keys(state.draftItems);
-  let receiptLines = '';
-  if(draftKeys.length===0){
-    receiptLines = `<div class="receipt-empty">— холӣ аст —</div>`;
-  } else {
-    draftKeys.forEach(mid=>{
-      const m = state.menu.find(x=>x.id===mid);
-      if(!m) return;
-      const qty = state.draftItems[mid];
-      const isKg = m.unit==='kg';
-      if(editable && isKg){
-        receiptLines += `
-        <div class="receipt-line" style="flex-direction:column;align-items:stretch;">
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <span>${escapeHtml(m.name)}</span>
-          <div class="qty-ctrl">
-            <input type="number" class="kg-edit-input" data-editgrams="${mid}" value="${qty}" min="0" step="10" style="width:60px;padding:4px 6px;border:1px solid var(--ink);border-radius:6px;font-family:inherit;font-size:12px;">
-            <span>г</span>
-            <span style="min-width:60px;text-align:right;">${fmtMoney(lineTotal(m,qty))}</span>
-            <button class="qty-btn" data-removeitem="${mid}">✕</button>
-          </div>
+  const mainKeys = draftKeys.filter(k=>!isTaKey(k));
+  const extraKeys = draftKeys.filter(k=>isTaKey(k));
+  const renderReceiptKeyLine = (mid, isExtraLine)=>{
+    const m = menuForKey(mid);
+    if(!m) return '';
+    const baseM = state.menu.find(x=>x.id===baseMenuId(mid)) || m;
+    const displayName = isExtraLine ? baseM.name : m.name;
+    const qty = state.draftItems[mid];
+    const isKg = m.unit==='kg';
+    const moveBtn = '';
+    const extraTag = (isExtraLine && isOshDiscountItem(baseM) && takeawayOshDiscountPct()>0)
+      ? ` <span style="font-size:10px;color:var(--olive);font-weight:700;">(−${takeawayOshDiscountPct()}% ош)</span>`
+      : ((!isExtraLine && isLaaliName(baseM.name)) ? ` <span style="font-size:10px;color:var(--olive);font-weight:700;">(бе хизмат.)</span>` : '');
+    const minCommitted = waiterLockedFromReducing() ? committedTicketItemQty(mid) : 0;
+    const canDec = !waiterLockedFromReducing() || qty > minCommitted;
+    const canRem = !waiterLockedFromReducing() || minCommitted === 0;
+    if(editable && isKg){
+      return `
+      <div class="receipt-line" style="flex-direction:column;align-items:stretch;">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;">
+        <span>${escapeHtml(displayName)}${extraTag}</span>
+        <div class="qty-ctrl">
+          <input type="number" class="kg-edit-input" data-editgrams="${mid}" value="${qty}" min="${minCommitted}" step="10" style="width:60px;padding:4px 6px;border:1px solid var(--ink);border-radius:6px;font-family:inherit;font-size:12px;">
+          <span>г</span>
+          <span style="min-width:56px;text-align:right;">${fmtMoney(lineTotal(m,qty))}</span>
+          ${moveBtn}
+          ${canRem ? `<button class="qty-btn" data-removeitem="${mid}">✕</button>` : `<span title="Нест кардан танҳо барои Кассир/Админ" style="font-size:11px;color:#94A3B8;padding:0 4px;">🔒</span>`}
         </div>
-        ${servedInfo(mid, qty)}
-        </div>`;
-      } else if(editable){
-        receiptLines += `
-        <div class="receipt-line" style="flex-direction:column;align-items:stretch;">
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <span>${escapeHtml(m.name)}</span>
-          <div class="qty-ctrl">
-            <button class="qty-btn" data-dec="${mid}">−</button>
-            <span>${qty}×</span>
-            <button class="qty-btn" data-inc="${mid}">+</button>
-            <span style="min-width:60px;text-align:right;">${fmtMoney(lineTotal(m,qty))}</span>
-          </div>
+      </div>
+      ${servedInfo(mid, qty)}
+      </div>`;
+    } else if(editable){
+      return `
+      <div class="receipt-line" style="flex-direction:column;align-items:stretch;">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;">
+        <span>${escapeHtml(displayName)}${extraTag}</span>
+        <div class="qty-ctrl">
+          ${canDec ? `<button class="qty-btn" data-dec="${mid}">−</button>` : `<button class="qty-btn" disabled style="opacity:.35;cursor:not-allowed;" title="Кам кардан танҳо барои Кассир/Админ">−</button>`}
+          <span>${qty}×</span>
+          <button class="qty-btn" data-inc="${mid}">+</button>
+          <span style="min-width:56px;text-align:right;">${fmtMoney(lineTotal(m,qty))}</span>
+          ${moveBtn}
+          ${canRem ? `<button class="qty-btn" data-removeitem="${mid}">✕</button>` : `<span title="Нест кардан танҳо барои Кассир/Админ" style="font-size:11px;color:#94A3B8;padding:0 4px;">🔒</span>`}
         </div>
-        ${servedInfo(mid, qty)}
-        </div>`;
-      } else {
-        receiptLines += `
-        <div class="receipt-line" style="flex-direction:column;align-items:stretch;">
-        <div style="display:flex;justify-content:space-between;">
-          <span>${formatQtyLabel({name:m.name, unit:m.unit, qty})}</span>
-          <span>${fmtMoney(lineTotal(m,qty))}</span>
-        </div>
-        ${servedInfo(mid, qty)}
-        </div>`;
-      }
-    });
-  }
+      </div>
+      ${servedInfo(mid, qty)}
+      </div>`;
+    } else {
+      return `
+      <div class="receipt-line" style="flex-direction:column;align-items:stretch;">
+      <div style="display:flex;justify-content:space-between;">
+        <span>${formatQtyLabel({name:displayName, unit:m.unit, qty})}${extraTag}</span>
+        <span>${fmtMoney(lineTotal(m,qty))}</span>
+      </div>
+      ${servedInfo(mid, qty)}
+      </div>`;
+    }
+  };
   const subtotal = draftTotal();
+  const mainSub = draftMainSubtotal();
+  const extraSub = draftExtraSubtotal();
+  const discountAmt = draftDiscount();
   const serviceFee = serviceChargeAmount(draftServiceBase());
-  const total = subtotal + serviceFee;
+  const total = roundMoney(Math.max(0, subtotal - discountAmt) + serviceFee);
   const disabled = draftKeys.length===0 ? 'disabled' : '';
+  const draftItemsList = draftKeys.map(k=>{
+    const mm = menuForKey(k);
+    return mm ? {menuId:k, name:mm.name, unit:mm.unit||'dona', category:mm.category, qty:state.draftItems[k]} : null;
+  }).filter(Boolean);
+  const schedDiffBannerHtml = currentOrder ? renderScheduledOshDiffBanner(currentOrder, draftItemsList) : '';
+  const receiptSectionsHtml = `${schedDiffBannerHtml}
+    <div style="background:#F8FAFC;border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:10px;">
+      <div style="font-size:12px;font-weight:800;color:var(--ink);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;">
+        <span>🍽 1. Қисми асосӣ (дар миз)</span>
+        <span style="font-size:11px;font-weight:600;color:#64748B;">бо ҳаққи хизматрасонӣ (${state.settings.serviceChargePct||0}%)</span>
+      </div>
+      ${mainKeys.length ? mainKeys.map(k=>renderReceiptKeyLine(k,false)).join('') : `<div class="receipt-empty" style="padding:6px 0;">— дар қисми асосӣ чизе нест —</div>`}
+      ${mainKeys.length ? `
+        <div class="receipt-line" style="border-top:1px dashed var(--line);margin-top:4px;padding-top:6px;font-size:12px;color:#475569;">
+          <span>Ҷамъи қисми асосӣ</span><span>${fmtMoney(mainSub)}</span>
+        </div>
+        <div class="receipt-line" style="font-size:12px;color:#475569;">
+          <span>Ҳаққи хизматрасонӣ (${state.settings.serviceChargePct||0}%)</span><span>+${fmtMoney(serviceFee)}</span>
+        </div>` : ''}
+    </div>
+    <div style="background:#FEF2F2;border:1.5px solid #FECACA;border-radius:10px;padding:10px 12px;margin-bottom:10px;">
+      <div style="font-size:12px;font-weight:800;color:var(--brick);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;">
+        <span>🥡 2. Қисми иловагӣ (вақти баромадан / собой)</span>
+        <span style="font-size:11px;font-weight:700;color:var(--olive);">бе ҳаққи хизматрасонӣ (0%)</span>
+      </div>
+      ${extraKeys.length ? extraKeys.map(k=>renderReceiptKeyLine(k,true)).join('') : `<div class="receipt-empty" style="padding:6px 0;">— чизҳои иловагӣ нест —</div>`}
+      ${extraKeys.length ? `
+        <div class="receipt-line" style="border-top:1px dashed #FECACA;margin-top:4px;padding-top:6px;font-size:12px;color:#475569;">
+          <span>Ҷамъи қисми иловагӣ</span><span>${fmtMoney(extraSub)}</span>
+        </div>
+        ${discountAmt>0 ? `<div class="receipt-line" style="font-size:12px;color:var(--olive);font-weight:700;"><span>Тахфифи оши иловагӣ (${takeawayOshDiscountPct()}%)</span><span>−${fmtMoney(discountAmt)}</span></div>` : ''}
+        <div class="receipt-line" style="font-size:11px;color:var(--olive);">
+          <span>Ҳаққи хизматрасонӣ барои қисми иловагӣ</span><span>0 смн</span>
+        </div>` : ''}
+    </div>`;
+
+  const freeTablesForMove = currentOrder ? sortedTables().filter(t=>t.id!==currentOrder.table && !activeOrderForTable(t.id)) : [];
+  const moveTableBlock = currentOrder ? `
+    <div style="margin:10px 20px 0;padding:10px 12px;background:#F8FAFC;border:1.5px solid var(--line);border-radius:10px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;">
+      <span style="font-size:12px;font-weight:700;color:var(--ink);">🔄 Кӯчонидан ба дигар миз:</span>
+      ${freeTablesForMove.length ? `
+        <div style="display:flex;align-items:center;gap:6px;flex:1;justify-content:flex-end;">
+          <select id="moveOrderTableSelect" style="padding:7px 10px;border:1.5px solid var(--ink);border-radius:8px;font-family:inherit;font-size:13px;background:var(--white);">
+            ${freeTablesForMove.map(t=>`<option value="${t.id}">${escapeHtml(t.name)} (${t.seats} ҷой)</option>`).join('')}
+          </select>
+          <button type="button" class="btn-primary" id="moveOrderTableBtn" style="flex:none;padding:7px 14px;font-size:12px;">Кӯчонидан</button>
+        </div>
+      ` : `<span style="font-size:12px;color:#9c8f78;">мизи озод нест</span>`}
+    </div>` : '';
+
+  const waiterLockedBanner = (currentOrder && state.role==='waiter') ? (
+    isCurrentHeadWaiter() ? `
+    <div style="margin:10px 20px 0;padding:8px 12px;background:#ECFDF5;border:1.5px solid #6EE7B7;border-radius:10px;font-size:12px;color:#065F46;font-weight:700;">
+      ⭐ Шумо <b>Сарофитсиант</b> ҳастед — метавонед маҳсулоти чекро ҳам илова (+) ва ҳам кам ё нест (− / ✕) кунед.
+    </div>` : `
+    <div style="margin:10px 20px 0;padding:8px 12px;background:#EFF6FF;border:1.5px solid #BFDBFE;border-radius:10px;font-size:12px;color:var(--blue-dim);font-weight:600;">
+      ➕ Шумо метавонед ба чек маҳсулоти нав илова кунед, аммо кам ё нест кардани маҳсулоти қабулшуда (🔒) танҳо барои Сарофитсиант, Кассир ва Админ дастрас аст.
+    </div>`
+  ) : '';
 
   let actions = '';
-  const cancelBlock = currentOrder ? (
+  const canCancelOrder = currentOrder && (state.role==='cashier' || state.role==='admin' || isCurrentHeadWaiter());
+  const cancelBlock = canCancelOrder ? (
     state.confirmCancelOrderId===currentOrder.id ? `
     <div class="form-box" style="border-color:var(--brick);margin:10px 20px 0;width:auto;">
       <div style="width:100%;">
@@ -3588,16 +4248,17 @@ function renderTicketOverlay(){
     </div>` : `<div style="padding:8px 20px 0;"><button class="btn-ghost" style="color:var(--brick);border-color:var(--brick);width:100%;" id="cancelOrderBtn">✕ Бекор кардани фармоиш (мизоҷ рад кард)</button></div>`
   ) : '';
   if(mode==='edit'){
-    const alreadySent = currentOrder && currentOrder.sentToKitchen;
-    const statusLine = currentOrder
-      ? `<p style="padding:0 20px;margin:-6px 0 8px;font-size:12px;color:${alreadySent?'var(--olive)':'#9c8f78'};">${alreadySent?'✅ Ба ошпаз фиристода шудааст':'⏳ Ҳанӯз ба ошпаз фиристода нашудааст'}</p>`
-      : '';
-    actions = `${statusLine}<div class="ticket-actions" style="gap:8px;">
-      <button type="button" class="btn-ghost" style="flex:1;" id="saveTicketBtn" ${disabled}>Захира</button>
-      <button type="button" class="btn-pay" style="flex:1;" id="sendKitchenBtn" ${disabled}>🍚 Ба ошпаз фиристодан</button>
+    actions = `<div class="ticket-actions" style="gap:8px;">
+      <button type="button" class="btn-primary" style="flex:1;" id="saveTicketBtn" ${disabled}>💾 Захира</button>
     </div>${cancelBlock}`;
   } else if(mode==='pay'){
-    actions = `<div class="ticket-actions" style="flex-direction:column;align-items:stretch;">${renderSplitPaymentForm('paytk', total)}</div>${cancelBlock}`;
+    const dirty = cashierEditing && ticketDraftDirty(currentOrder);
+    const editNote = cashierEditing ? `<p style="padding:0 20px;margin:-6px 0 8px;font-size:12px;color:${dirty?'var(--brick)':'#9c8f78'};">${dirty?'✏️ Чек тағйир дода шуд — ҳангоми пардохт худкор сабт мешавад':'✏️ Шумо метавонед маҳсулотро зиёд ё кам кунед'}</p>` : '';
+    const saveEditBtn = dirty && draftKeys.length ? `<div style="padding:0 20px 8px;"><button type="button" class="btn-ghost" style="width:100%;" id="cashierSaveEditsBtn">💾 Сабти тағйироти чек</button></div>` : '';
+    const payBody = draftKeys.length ? renderSplitPaymentForm('paytk', total) : `<p style="text-align:center;color:var(--brick);font-size:13px;">Чек холӣ аст — маҳсулот илова кунед ё фармоишро бекор кунед</p>`;
+    actions = `${editNote}${saveEditBtn}<div class="ticket-actions" style="flex-direction:column;align-items:stretch;">${payBody}</div>${cancelBlock}`;
+  } else {
+    actions = `${cancelBlock}`;
   }
 
   const _activeTbl = state.tables.find(t=>t.id===state.activeTable);
@@ -3610,8 +4271,11 @@ function renderTicketOverlay(){
         <button class="close-x" id="closeTicket">✕</button>
       </div>
       ${state.role!=='waiter' ? `<div style="padding:10px 20px 0;">${oshRemainingBadge()}</div>` : ''}
+      ${currentOrder && orderSourceBadge(currentOrder) ? `<div style="padding:10px 20px 0;">${orderSourceBadge(currentOrder)}</div>` : ''}
       ${currentOrder && currentOrder.createdBy ? `<p style="padding:10px 20px 0;font-size:12px;color:#9c8f78;margin:0;">👤 официант: ${escapeHtml(currentOrder.createdBy)}</p>` : ''}
       ${currentOrder && currentOrder.customerPhone ? `<p style="padding:4px 20px 0;font-size:12px;color:#9c8f78;margin:0;">📞 ${escapeHtml(String(currentOrder.customerPhone).replace(/\D/g,'').slice(0,9))}</p>` : ''}
+      ${waiterLockedBanner}
+      ${moveTableBlock}
       ${mode==='edit' && !currentOrder && state.role==='waiter' ? `
        <div class="form-box" style="margin:10px 20px 14px;display:block;">
          <div style="font-weight:700;font-size:13px;margin-bottom:10px;">📞 Рақами телефони клиент (9 рақам)</div>
@@ -3620,9 +4284,8 @@ function renderTicketOverlay(){
       ${menuSection}
       <div class="receipt">
         <div class="receipt-title">Чек — Миз: ${_activeTblName}</div>
-        ${receiptLines}
-        ${serviceFee>0 ? `<div class="receipt-line"><span>Тарҳи мобайнӣ</span><span>${fmtMoney(subtotal)}</span></div><div class="receipt-line"><span>Ҳаққи хизматрасонӣ (${state.settings.serviceChargePct}%)</span><span>+${fmtMoney(serviceFee)}</span></div>` : ''}
-        <div class="receipt-total"><span>Ҳамагӣ</span><span>${fmtMoney(total)}</span></div>
+        ${receiptSectionsHtml}
+        <div class="receipt-total"><span>Ҳамагӣ (Асосӣ + Иловагӣ)</span><span>${fmtMoney(total)}</span></div>
       </div>
       ${actions}
     </div>
@@ -3633,6 +4296,16 @@ function attachTicketEvents(){
   const overlay = document.getElementById('ticketOverlay');
   overlay.addEventListener('click', (e)=>{ if(e.target===overlay) closeTicket(); });
   document.getElementById('closeTicket').addEventListener('click', closeTicket);
+  const moveOrderTableBtn = document.getElementById('moveOrderTableBtn');
+  if(moveOrderTableBtn){
+    moveOrderTableBtn.addEventListener('click', async ()=>{
+      const o = activeOrderForTable(state.activeTable);
+      const sel = document.getElementById('moveOrderTableSelect');
+      if(o && sel && sel.value){
+        await moveOrderToTable(o.id, Number(sel.value));
+      }
+    });
+  }
   const cancelOrderBtn = document.getElementById('cancelOrderBtn');
   if(cancelOrderBtn) cancelOrderBtn.addEventListener('click', ()=>{
     const o = activeOrderForTable(state.activeTable);
@@ -3650,7 +4323,8 @@ function attachTicketEvents(){
   if(cancelCancelOrderBtn) cancelCancelOrderBtn.addEventListener('click', ()=>{
     state.confirmCancelOrderId = null; render();
   });
-  if(mode==='edit'){
+  const cashierEditing = mode==='pay' && state.role==='cashier';
+  if(mode==='edit' || cashierEditing){
     const arrivalPhone = document.getElementById('arrivalPhone');
     if(arrivalPhone){
       arrivalPhone.addEventListener('input', e=>setCustomerPhone(e.target.value));
@@ -3660,7 +4334,10 @@ function attachTicketEvents(){
         if(!/^[0-9]$/.test(e.key)) e.preventDefault();
       });
     }
-    document.querySelectorAll('.cat-tab').forEach(el=>{
+    document.querySelectorAll('#ticketOverlay [data-ticketsec]').forEach(el=>{
+      el.addEventListener('click', ()=>{ state.ticketSection = el.dataset.ticketsec; render(); });
+    });
+    document.querySelectorAll('#ticketOverlay [data-cat]').forEach(el=>{
       el.addEventListener('click', ()=>{ state.activeCat = el.dataset.cat; render(); });
     });
     document.querySelectorAll('[data-add]').forEach(el=>{
@@ -3684,19 +4361,39 @@ function attachTicketEvents(){
     document.querySelectorAll('[data-removeitem]').forEach(el=>{
       el.addEventListener('click', ()=> removeDraftItem(el.dataset.removeitem));
     });
+    // Қисми иловагӣ (вақти баромадан / собой — бе ҳаққи хизматрасонӣ)
+    document.querySelectorAll('[data-addta]').forEach(el=>{
+      el.addEventListener('click', ()=> changeQty(el.dataset.addta+TA_SUFFIX, 1));
+    });
+    document.querySelectorAll('[data-addgramsta]').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        const input = document.getElementById('kgin-'+el.dataset.addgramsta);
+        addGrams(el.dataset.addgramsta+TA_SUFFIX, input ? input.value : 0);
+      });
+    });
+    document.querySelectorAll('[data-toextra]').forEach(el=>{
+      el.addEventListener('click', ()=> moveDraftItemSection(el.dataset.toextra, true));
+    });
+    document.querySelectorAll('[data-tomain]').forEach(el=>{
+      el.addEventListener('click', ()=> moveDraftItemSection(el.dataset.tomain, false));
+    });
+    const cashierSaveEditsBtn = document.getElementById('cashierSaveEditsBtn');
+    if(cashierSaveEditsBtn) cashierSaveEditsBtn.addEventListener('click', async e=>{
+      e.preventDefault();
+      e.stopPropagation();
+      const o = activeOrderForTable(state.activeTable);
+      const ok = await saveTicket(!!(o && o.sentToKitchen), {keepOpen:true, cashierEdit:true});
+      if(ok) render();
+    });
     const saveBtn = document.getElementById('saveTicketBtn');
     if(saveBtn) saveBtn.addEventListener('click', async e=>{
       e.preventDefault();
       e.stopPropagation();
-      await saveTicket(false);
+      const existingOrd = activeOrderForTable(state.activeTable);
+      await saveTicket(true, (existingOrd && state.role!=='waiter') ? {cashierEdit:true} : {});
     });
-    const sendKitchenBtn = document.getElementById('sendKitchenBtn');
-    if(sendKitchenBtn) sendKitchenBtn.addEventListener('click', async e=>{
-      e.preventDefault();
-      e.stopPropagation();
-      await saveTicket(true);
-    });
-  } else if(mode==='pay'){
+  }
+  if(mode==='pay'){
     attachSplitPaymentEvents('paytk', draftTotalWithService(), (cash, noncash)=> payTicket(cash, noncash));
   }
 }
@@ -3705,6 +4402,7 @@ function attachTicketEvents(){
 function renderAdmin(){
   let body = '';
   if(state.adminTab==='tables') body = renderAdminTables();
+  else if(state.adminTab==='osh') body = renderOshShiftsSection();
   else if(state.adminTab==='orders') body = renderAdminOrders();
   else if(state.adminTab==='menu') body = renderAdminMenu();
   else if(state.adminTab==='inventory') body = renderAdminInventory();
@@ -3716,6 +4414,7 @@ function renderAdmin(){
   return `
   <div class="admin-tabs">
     <button class="admin-tab ${state.adminTab==='tables'?'active':''}" data-atab="tables">Мизҳо</button>
+    <button class="admin-tab ${state.adminTab==='osh'?'active':''}" data-atab="osh">🍚 Ош / Бастҳо</button>
     <button class="admin-tab ${state.adminTab==='orders'?'active':''}" data-atab="orders">Фармоишҳо</button>
     <button class="admin-tab ${state.adminTab==='menu'?'active':''}" data-atab="menu">Меню</button>
     <button class="admin-tab ${state.adminTab==='inventory'?'active':''}" data-atab="inventory">Анбор</button>
@@ -3856,6 +4555,151 @@ async function deleteClientRecord(delType, delId){
   }
   showToast('Сабт нест шуд');
 }
+
+async function setOrderOshShift(orderId, shift){
+  const sh = Number(shift)===2 ? 2 : 1;
+  const o = state.orders.find(x=>x.id===orderId);
+  if(!o) return;
+  o.oshShift = sh;
+  o.oshShiftManual = sh;
+  o.updatedAt = Date.now();
+  await saveOrderV2(o);
+  showToast('Ба Басти '+sh+' гузаронида шуд');
+  render();
+}
+async function setActiveOshShift(shift){
+  const sh = Number(shift)===2 ? 2 : 1;
+  const cur = normalizeOshStock(state.oshStock && state.oshStock.date===todayKey() ? state.oshStock : {date:todayKey(), lunchKg:0, eveningKg:0});
+  state.oshStock = {...cur, date:todayKey(), activeShift:sh};
+  await saveOshStock(state.oshStock);
+  showToast('Басти фаъол: Басти '+sh);
+  render();
+}
+function renderOshShiftsSection(){
+  const hasStock = state.oshStock && state.oshStock.date===todayKey();
+  const stock = hasStock ? normalizeOshStock(state.oshStock) : {lunchKg:0, eveningKg:0, activeShift:currentShift()};
+  const actShift = activeOshShift();
+  const s1 = oshShiftStats(1);
+  const s2 = oshShiftStats(2);
+  const totalCooked = stock.lunchKg + stock.eveningKg;
+  const totalUsed = s1.total + s2.total;
+  const totalRem = totalCooked - totalUsed;
+
+  const todayOrders = (state.orders||[]).filter(o=>isOrderInTodayOshScope(o) && oshWeightFromItems(o.items)>0)
+    .sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+  const schedOrders = todayOrders.filter(o=>o.type==='scheduled' || o.fromScheduled);
+  const waiterOrders = todayOrders.filter(o=>o.type!=='takeaway' && o.type!=='scheduled' && !o.fromScheduled);
+  const takeawayOrders = todayOrders.filter(o=>o.type==='takeaway');
+
+  const renderShiftOrderRow = (o)=>{
+    const kg = oshWeightFromItems(o.items);
+    const sh = orderOshShift(o);
+    const oshDesc = (o.items||[]).filter(it=>itemOshKg(it)>0).map(i=>formatQtyLabel(i)).join(', ');
+    const statusBadge = o.status==='paid'
+      ? '<span style="color:var(--olive);font-weight:700;">✅ пардохт шуд</span>'
+      : (o.table ? '<span style="color:var(--blue);font-weight:700;">🍽 дар миз фаъол</span>' : '<span style="color:#c07f00;font-weight:700;">⏳ брон (интизор)</span>');
+    return `<div class="receipt-item-row" style="flex-wrap:wrap;gap:10px;">
+      <div>
+        <div class="l1">${orderLabel(o)} · <b style="color:var(--brick);">🍚 ${kg.toFixed(2)} кг ош</b></div>
+        <div class="l2">${oshDesc} · ${statusBadge}${o.createdBy ? ' · 👤 '+escapeHtml(o.createdBy) : ''}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+        <button type="button" class="cat-tab ${sh===1?'active':''}" style="padding:5px 10px;font-size:11px;" data-orderoshshift="${o.id}|1">☀️ Басти 1</button>
+        <button type="button" class="cat-tab ${sh===2?'active':''}" style="padding:5px 10px;font-size:11px;" data-orderoshshift="${o.id}|2">🌙 Басти 2</button>
+      </div>
+    </div>`;
+  };
+
+  return `
+    <div class="section-title">🍚 Идораи оши имрӯза — 2 баст (смена)</div>
+    <p style="color:#6b5f4d;font-size:13px;margin-top:-8px;margin-bottom:14px;">
+      Дар ин бахш миқдори оши пухташудаи имрӯзаро барои <b>Басти 1</b> ва <b>Басти 2</b> ворид кунед. Ҳангоми қабули ҳар гуна заказ (брон, мизҳои официантон ё собой) миқдори ош <b>дарҳол</b> аз басти дахлдор кам мешавад.
+    </p>
+
+    <div class="form-box" style="flex-direction:column;align-items:stretch;margin-bottom:18px;border:2px solid var(--blue);">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;">
+        <div style="font-weight:800;font-size:15px;color:var(--ink);">🍳 Ворид кардани оши пухташуда (имрӯз)</div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:12px;color:#64748B;font-weight:600;">Басти фаъол барои заказҳои нави миз/собой:</span>
+          <button type="button" class="cat-tab ${actShift===1?'active':''}" data-setactiveoshshift="1" style="padding:6px 12px;">☀️ Басти 1</button>
+          <button type="button" class="cat-tab ${actShift===2?'active':''}" data-setactiveoshshift="2" style="padding:6px 12px;">🌙 Басти 2</button>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;">
+        <div class="field"><label>☀️ Басти 1 — пухта шуд (кг)</label><input type="number" id="oshSecLunchInput" value="${hasStock ? stock.lunchKg : ''}" min="0" step="0.5" placeholder="масалан: 20"></div>
+        <div class="field"><label>🌙 Басти 2 — пухта шуд (кг)</label><input type="number" id="oshSecEveningInput" value="${hasStock ? stock.eveningKg : ''}" min="0" step="0.5" placeholder="масалан: 50"></div>
+        <button class="btn-primary" style="flex:none;padding:10px 22px;" id="saveOshSecStockBtn">💾 Сабти оши пухташуда</button>
+        <button class="btn-ghost" style="flex:none;padding:10px 16px;" id="openSchedFromOshBtn">🕐 + Закази брон (вақтдор)</button>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card" style="border:2px solid ${actShift===1?'var(--blue)':'var(--line)'};">
+        <div class="label">☀️ БАСТИ 1 (${shiftLabel(1)}) ${actShift===1?'· ФАЪОЛ':''}</div>
+        <div class="value" style="color:${s1.remaining<=0?'var(--brick)':'var(--olive)'};">${s1.remaining.toFixed(2)} кг боқӣ</div>
+        <div style="font-size:12px;color:#475569;margin-top:6px;line-height:1.5;">
+          🍳 Пухта шуд: <b>${s1.cooked.toFixed(2)} кг</b><br>
+          📉 Ҳамагӣ рафт: <b>${s1.total.toFixed(2)} кг</b><br>
+          <span style="font-size:11px;color:#64748B;">🕐 Брон: ${s1.scheduledOnly.toFixed(2)} кг · 🍽 Официантҳо: ${s1.waiters.toFixed(2)} кг · 🥡 Собой: ${s1.takeaway.toFixed(2)} кг</span>
+        </div>
+      </div>
+      <div class="stat-card" style="border:2px solid ${actShift===2?'var(--blue)':'var(--line)'};">
+        <div class="label">🌙 БАСТИ 2 (${shiftLabel(2)}) ${actShift===2?'· ФАЪОЛ':''}</div>
+        <div class="value" style="color:${s2.remaining<=0?'var(--brick)':'var(--olive)'};">${s2.remaining.toFixed(2)} кг боқӣ</div>
+        <div style="font-size:12px;color:#475569;margin-top:6px;line-height:1.5;">
+          🍳 Пухта шуд: <b>${s2.cooked.toFixed(2)} кг</b><br>
+          📉 Ҳамагӣ рафт: <b>${s2.total.toFixed(2)} кг</b><br>
+          <span style="font-size:11px;color:#64748B;">🕐 Брон: ${s2.scheduledOnly.toFixed(2)} кг · 🍽 Официантҳо: ${s2.waiters.toFixed(2)} кг · 🥡 Собой: ${s2.takeaway.toFixed(2)} кг</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="label">🍚 ҲАМАГӢ ИМРӮЗ (БАСТИ 1 + 2)</div>
+        <div class="value" style="color:${totalRem<=0?'var(--brick)':'var(--ink)'};">${totalRem.toFixed(2)} кг боқӣ</div>
+        <div style="font-size:12px;color:#475569;margin-top:6px;line-height:1.5;">
+          🍳 Умумӣ пухта: <b>${totalCooked.toFixed(2)} кг</b><br>
+          📉 Умумӣ рафт: <b>${totalUsed.toFixed(2)} кг</b>
+        </div>
+      </div>
+    </div>
+
+    ${renderOshShiftTable()}
+
+    <div class="section-title" style="margin-top:24px;">🕐 Заказҳои брон (вақтдор) — тақсим ба бастҳо (${schedOrders.length})</div>
+    <p style="color:#6b5f4d;font-size:12px;margin-top:-8px;margin-bottom:10px;">Шумо метавонед ҳар як закази бронро ба <b>Басти 1</b> ё <b>Басти 2</b> гузаронед — миқдори ош дарҳол аз ҳамон баст ҳисоб мешавад.</p>
+    ${schedOrders.length ? schedOrders.map(renderShiftOrderRow).join('') : '<div class="empty-state" style="padding:18px;">Ҳоло закази брон бо ош нест</div>'}
+
+    <div class="section-title" style="margin-top:24px;">🍽 Заказҳои официантон дар мизҳо (${waiterOrders.length})</div>
+    ${waiterOrders.length ? waiterOrders.map(renderShiftOrderRow).join('') : '<div class="empty-state" style="padding:18px;">Ҳоло дар мизҳо закази ош нест</div>'}
+
+    ${takeawayOrders.length ? `<div class="section-title" style="margin-top:24px;">🥡 Заказҳои собой бо ош (${takeawayOrders.length})</div>${takeawayOrders.map(renderShiftOrderRow).join('')}` : ''}
+  `;
+}
+function attachOshShiftsEvents(){
+  const saveBtn = document.getElementById('saveOshSecStockBtn');
+  if(saveBtn) saveBtn.addEventListener('click', async ()=>{
+    const lunchKg = Math.max(0, Number(document.getElementById('oshSecLunchInput')?.value) || 0);
+    const eveningKg = Math.max(0, Number(document.getElementById('oshSecEveningInput')?.value) || 0);
+    const actShift = activeOshShift();
+    state.oshStock = {date: todayKey(), kg: lunchKg + eveningKg, lunchKg, eveningKg, activeShift: actShift};
+    await saveOshStock(state.oshStock);
+    showToast('✅ Миқдори оши Басти 1 ва Басти 2 сабт шуд');
+    render();
+  });
+  const openSchedBtn = document.getElementById('openSchedFromOshBtn');
+  if(openSchedBtn) openSchedBtn.addEventListener('click', openScheduled);
+  document.querySelectorAll('[data-setactiveoshshift]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      setActiveOshShift(Number(el.dataset.setactiveoshshift));
+    });
+  });
+  document.querySelectorAll('[data-orderoshshift]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const [ordId, sh] = el.dataset.orderoshshift.split('|');
+      setOrderOshShift(ordId, Number(sh));
+    });
+  });
+}
+
 function renderAdminOrders(){
   const clientQuery = (state.clientSearchQuery||'').trim().toLowerCase();
   const allClients = allKnownClients();
@@ -4026,7 +4870,7 @@ function renderCashierSalary(){
     const w=computeWages(acc);
     const b=staffCommissionBreakdown(acc.username,'waiter','today');
     const month=staffCommissionBreakdown(acc.username,'waiter','month');
-    return `<div class="salary-row"><div class="salary-name"><div class="nm">${escapeHtml(acc.username)}</div><div class="cat">Официант</div></div><div class="salary-computed" style="margin-left:0;"><span>Имрӯз: <b class="mono">${w.daily.toFixed(1)} смн</b></span><span>Ин моҳ: <b class="mono">${w.monthly.toFixed(1)} смн</b></span><span>Чекҳои имрӯз: <b>${b.orderCount}</b> · Комиссия: <b>${b.total.toFixed(1)} смн</b></span><span>Комиссия моҳ: <b>${month.total.toFixed(1)} смн</b></span></div></div>`;
+    return `<div class="salary-row"><div class="salary-name"><div class="nm">${escapeHtml(acc.username)}</div><div class="cat">Официант · <b>${b.commissionRate}%</b> аз чек</div></div><div class="salary-computed" style="margin-left:0;"><span>Имрӯз: <b class="mono">${w.daily.toFixed(1)} смн</b></span><span>Ин моҳ: <b class="mono">${w.monthly.toFixed(1)} смн</b></span><span>Чекҳои имрӯз: <b>${b.orderCount}</b> · Комиссия (${b.commissionRate}%): <b>${b.total.toFixed(1)} смн</b></span><span>Комиссия моҳ (${month.commissionRate}%): <b>${month.total.toFixed(1)} смн</b></span></div></div>`;
   }).join('');
   const my = currentCashier ? computeWages(currentCashier) : {daily:0,monthly:0};
   const myB = currentCashier ? staffCommissionBreakdown(currentUsername,'cashier','today') : {total:0,orderCount:0};
@@ -4036,7 +4880,10 @@ function renderCashierSalary(){
     <div class="section-title" style="margin-top:20px;">👤 Маоши официантҳо</div>
     ${cashierRows || '<div class="empty-state" style="padding:24px;">Ҳоло официантҳо илова нашудаанд</div>'}
     <div class="section-title" style="margin-top:28px;">💵 Маоши кассир</div>
-    <div class="stat-row"><div class="stat-card"><div class="label">Имрӯз</div><div class="value">${my.daily.toFixed(1)} смн</div></div><div class="stat-card"><div class="label">Ин моҳ</div><div class="value">${my.monthly.toFixed(1)} смн</div></div><div class="stat-card"><div class="label">Комиссияи имрӯз</div><div class="value">${myB.total.toFixed(1)} смн</div></div><div class="stat-card"><div class="label">Комиссияи моҳ</div><div class="value">${myM.total.toFixed(1)} смн</div></div></div>`;
+    <div class="stat-row"><div class="stat-card"><div class="label">Имрӯз</div><div class="value">${my.daily.toFixed(1)} смн</div></div><div class="stat-card"><div class="label">Ин моҳ</div><div class="value">${my.monthly.toFixed(1)} смн</div></div><div class="stat-card"><div class="label">Комиссияи имрӯз</div><div class="value">${myB.total.toFixed(1)} смн</div></div><div class="stat-card"><div class="label">Комиссияи моҳ</div><div class="value">${myM.total.toFixed(1)} смн</div></div></div>
+    <div class="section-title" style="margin-top:28px;">📅 Ҳисоботи моҳонаи маошҳо</div>
+    ${renderMonthlySalaryLedger()}
+    ${renderClearMonthlySalaryControl()}`;
 }
 function renderAdminSalary(){
   const roleLabel={waiter:'Официант',cashier:'Кассир'};
@@ -4046,8 +4893,10 @@ function renderAdminSalary(){
   const commissionAccounts=(state.accounts||[]).filter(a=>a.role==='waiter');
   const makeShiftRows=(shift)=>commissionAccounts.map(acc=>{
     const b=staffCommissionBreakdown(acc.username,'waiter','today',shift);
-    return `<tr><td>${escapeHtml(acc.username)}</td><td>${b.orderCount}</td><td>${fmtMoney(b.salesTotal)}</td><td>5%</td><td class="total-cell">${fmtMoney(b.total)}</td></tr>`;
+    return `<tr><td>${escapeHtml(acc.username)}</td><td>${b.orderCount}</td><td>${fmtMoney(b.salesTotal)}</td><td><b>${b.commissionRate}%</b></td><td class="total-cell">${fmtMoney(b.total)}</td></tr>`;
   }).join('');
+  const ratesSet = Array.from(new Set(commissionAccounts.map(a=>accountCommissionPct(a))));
+  const summaryRateLabel = ratesSet.length===1 ? (ratesSet[0]+'%') : 'Аз рӯи %';
   const shiftTable=(shift,label)=>{
     const rows=makeShiftRows(shift);
     const all=commissionAccounts.reduce((x,acc)=>{const b=staffCommissionBreakdown(acc.username,'waiter','today',shift);return {checks:x.checks+b.orderCount,sales:x.sales+b.salesTotal,wage:x.wage+b.total};},{checks:0,sales:0,wage:0});
@@ -4055,21 +4904,30 @@ function renderAdminSalary(){
     return `<div class="section-title" style="margin-top:22px;">${label}</div>
       <table class="xls-table"><thead><tr><th>Офитсиант</th><th>Чекҳо</th><th>Фурӯши умумӣ</th><th>Фоиз</th><th>Маош</th></tr></thead>
       <tbody>${rows||'<tr><td colspan="5" style="text-align:center;color:#9c8f78;">Офитсиант нест</td></tr>'}
-      <tr><td><b>Ҳамагӣ</b></td><td><b>${all.checks}</b></td><td><b>${fmtMoney(all.sales)}</b></td><td><b>5%</b></td><td class="total-cell"><b>${fmtMoney(all.wage)}</b></td></tr></tbody></table>
+      <tr><td><b>Ҳамагӣ</b></td><td><b>${all.checks}</b></td><td><b>${fmtMoney(all.sales)}</b></td><td><b>${summaryRateLabel}</b></td><td class="total-cell"><b>${fmtMoney(all.wage)}</b></td></tr></tbody></table>
       <div style="font-size:12px;color:#6b5f4d;margin-top:6px;">Маоши кормандони техникӣ дар ин смена: <b>${fmtMoney(tech)}</b></div>
       <button class="btn-ghost" data-resetsalaryshift="${shift}" style="margin-top:8px;color:var(--brick);border-color:var(--brick);">🗑 Пок кардани маоши сменаи ${shift}</button>`;
   };
   const techRows=(state.technicalStaff||[]).map(x=>`<div class="salary-row"><div class="salary-name"><div class="nm">${escapeHtml(x.name)}</div><div class="cat">${escapeHtml(x.role||'Корманди техникӣ')}</div></div><input type="number" class="salary-input" id="tech-wage-${x.id}" value="${Number(x.dailyWage)||0}" min="0" step="1"><span class="salary-computed"><span>Маоши рӯзона: <b>${fmtMoney(x.dailyWage)}</b></span></span><button class="icon-btn danger" data-deltech="${x.id}">🗑</button></div>`).join('');
+  const waiterMonthRows = commissionAccounts.map(acc=>{
+    const w=computeWages(acc);
+    const m=staffCommissionBreakdown(acc.username,'waiter','month');
+    return `<tr><td>${escapeHtml(acc.username)}</td><td>${m.orderCount}</td><td>${fmtMoney(m.salesTotal)}</td><td><b>${m.commissionRate}%</b></td><td class="total-cell">${fmtMoney(w.monthly)}</td></tr>`;
+  }).join('');
+  const waiterMonthTable = `<div class="section-title" style="margin-top:26px;">📊 Ҳисоботи моҳонаи маоши офитсиантҳо (${monthKey})</div>
+    <table class="xls-table"><thead><tr><th>Офитсиант</th><th>Чекҳои моҳ</th><th>Фурӯши моҳ</th><th>Фоиз</th><th>Маоши моҳ</th></tr></thead>
+    <tbody>${waiterMonthRows||'<tr><td colspan="5" style="text-align:center;color:#9c8f78;">Офитсиант нест</td></tr>'}</tbody></table>`;
   return `<div class="section-title">💰 Маош</div>
     <div class="stat-row"><div class="stat-card"><div class="label">Маоши умумии имрӯз</div><div class="value">${fmtMoney(totalToday)}</div></div><div class="stat-card"><div class="label">Маоши ҷамъшудаи ${monthKey}</div><div class="value">${fmtMoney(monthTotal)}</div></div></div>
     ${shiftTable(1,'☀️ Смена 1 — '+shiftLabel(1))}
     ${shiftTable(2,'🌙 Смена 2 — '+shiftLabel(2))}
+    ${waiterMonthTable}
     <div class="section-title" style="margin-top:28px;">🧹 Кормандони техникӣ</div>
     ${techRows||'<div class="empty-state">Ҳоло корманди техникӣ илова нашудааст.</div>'}
     <div class="form-box" style="margin-top:10px;"><div class="field"><label>Ном</label><input id="newTechName" placeholder="масалан: Саид"></div><div class="field"><label>Вазифа</label><input id="newTechRole" placeholder="масалан: Ошпаз"></div><div class="field small"><label>Маоши рӯзона</label><input id="newTechWage" type="number" min="0" step="1" placeholder="300"></div><button class="btn-primary" id="addTechBtn">+ Илова кардан</button></div>
-    <div class="section-title" style="margin-top:30px;">📅 Маошҳои ҷамъшуда</div>
+    <div class="section-title" style="margin-top:30px;">📅 Ҳисоботи моҳонаи маошҳои ҷамъшуда</div>
     ${renderMonthlySalaryLedger()}
-    <button class="btn-ghost" id="clearAccumulatedSalaryBtn" style="margin-top:14px;color:var(--brick);border-color:var(--brick);">🗑 Пок кардани ҳамаи маошҳои ҷамъшуда</button>`;
+    ${renderClearMonthlySalaryControl()}`;
 }
 function renderSalaryXlsTable(){
   const roleLabel = {waiter:'Официант', cashier:'Кассир'};
@@ -4133,14 +4991,29 @@ function renderAdminStaff(){
   const rows = state.accounts.map(acc=>{
     const confirming = state.confirmDeleteAccountId === acc.id;
     const isOnlyAdmin = acc.role==='admin' && state.accounts.filter(a=>a.role==='admin').length<=1;
+    const pct = accountCommissionPct(acc);
+    const showCommControl = (acc.role==='waiter' || acc.role==='cashier');
+    const isHead = acc.role==='waiter' && !!acc.isHeadWaiter;
     return `
-    <div class="item-row">
-      <div class="info">
-        <div class="nm">${escapeHtml(acc.username)}</div>
-        <div class="cat">${roleLabel[acc.role]||acc.role}</div>
+    <div class="item-row" style="flex-wrap:wrap;gap:10px;${isHead?'border-color:var(--gold);background:#FFFBEB;':''}">
+      <div class="info" style="min-width:160px;">
+        <div class="nm">${escapeHtml(acc.username)} ${isHead ? `<span style="background:var(--gold);color:#fff;font-size:11px;padding:2px 8px;border-radius:12px;font-weight:800;margin-left:4px;">⭐ Сарофитсиант</span>` : ''}</div>
+        <div class="cat">${isHead ? '⭐ Сарофитсиант (илова + кам/нест дар чек)' : (roleLabel[acc.role]||acc.role)}${showCommControl ? ` · <b style="color:var(--olive);">💰 ${pct}% аз чек</b>` : ''}</div>
         <div class="cat" style="text-transform:none;letter-spacing:0;color:var(--text-dim);">🔑 ${escapeHtml(String(acc.password ?? ''))}</div>
       </div>
-      <div style="display:flex;align-items:center;gap:10px;">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        ${acc.role==='waiter' ? `
+          <button type="button" class="${isHead?'btn-primary':'btn-ghost'}" style="flex:none;padding:6px 12px;font-size:12px;${isHead?'background:var(--gold);border-color:var(--gold);':''}" data-toggleheadwaiter="${acc.id}">
+            ${isHead ? '⭐ Сарофитсиант (фаъол)' : '☆ Таъин кардани Сарофитсиант'}
+          </button>
+        ` : ''}
+        ${showCommControl ? `
+          <div style="display:flex;align-items:center;gap:6px;background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:4px 8px;">
+            <span style="font-size:12px;color:#475569;font-weight:600;">Фоиз (%):</span>
+            <input type="number" id="acc-comm-${acc.id}" value="${pct}" min="0" max="100" step="0.5" style="width:64px;padding:5px 6px;border:1px solid #cbd5e1;border-radius:6px;font-weight:700;text-align:center;font-size:13px;">
+            <button class="btn-primary" style="flex:none;padding:5px 10px;font-size:12px;" data-saveacccomm="${acc.id}">Сабт</button>
+          </div>
+        ` : ''}
         ${confirming ? `
           <span style="font-size:12px;color:var(--brick);font-weight:600;">Нест кунам?</span>
           <button class="icon-btn danger" data-confirmdelacc="${acc.id}">Ҳа</button>
@@ -4165,6 +5038,7 @@ function renderAdminStaff(){
           <option value="admin">Админ</option>
         </select>
       </div>
+      <div class="field small"><label>Фоиз аз чек (%)</label><input type="number" id="newAccCommissionPct" value="5" min="0" max="100" step="0.5" placeholder="5"></div>
       <button class="btn-primary" style="flex:none;padding:9px 18px;" id="submitAddAccount">Илова кардан</button>
       <button class="btn-ghost" id="cancelAddAccount">Бекор</button>
     </div>` : `<button class="btn-ghost" id="showAddAccountBtn" style="margin-bottom:14px;">+ Иловаи корманд</button>`;
@@ -4182,6 +5056,7 @@ function renderAdminStaff(){
           <option value="admin" ${editTarget.role==='admin'?'selected':''}>Админ</option>
         </select>
       </div>
+      <div class="field small"><label>Фоиз аз чек (%)</label><input type="number" id="editAccCommissionPct" value="${accountCommissionPct(editTarget)}" min="0" max="100" step="0.5" placeholder="5"></div>
       <button class="btn-primary" style="flex:none;padding:9px 18px;" id="submitEditAccount">Нигоҳ доштан</button>
       <button class="btn-ghost" id="cancelEditAccount">Бекор</button>
     </div>` : '';
@@ -4322,39 +5197,55 @@ function renderAdminMenu(){
 }
 
 async function clearAllReportHistory(){
-  const now=Date.now();
-  const actor=actingUsername()||'?';
-  const paidToClear=(state.orders||[]).filter(o=>o.status==='paid' && o.archived!==true && o.paidAt);
+  const now = Date.now();
+  // Keep ONLY currently active table orders and active scheduled orders; delete all paid/takeaway/cancelled orders
+  const ordersToDelete = (state.orders||[]).filter(o => o.status !== 'active' || o.type === 'takeaway');
+  const localIdsToDelete = new Set(ordersToDelete.map(o => String(o.id)));
 
-  // First publish the reset marker so every device knows the report cutoff.
-  // The marker is shared through Firebase settings and is also kept in the local state.
-  state.settings={...state.settings, reportClearedAt:now, reportClosedAt:now, salaryResetAt:now};
-  const settingsOk=await saveSettings(state.settings);
-  if(settingsOk===false) return;
-
-  // Archive only the paid orders that existed at the moment of the clear.
-  const ids=new Set(paidToClear.map(o=>o.id));
-  state.orders=(state.orders||[]).map(o=>ids.has(o.id)
-    ? {...o, archived:true, archivedAt:now, archivedBy:actor, updatedAt:now}
-    : o);
-  // Save each archived order individually (not the whole array) to minimise writes
-  const toSave=state.orders.filter(o=>ids.has(o.id));
-  for(const o of toSave){ await saveOrderV2(o); }
-  const ok=true;
-
-  // Clear all manual bonuses so salary resets to zero along with the report.
+  // 1. Update local state and re-render IMMEDIATELY so the button responds in < 10ms!
+  state.orders = (state.orders||[]).filter(o => !localIdsToDelete.has(String(o.id)));
+  state.__lastKnownOrderIds = new Set(state.orders.map(o => o.id));
+  state.settings = {...state.settings, reportClearedAt:now, reportClosedAt:now, salaryResetAt:now, oshTotalResetAt:now};
   state.bonuses = [];
-  await saveBonuses([]);
-
-  state.dailyClosures=(state.dailyClosures||[]).filter(x=>x.kind==='wagePayment');
-  await saveDailyClosures(state.dailyClosures);
-  state.reportArchive={days:[],months:{}};
-  await saveReportArchive();
-  state.dailyReportRows=[];
-  state.confirmClearReport=false;
+  state.expenses = [];
+  state.dailyClosures = (state.dailyClosures||[]).filter(x=>x.kind==='wagePayment');
+  state.reportArchive = {days:[],months:{}};
+  state.dailyReportRows = [];
+  state.confirmClearReport = false;
   render();
-  await logActivity('Ҳисобот, бонусҳо ва маоши кормандон пурра пок карда шуд');
-  showToast('Ҳисобот ва маош пурра пок шуд');
+  showToast('Ҳисобот ва собой пурра пок шуд');
+
+  // 2. Delete all non-active / takeaway orders from Firestore in fast batches + save reset state in parallel
+  const batchDeleteOrdersFromDb = async ()=>{
+    if(!db) return;
+    try{
+      const snap = await ordersCollectionRef().get();
+      const refsToDelete = [];
+      snap.forEach(d=>{
+        const data = d.data() || {};
+        if(data.status !== 'active' || data.type === 'takeaway' || localIdsToDelete.has(String(d.id))){
+          refsToDelete.push(d.ref);
+        }
+      });
+      for(let i=0; i<refsToDelete.length; i+=400){
+        const batch = db.batch();
+        refsToDelete.slice(i, i+400).forEach(ref => batch.delete(ref));
+        await batch.commit();
+      }
+    }catch(e){
+      console.error('batchDeleteOrdersFromDb failed', e);
+    }
+  };
+
+  await Promise.all([
+    saveSettings(state.settings),
+    batchDeleteOrdersFromDb(),
+    saveBonuses([]),
+    saveExpenses([]),
+    saveDailyClosures(state.dailyClosures),
+    saveReportArchive()
+  ]);
+  logActivity('Ҳисобот, собой ва чекҳои пардохтшуда аз база пурра пок карда шуд').catch(()=>{});
 }
 
 function wagePaymentsForDate(date){
@@ -4477,24 +5368,72 @@ function technicalDailyWageTotal(){
   return (state.technicalStaff||[]).filter(x=>x.active!==false).reduce((s,x)=>s+(Number(x.dailyWage)||0),0);
 }
 function wageReportForOrders(orders, shift){
-  const list=orders||[];
+  const mReset=salaryMonthResetAt();
+  const shReset=shift?salaryShiftResetAt(shift):0;
+  const effReset=Math.max(mReset, shReset);
+  const list=(orders||[]).filter(o=>{
+    const ts=Number(o.paidAt||o.updatedAt||o.createdAt)||0;
+    return !effReset || ts>effReset;
+  });
+  const resetToday = effReset && isToday(effReset);
   const entries=(state.accounts||[]).filter(acc=>acc.role==='waiter'||acc.role==='cashier').map(acc=>{
     const mine=list.filter(o=>o.status==='paid' && (acc.role==='waiter'?o.createdBy===acc.username:o.paidBy===acc.username));
-    const commission=acc.wageType==='commission'?mine.reduce((v,o)=>v+orderCommission(o),0):0;
+    const useComm = isCommissionAccount(acc);
+    const rate = accountCommissionPct(acc);
+    const commission=useComm?mine.reduce((v,o)=>v+orderCommission(o, rate),0):0;
     const days=Math.max(1,Number(state.settings.workDaysPerMonth)||30);
-    const fixedBase=acc.wageType==='commission'?0:acc.wageType==='monthly'?(Number(acc.wageAmount)||0)/days:(Number(acc.wageAmount)||0);
-    const reset=shift?salaryShiftResetAt(shift):0;
-    const fixed=(shift && reset && isToday(reset))?0:(shift?fixedBase/2:fixedBase);
-    return {username:acc.username,role:acc.role,amount:commission+fixed};
+    const fixedBase=useComm?0:acc.wageType==='monthly'?(Number(acc.wageAmount)||0)/days:(Number(acc.wageAmount)||0);
+    const fixed=resetToday?0:(shift?fixedBase/2:fixedBase);
+    return {username:acc.username,role:acc.role,commissionRate:rate,amount:commission+fixed};
   });
   const techBase=technicalDailyWageTotal();
-  const techReset=shift?salaryShiftResetAt(shift):0;
-  const tech=(shift && techReset && isToday(techReset))?0:(shift?techBase/2:techBase);
+  const tech=resetToday?0:(shift?techBase/2:techBase);
   return {entries,total:entries.reduce((n,x)=>n+x.amount,0)+tech, technical:tech};
 }
 function dailySalaryTotalFromAllPaid(){
-  const paidToday=(state.orders||[]).filter(o=>o.status==='paid'&&o.paidAt&&isToday(o.paidAt));
+  const mReset=salaryMonthResetAt();
+  const paidToday=(state.orders||[]).filter(o=>o.status==='paid'&&o.paidAt&&isToday(o.paidAt)&&(!mReset||Number(o.paidAt)>mReset));
   return wageReportForOrders(paidToday).total;
+}
+async function clearMonthlySalaryReport(){
+  const now=Date.now();
+  state.dailySalaryLedger=[];
+  await saveDailySalaryLedger([]);
+  state.settings={
+    ...state.settings,
+    salaryResetAt:now,
+    salaryMonthResetAt:now,
+    salaryResetAtShift1:now,
+    salaryResetAtShift2:now
+  };
+  await saveSettings(state.settings);
+  state.confirmClearMonthlySalary=false;
+  try{ await logActivity('Ҳисоботи моҳонаи маошҳоро пурра пок кард'); }catch(e){}
+  showToast('Ҳисоботи моҳонаи маошҳо пок карда шуд');
+}
+function renderClearMonthlySalaryControl(){
+  if(state.confirmClearMonthlySalary){
+    return `<div class="form-box" style="border-color:var(--brick);margin:14px 0;">
+      <div style="width:100%;">
+        <p style="font-size:13px;color:var(--brick);font-weight:700;margin:0 0 4px;">⚠️ Ҳисоботи моҳонаи маошҳоро пок кунем?</p>
+        <p style="font-size:12px;color:#6b5f4d;margin:0 0 10px;">Ҳамаи маошҳои ҳисобшудаи моҳона ва ҷадвали маошҳои ҷамъшуда ба сифр (0) баргардонида мешаванд. Чекҳо ва фурӯшҳо дар база боқӣ мемонанд.</p>
+        <button class="btn-pay" style="padding:8px 16px;margin-right:8px;" id="confirmClearMonthlySalaryBtn">Ҳа, пурра пок кун</button>
+        <button class="btn-ghost" id="cancelClearMonthlySalaryBtn">Бекор</button>
+      </div>
+    </div>`;
+  }
+  return `<div style="margin:14px 0;"><button class="btn-ghost" id="clearAccumulatedSalaryBtn" style="color:var(--brick);border-color:var(--brick);">🗑 Пок кардани ҳисоботи моҳонаи маошҳо</button></div>`;
+}
+function attachMonthlySalaryClearEvents(){
+  const clearBtn=document.getElementById('clearAccumulatedSalaryBtn');
+  if(clearBtn) clearBtn.addEventListener('click',()=>{ state.confirmClearMonthlySalary=true; render(); });
+  const cancelBtn=document.getElementById('cancelClearMonthlySalaryBtn');
+  if(cancelBtn) cancelBtn.addEventListener('click',()=>{ state.confirmClearMonthlySalary=false; render(); });
+  const confirmBtn=document.getElementById('confirmClearMonthlySalaryBtn');
+  if(confirmBtn) confirmBtn.addEventListener('click',async()=>{
+    await clearMonthlySalaryReport();
+    render();
+  });
 }
 async function ensureDailySalarySnapshot(){
   const date=todayKey();
@@ -4519,11 +5458,19 @@ function renderDailyWageReport(orders){
   return `<div class="section-title" style="margin-top:24px;">💰 Маоши имрӯз</div>
     <div class="stat-row"><div class="stat-card"><div class="label">Маоши умумии ҳамаи кормандон</div><div class="value">${fmtMoney(total)}</div></div></div>`;
 }
+function reportItemDisplayName(order, it){
+  const raw = String(it && it.name || 'Маҳсулот').replace(/\s*\(иловагӣ\)\s*$/i, '').trim();
+  if(isTakeawayOrderItem(order, it) && !/\(собой\)/i.test(raw)){
+    return raw + ' (собой)';
+  }
+  return String(it && it.name || 'Маҳсулот');
+}
 function shiftProductSummary(orders){
   const rows={};
   (orders||[]).forEach(o=>(o.items||[]).forEach(it=>{
-    const key=String(it.name||'Маҳсулот')+'|'+String(it.unit||'dona');
-    if(!rows[key])rows[key]={name:it.name||'Маҳсулот',unit:it.unit||'dona',qty:0,revenue:0,osh:getItemCategory(it)==='Ош'};
+    const dispName=reportItemDisplayName(o, it);
+    const key=dispName+'|'+String(it.unit||'dona');
+    if(!rows[key])rows[key]={name:dispName,unit:it.unit||'dona',qty:0,revenue:0,osh:isOshDiscountItem(it)};
     rows[key].qty+=Number(it.qty)||0;
     rows[key].revenue+=lineTotal({unit:it.unit,price:it.price},it.qty);
   }));
@@ -4659,6 +5606,7 @@ function renderAdminReport(){
       <div class="stat-card"><div class="label">Шумораи чекҳо</div><div class="value">${paidToday.length}</div></div>
     </div>
 
+    ${renderOshShiftTable()}
 
     <div class="section-title" style="margin-top:24px;">Даромад аз рӯи маҳсулот (имрӯз)</div>
     ${renderProductBreakdownTable(paidToday)}
@@ -4758,9 +5706,10 @@ function renderProductBreakdownTable(orders){
   const map = {};
   orders.forEach(o=>{
     o.items.forEach(it=>{
-      if(!map[it.name]) map[it.name] = {qty:0, unit:it.unit, revenue:0};
-      map[it.name].qty += it.qty;
-      map[it.name].revenue += lineTotal({unit:it.unit, price:it.price}, it.qty);
+      const dName = reportItemDisplayName(o, it);
+      if(!map[dName]) map[dName] = {qty:0, unit:it.unit, revenue:0};
+      map[dName].qty += it.qty;
+      map[dName].revenue += lineTotal({unit:it.unit, price:it.price}, it.qty);
     });
   });
   const list = Object.entries(map).map(([name,v])=>({name, ...v})).sort((a,b)=>b.revenue-a.revenue);
@@ -4935,24 +5884,11 @@ function renderAdminSettings(){
   </div>
   <div class="settings-form" style="margin-top:18px;">
     <div class="field">
-      <label>Тахфифи «Бо худ бурдан» (%)</label>
+      <label>Тахфифи «Оши собой» (%)</label>
       <input type="number" id="takeawayDiscountInput" value="${state.settings.takeawayDiscountPct||0}" min="0" max="100" step="1" style="width:120px;">
     </div>
-    <p style="font-size:12px;color:#9c8f78;margin:-8px 0 0;">Ин фоиз худкор аз ҳамаи фармоишҳои «Бо худ бурдан» кам карда мешавад (0 = бе тахфиф).</p>
+    <p style="font-size:12px;color:#9c8f78;margin:-8px 0 0;">Ин фоиз <b>танҳо аз нархи ош</b> кам карда мешавад: дар фармоишҳои «Собой» ва ҳангоми илова кардани «🥡 собой» дар чеки миз. Нӯшокӣ, нон, салат, лаълӣ ва дигар маҳсулот бе тахфиф мемонанд. Аз оши собой ва лаълӣ ҳаққи хизматрасонӣ гирифта намешавад (0 = бе тахфиф).</p>
     <button class="btn-ghost" style="flex:none;padding:9px 16px;align-self:flex-start;" id="saveTakeawayDiscountBtn">Сабт кардан</button>
-  </div>
-
-  <div class="settings-form" style="margin-top:18px;">
-    <div class="field">
-      <label>Матни огоҳии овозии кассир</label>
-      <input type="text" id="cashierAlertTextInput" value="${escapeHtml(state.settings.cashierAlertText||'Фармоиши нав')}" style="width:220px;">
-    </div>
-    <div class="field">
-      <label>Матни огоҳии овозии ошпаз</label>
-      <input type="text" id="chefAlertTextInput" value="${escapeHtml(state.settings.chefAlertText||'Фармоиши нав')}" style="width:220px;">
-    </div>
-    <p style="font-size:12px;color:#9c8f78;margin:-8px 0 0;">Ҳангоми фармоиши нав, экрани кассир ва ошпаз бо ин матн (баъд аз он миз/навъ илова мешавад) бо овоз хабар медиҳанд.</p>
-    <button class="btn-ghost" style="flex:none;padding:9px 16px;align-self:flex-start;" id="saveAlertTextBtn">Сабт кардан</button>
   </div>
 
   <div class="settings-form" style="margin-top:18px;">
@@ -4995,6 +5931,52 @@ function renderAdminSettings(){
   </div>`;
 }
 
+function attachReportEvents(){
+  const addExpenseBtn=document.getElementById('addExpenseBtn');
+  if(addExpenseBtn) addExpenseBtn.addEventListener('click', async()=>{const name=(document.getElementById('expenseName')?.value||'').trim(); const amount=Number(document.getElementById('expenseAmount')?.value)||0; if(!name||amount<=0){showToast('Ном ва маблағи хароҷотро ворид кунед');return;} state.expenses=state.expenses||[]; state.expenses.push({id:uid('exp'),name,amount,ts:Date.now(),createdBy:actingUsername()}); await saveExpenses(state.expenses); render();});
+  document.querySelectorAll('[data-vieworder]').forEach(el=>{
+    el.addEventListener('click', ()=> openOrderView(el.dataset.vieworder, el.dataset.viewmode||'pay'));
+  });
+  const clearBtn = document.getElementById('clearReportBtn');
+  if(clearBtn) clearBtn.addEventListener('click', ()=>{ state.confirmClearReport=true; render(); });
+  const cancelClearBtn = document.getElementById('cancelClearReportBtn');
+  if(cancelClearBtn) cancelClearBtn.addEventListener('click', ()=>{ state.confirmClearReport=false; render(); });
+  const confirmClearBtn = document.getElementById('confirmClearReportBtn');
+  if(confirmClearBtn) confirmClearBtn.addEventListener('click', async ()=>{
+    await clearAllReportHistory();
+    render();
+  });
+  const exportExcelBtn = document.getElementById('exportExcelBtn');
+  if(exportExcelBtn) exportExcelBtn.addEventListener('click', exportReportToExcel);
+  document.querySelectorAll('[data-closeshift]').forEach(el=>el.addEventListener('click',async()=>{
+    el.disabled=true;
+    try{await closeWorkShift(Number(el.dataset.closeshift));}finally{el.disabled=false;}
+  }));
+  const closeDayBtn = document.getElementById('closeDayBtn');
+  if(closeDayBtn) closeDayBtn.addEventListener('click', ()=>{ state.showCloseDayConfirm=true; render(); });
+  const cancelCloseDayBtn = document.getElementById('cancelCloseDayBtn');
+  if(cancelCloseDayBtn) cancelCloseDayBtn.addEventListener('click', ()=>{ state.showCloseDayConfirm=false; render(); });
+  const confirmCloseDayBtn = document.getElementById('confirmCloseDayBtn');
+  if(confirmCloseDayBtn) confirmCloseDayBtn.addEventListener('click', async ()=>{
+    try{ await closeDailyReport(); }catch(e){ console.error(e); showToast('Хатогӣ: '+(e.message||e)); }
+    state.showCloseDayConfirm=false;
+    render();
+  });
+  document.querySelectorAll('[data-delclosure]').forEach(el=>{
+    el.addEventListener('click', ()=>{ state.confirmDeleteClosureId = el.dataset.delclosure; render(); });
+  });
+  document.querySelectorAll('[data-confirmdelclosure]').forEach(el=>{
+    el.addEventListener('click', async ()=>{
+      const id = el.dataset.confirmdelclosure;
+      state.confirmDeleteClosureId = null;
+      await deleteDailyClosure(id);
+      render();
+    });
+  });
+  document.querySelectorAll('[data-canceldelclosure]').forEach(el=>{
+    el.addEventListener('click', ()=>{ state.confirmDeleteClosureId = null; render(); });
+  });
+}
 function attachAdminOrdersEvents(){
   const clearOshTotalBtn = document.getElementById('clearOshTotalBtn');
   if(clearOshTotalBtn) clearOshTotalBtn.addEventListener('click', async ()=>{
@@ -5038,7 +6020,7 @@ function attachAdminOrdersEvents(){
 }
 function attachAdminEvents(){
   // keep typing safe from the 6s poll wipe while on tabs with persistent free-typed fields
-  if(state.adminTab==='tables' || state.adminTab==='salary' || state.adminTab==='settings' || state.adminTab==='inventory' || state.adminTab==='orders'){
+  if(state.adminTab==='tables' || state.adminTab==='salary' || state.adminTab==='settings' || state.adminTab==='inventory' || state.adminTab==='orders' || state.adminTab==='staff'){
     state.formOpen = true;
     state.formOpenAt = Date.now();
   }
@@ -5059,7 +6041,7 @@ function attachAdminEvents(){
       state.confirmClearLog=false;
       state.confirmDeleteClientKey=null;
       state.recipeDraft={}; state.menuFormDraft={name:'', price:'', cat:'', unit:'dona'};
-      if(el.dataset.atab==='salary' || el.dataset.atab==='tables' || el.dataset.atab==='settings' || el.dataset.atab==='inventory' || el.dataset.atab==='orders'){ state.formOpen=true; state.formOpenAt=Date.now(); } else { state.formOpen=false; }
+      if(el.dataset.atab==='salary' || el.dataset.atab==='tables' || el.dataset.atab==='settings' || el.dataset.atab==='inventory' || el.dataset.atab==='orders' || el.dataset.atab==='staff'){ state.formOpen=true; state.formOpenAt=Date.now(); } else { state.formOpen=false; }
       render();
     });
   });
@@ -5145,11 +6127,28 @@ function attachAdminEvents(){
       const username = document.getElementById('newAccUsername').value.trim();
       const password = document.getElementById('newAccPassword').value;
       const role = document.getElementById('newAccRole').value;
-      const ok = await addAccount(username, password, role);
+      const commEl = document.getElementById('newAccCommissionPct');
+      const commPct = commEl ? commEl.value : 5;
+      const ok = await addAccount(username, password, role, commPct);
       if(ok){ state.showAddAccountForm=false; state.formOpen=false; }
       render();
     });
 
+    document.querySelectorAll('[data-toggleheadwaiter]').forEach(el=>{
+      el.addEventListener('click', async ()=>{
+        await toggleHeadWaiter(el.dataset.toggleheadwaiter);
+        render();
+      });
+    });
+    document.querySelectorAll('[data-saveacccomm]').forEach(el=>{
+      el.addEventListener('click', async ()=>{
+        const id = el.dataset.saveacccomm;
+        const inp = document.getElementById('acc-comm-'+id);
+        if(!inp) return;
+        await saveAccountCommissionPct(id, inp.value);
+        render();
+      });
+    });
     document.querySelectorAll('[data-editacc]').forEach(el=>{
       el.addEventListener('click', ()=>{ state.editingAccountId = el.dataset.editacc; state.formOpen=true; state.formOpenAt=Date.now(); render(); });
     });
@@ -5173,7 +6172,9 @@ function attachAdminEvents(){
       const username = document.getElementById('editAccUsername').value.trim();
       const password = document.getElementById('editAccPassword').value;
       const role = document.getElementById('editAccRole').value;
-      const ok = await updateAccountFn(state.editingAccountId, username, password, role);
+      const commEl = document.getElementById('editAccCommissionPct');
+      const commPct = commEl ? commEl.value : undefined;
+      const ok = await updateAccountFn(state.editingAccountId, username, password, role, commPct);
       if(ok){ state.editingAccountId=null; state.formOpen=false; }
       render();
     });
@@ -5245,50 +6246,7 @@ function attachAdminEvents(){
   }
 
   if(state.adminTab==='report'){
-    const addExpenseBtn=document.getElementById('addExpenseBtn');
-    if(addExpenseBtn) addExpenseBtn.addEventListener('click', async()=>{const name=(document.getElementById('expenseName')?.value||'').trim(); const amount=Number(document.getElementById('expenseAmount')?.value)||0; if(!name||amount<=0){showToast('Ном ва маблағи хароҷотро ворид кунед');return;} state.expenses=state.expenses||[]; state.expenses.push({id:uid('exp'),name,amount,ts:Date.now(),createdBy:actingUsername()}); await saveExpenses(state.expenses); render();});
-    document.querySelectorAll('[data-vieworder]').forEach(el=>{
-      el.addEventListener('click', ()=> openOrderView(el.dataset.vieworder, el.dataset.viewmode||'pay'));
-    });
-    const clearBtn = document.getElementById('clearReportBtn');
-    if(clearBtn) clearBtn.addEventListener('click', ()=>{ state.confirmClearReport=true; render(); });
-    const cancelClearBtn = document.getElementById('cancelClearReportBtn');
-    if(cancelClearBtn) cancelClearBtn.addEventListener('click', ()=>{ state.confirmClearReport=false; render(); });
-    const confirmClearBtn = document.getElementById('confirmClearReportBtn');
-    if(confirmClearBtn) confirmClearBtn.addEventListener('click', async ()=>{
-      await clearAllReportHistory();
-      render();
-    });
-    const exportExcelBtn = document.getElementById('exportExcelBtn');
-    if(exportExcelBtn) exportExcelBtn.addEventListener('click', exportReportToExcel);
-    document.querySelectorAll('[data-closeshift]').forEach(el=>el.addEventListener('click',async()=>{
-      el.disabled=true;
-      try{await closeWorkShift(Number(el.dataset.closeshift));}finally{el.disabled=false;}
-    }));
-    const closeDayBtn = document.getElementById('closeDayBtn');
-    if(closeDayBtn) closeDayBtn.addEventListener('click', ()=>{ state.showCloseDayConfirm=true; render(); });
-    const cancelCloseDayBtn = document.getElementById('cancelCloseDayBtn');
-    if(cancelCloseDayBtn) cancelCloseDayBtn.addEventListener('click', ()=>{ state.showCloseDayConfirm=false; render(); });
-    const confirmCloseDayBtn = document.getElementById('confirmCloseDayBtn');
-    if(confirmCloseDayBtn) confirmCloseDayBtn.addEventListener('click', async ()=>{
-      try{ await closeDailyReport(); }catch(e){ console.error(e); showToast('Хатогӣ: '+(e.message||e)); }
-      state.showCloseDayConfirm=false;
-      render();
-    });
-    document.querySelectorAll('[data-delclosure]').forEach(el=>{
-      el.addEventListener('click', ()=>{ state.confirmDeleteClosureId = el.dataset.delclosure; render(); });
-    });
-    document.querySelectorAll('[data-confirmdelclosure]').forEach(el=>{
-      el.addEventListener('click', async ()=>{
-        const id = el.dataset.confirmdelclosure;
-        state.confirmDeleteClosureId = null;
-        await deleteDailyClosure(id);
-        render();
-      });
-    });
-    document.querySelectorAll('[data-canceldelclosure]').forEach(el=>{
-      el.addEventListener('click', ()=>{ state.confirmDeleteClosureId = null; render(); });
-    });
+    attachReportEvents();
   }
 
   if(state.adminTab==='settings'){
@@ -5333,16 +6291,7 @@ function attachAdminEvents(){
       await ensureDailySalarySnapshot();
       render();
     }));
-    const clearAccumulatedSalaryBtn=document.getElementById('clearAccumulatedSalaryBtn');
-    if(clearAccumulatedSalaryBtn) clearAccumulatedSalaryBtn.addEventListener('click',async()=>{
-      if(!confirm('Ҳамаи маошҳои ҷамъшуда пок карда шаванд? Чекҳо ва фурӯшҳо нигоҳ дошта мешаванд.')) return;
-      state.dailySalaryLedger=[];
-      await saveDailySalaryLedger([]);
-      state.settings={...state.settings,salaryResetAt:Date.now(),salaryResetAtShift1:Date.now(),salaryResetAtShift2:Date.now()};
-      await saveSettings(state.settings);
-      render();
-      showToast('Ҳамаи маошҳои ҷамъшуда пок шуд');
-    });
+    attachMonthlySalaryClearEvents();
     document.querySelectorAll('[data-deltech]').forEach(el=>el.addEventListener('click',async()=>{
       state.technicalStaff=(state.technicalStaff||[]).filter(x=>x.id!==el.dataset.deltech);
       await saveTechnicalStaff(state.technicalStaff); render();
@@ -5400,6 +6349,9 @@ function attachAdminEvents(){
     });
   }
 
+  if(state.adminTab==='osh'){
+    attachOshShiftsEvents();
+  }
   if(state.adminTab==='orders'){
     attachAdminOrdersEvents();
   }
@@ -5577,15 +6529,6 @@ function attachAdminEvents(){
       showToast('Сабт шуд');
       render();
     });
-    const saveAlertTextBtn = document.getElementById('saveAlertTextBtn');
-    if(saveAlertTextBtn) saveAlertTextBtn.addEventListener('click', async ()=>{
-      const cashierText = (document.getElementById('cashierAlertTextInput').value || 'Фармоиши нав').trim();
-      const chefText = (document.getElementById('chefAlertTextInput').value || 'Фармоиши нав').trim();
-      state.settings = {...state.settings, cashierAlertText: cashierText, chefAlertText: chefText};
-      await saveSettings(state.settings);
-      showToast('Сабт шуд');
-      render();
-    });
     const saveServiceChargeBtn = document.getElementById('saveServiceChargeBtn');
     if(saveServiceChargeBtn) saveServiceChargeBtn.addEventListener('click', async ()=>{
       const pct = Math.max(0, Math.min(100, Number(document.getElementById('serviceChargeInput').value) || 0));
@@ -5696,10 +6639,8 @@ async function hardRefreshApp(){
   url.searchParams.set('_v', String(Date.now()));
   window.location.replace(url.toString());
 }
-function showUpdateBanner(){
-  return;
-}
-function _unused_showUpdateBanner(){
+function showUpdateBanner(){ return;
+function _disabled_showUpdateBanner(){
   if(__updateBannerShown) return;
   __updateBannerShown = true;
   const bar = document.createElement('div');
